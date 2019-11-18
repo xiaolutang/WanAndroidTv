@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Checkable;
 
-import androidx.annotation.NonNull;
 import androidx.leanback.widget.HorizontalGridView;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 
 /**
  * 使HorizontalGridView具有类似RadioGroup的功能
@@ -42,19 +40,6 @@ public class RadioGroupHorizontalGridView extends HorizontalGridView {
         _childOnCheckedChangeListener = new CheckedStateTracker();
         _passThroughListener = new PassThroughHierarchyChangeListener();
         super.setOnHierarchyChangeListener(_passThroughListener);
-        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator(){
-            @Override
-            public boolean animateChange(@NonNull ViewHolder oldHolder, @NonNull ViewHolder newHolder, @NonNull ItemHolderInfo preInfo, @NonNull ItemHolderInfo postInfo) {
-                return super.animateChange(oldHolder, newHolder, preInfo, postInfo);
-            }
-
-            @Override
-            public boolean animateChange(ViewHolder oldHolder, ViewHolder newHolder, int fromX, int fromY, int toX, int toY) {
-                return super.animateChange(oldHolder, newHolder, fromX, fromY, toX, toY);
-            }
-        };
-        defaultItemAnimator.setChangeDuration(500);
-        setItemAnimator(defaultItemAnimator);
     }
 
 
