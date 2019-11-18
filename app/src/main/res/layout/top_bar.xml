@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.txl.tvlib.widget.dynamic.focus.DynamicLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <com.txl.tvlib.widget.BaseCustomCardView
         android:id="@+id/main_action_search"
@@ -89,4 +91,4 @@
             app:layout_viewType="main"
             android:background="@drawable/b_menu_settled"/>
     </com.txl.tvlib.widget.BaseCustomCardView>
-</LinearLayout>
+</com.txl.tvlib.widget.dynamic.focus.DynamicLinearLayout>

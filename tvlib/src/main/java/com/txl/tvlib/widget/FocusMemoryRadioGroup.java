@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * */
 public class FocusMemoryRadioGroup extends RadioGroup {
     /**
-     * 上一个获取焦点的子元素
+     * 上一个获取焦点的子元素,可以是View也可以是ViewGroup
      * */
     private View mLastFocusView;
 

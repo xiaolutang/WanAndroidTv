@@ -7,11 +7,14 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:clipChildren="true"
-    android:clipToPadding="true">
+    android:clipChildren="false"
+    android:clipToPadding="false">
     <include layout="@layout/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_100"
+        android:layout_marginEnd="@dimen/dp_100"
+        android:layout_marginTop="@dimen/dp_20"/>
     <com.txl.tvlib.widget.RadioGroupHorizontalGridView
         android:id="@+id/nav_horizontal_recycler_view"
         android:paddingTop="@dimen/dp_30"
