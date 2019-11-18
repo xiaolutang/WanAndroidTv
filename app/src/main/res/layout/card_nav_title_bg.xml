@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.txl.tvlib.widget.BaseCustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardType="mainOnly"
+    android:focusable="true"
+    android:descendantFocusability="blocksDescendants"
+    android:focusableInTouchMode="true">
+    <RadioButton
+        android:id="@+id/tv_vav_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_viewType="main"
+        android:textSize="@dimen/sp_28"
+        android:paddingStart="@dimen/dp_50"
+        android:paddingEnd="@dimen/dp_50"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_20"
+        android:background="@drawable/b_menu_settled"
+        android:focusable="false"
+        android:textColor="@drawable/color_text_checked"
+        android:button="@null" />
+
+</com.txl.tvlib.widget.BaseCustomCardView>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+    <attr name="scrollMode" >
+        <enum name="alignScroll" value="0"/>
+        <enum name="followScroll" value="1"/>
+        <enum name="normalScroll" value="2" />
+    </attr>
+
+    <declare-styleable name="TvRecyclerView">
+        <attr name="scrollMode"/>
+        <attr name="focusDrawable" format="reference" />
+        <attr name="isAutoProcessFocus" format="boolean" />
+        <attr name="focusScale" format="float" />
+        <attr name="focusOutKeepDrawable" format="boolean"/>
+    </declare-styleable>
+
+    <!--是否可以缩放-->
+    <attr name="needZoom" format="boolean"/>
+    <!--是否能获取焦点-->
+    <attr name="canFocus" format="boolean"/>
+    <!--放大时的缩放倍数-->
+    <attr name="scaleNum" format="float|reference"/>
+    <!--焦点获取时候的背景selector-->
+    <attr name="focusSelector" format="reference"/>
+
+</resources>

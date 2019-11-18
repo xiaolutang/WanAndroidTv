@@ -1,0 +1,116 @@
+{
+  "nav": [
+    {
+      "type": "text",
+      "title": "我的"
+    },
+    {
+      "type": "text",
+      "title": "爱看"
+    },
+    {
+      "type": "text",
+      "title": "精选"
+    },
+    {
+      "type": "text",
+      "title": "我的"
+    },
+    {
+      "type": "image",
+      "title": "速度与激情",
+      "imageResId": "",
+      "imageUrl": "url"
+    },
+    {
+      "type": "image",
+      "title": "Vip",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "电视剧",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "电影",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "综艺",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "少儿",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "动漫",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "知识",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "游戏",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "纪录片",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "新闻",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "小视频",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "搞笑",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "体育",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "音乐",
+      "imageResId": "",
+      "imageUrl": ""
+    },
+    {
+      "type": "text",
+      "title": "王者荣耀",
+      "imageResId": "",
+      "imageUrl": ""
+    }
+  ]
+}

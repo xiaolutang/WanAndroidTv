@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="focuse_border_padding">2dp</dimen>
+</resources>
