@@ -6,6 +6,7 @@
     android:orientation="horizontal"
     android:clipChildren="false"
     android:clipToPadding="false">
+    <!--用于测试焦点记忆多层嵌套-->
     <com.txl.tvlib.widget.dynamic.focus.DynamicLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
