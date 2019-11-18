@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * 具有焦点记忆功能的LinearLayout,暂时先这样命名，后面可以考虑加入焦点优先级功能
  * */
-public class DynamicLinearLayout extends LinearLayout {
+public class DynamicLinearLayout extends LinearLayout implements IDynamicFocusViewGroup{
     private DynamicFocusUtils dynamicFocusUtils;
 
     public DynamicLinearLayout(Context context) {
@@ -74,5 +74,10 @@ public class DynamicLinearLayout extends LinearLayout {
     public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
         dynamicFocusUtils.requestFocus(direction, previouslyFocusedRect);
         return super.requestFocus(direction, previouslyFocusedRect);
+    }
+
+    @Override
+    public boolean dispatchAddFocusables(ArrayList<View> views, int direction, int focusableMode) {
+        return dynamicFocusUtils.dispatchAddFocusables(views, direction, focusableMode);
     }
 }
