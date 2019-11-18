@@ -1,4 +1,4 @@
-package com.example.wanandroidtv;
+package com.txl.wanandroidtv;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -10,14 +10,13 @@ import androidx.leanback.widget.HorizontalGridView;
 import androidx.leanback.widget.ItemBridgeAdapter;
 import androidx.leanback.widget.ObjectAdapter;
 
-import com.example.wanandroidtv.bean.Nav;
-import com.example.wanandroidtv.bean.NavItemData;
-import com.example.wanandroidtv.card.NvaPresenter;
+import com.txl.wanandroidtv.bean.Nav;
+import com.txl.wanandroidtv.bean.NavItemData;
+import com.txl.wanandroidtv.card.NvaPresenter;
 import com.google.gson.Gson;
 import com.txl.commonlibrary.utils.Utils;
 import com.txl.commonlibrary.utils.exector.AppExecutors;
 import com.txl.screenadaptation.ScreenAdaptionBaseActivity;
-import com.txl.tvlib.card.BaseCard;
 import com.txl.tvlib.card.BaseCardKt;
 import com.txl.tvlib.card.TextCard;
 import com.txl.tvlib.focushandler.ViewFocusChangeListener;
@@ -38,7 +37,6 @@ public class MainActivity extends ScreenAdaptionBaseActivity {
         findViewById(R.id.main_action_search).setOnFocusChangeListener(new ViewFocusChangeListener(findViewById(R.id.main_action_search)));
         findViewById(R.id.main_action_mine).setOnFocusChangeListener(new ViewFocusChangeListener(findViewById(R.id.main_action_mine)));
         findViewById(R.id.main_action_member).setOnFocusChangeListener(new ViewFocusChangeListener(findViewById(R.id.main_action_member)));
-        findViewById(R.id.main_action_member1).setOnFocusChangeListener(new ViewFocusChangeListener(findViewById(R.id.main_action_member1)));
         initNavView();
     }
 

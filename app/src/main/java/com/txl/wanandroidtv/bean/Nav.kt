@@ -1,4 +1,4 @@
-package com.example.wanandroidtv.bean
+package com.txl.wanandroidtv.bean
 
 class Nav {
     var nav:List<NavItemData>? = null

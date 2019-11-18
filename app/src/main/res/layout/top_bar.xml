@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:cardBackground="@drawable/b_menu_settled"
         android:descendantFocusability="blocksDescendants"
         app:cardType = "mainOnly"
         app:infoVisibility="selected"
@@ -24,25 +23,14 @@
             android:focusable="false"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/dp_30"
-            android:paddingTop="@dimen/size_16dp"
+            android:paddingTop="@dimen/dp_10"
             android:paddingEnd="@dimen/dp_30"
-            android:paddingBottom="@dimen/size_16dp"
+            android:paddingBottom="@dimen/dp_10"
             android:text="@string/action_search"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_28"
-            app:layout_viewType="main"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="info"
-            android:background="#f0f"
-            app:layout_viewType="info"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="extra"
-            app:layout_viewType="extra"
-            android:background="#000"/>
+            app:layout_viewType="main"
+            android:background="@drawable/b_menu_settled"/>
     </com.txl.tvlib.widget.BaseCustomCardView>
     <com.txl.tvlib.widget.BaseCustomCardView
         android:layout_width="wrap_content"
@@ -63,31 +51,14 @@
             android:focusable="false"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/dp_30"
-            android:paddingTop="@dimen/size_16dp"
+            android:paddingTop="@dimen/dp_10"
             android:paddingEnd="@dimen/dp_30"
-            android:paddingBottom="@dimen/size_16dp"
+            android:paddingBottom="@dimen/dp_10"
             android:text="@string/action_mine"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_28"
-            app:layout_viewType="main"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="info"
-            android:background="#f0f"
-            app:layout_viewType="info"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="info"
-            android:background="#eee"
-            app:layout_viewType="info"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="extra"
-            app:layout_viewType="extra"
-            android:background="#000"/>
+            app:layout_viewType="main"
+            android:background="@drawable/b_menu_settled"/>
     </com.txl.tvlib.widget.BaseCustomCardView>
 
     <com.txl.tvlib.widget.BaseCustomCardView
@@ -109,64 +80,13 @@
             android:focusable="false"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/dp_30"
-            android:paddingTop="@dimen/size_16dp"
+            android:paddingTop="@dimen/dp_10"
             android:paddingEnd="@dimen/dp_30"
-            android:paddingBottom="@dimen/size_16dp"
+            android:paddingBottom="@dimen/dp_10"
             android:text="@string/action_member"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_28"
-            app:layout_viewType="main"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="info"
-            android:background="#f0f"
-            app:layout_viewType="info"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="extra"
-            app:layout_viewType="extra"
-            android:background="#000"/>
-    </com.txl.tvlib.widget.BaseCustomCardView>
-
-    <com.txl.tvlib.widget.BaseCustomCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_action_member1"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:cardBackground="@drawable/b_menu_settled"
-        android:descendantFocusability="blocksDescendants"
-        app:cardType = "infoUnderWithExtra"
-        app:infoVisibility="always"
-        app:extraVisibility="always">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_action_member"
-            android:drawablePadding="@dimen/dp_10"
-            android:focusable="false"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/dp_30"
-            android:paddingTop="@dimen/size_16dp"
-            android:paddingEnd="@dimen/dp_30"
-            android:paddingBottom="@dimen/size_16dp"
-            android:text="@string/action_member"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_28"
-            app:layout_viewType="main"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="info"
-            android:background="#f0f"
-            app:layout_viewType="info"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="extra"
-            app:layout_viewType="extra"
-            android:background="#000"/>
+            app:layout_viewType="main"
+            android:background="@drawable/b_menu_settled"/>
     </com.txl.tvlib.widget.BaseCustomCardView>
 </LinearLayout>

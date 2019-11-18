@@ -1,4 +1,4 @@
-package com.example.wanandroidtv;
+package com.txl.wanandroidtv;
 
 import com.txl.screenadaptation.ScreenAdaptionBaseActivity;
 

@@ -5,6 +5,8 @@ import android.animation.ValueAnimator;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.txl.commonlibrary.utils.Utils;
+
 /**
  * View无法找到焦点元素的抖动动画
  * */
@@ -14,14 +16,32 @@ public class ViewShakeAnimation {
     private ObjectAnimator translationAnimatorY;
     private static final int DURATION = 500;
 
+    /**
+     * 抖动偏差 单位px
+     * */
+    private int offset;
+
     public ViewShakeAnimation(View animationView) {
+        this(animationView,5);
+        setHorizontalShakeAnimator(animationView);
+        setVerticalShakeAnimator(animationView);
+    }
+
+    /**
+     * @param animationView  要使用动画的View
+     * @param offset 抖动偏差 单位dp
+     * */
+    public ViewShakeAnimation(View animationView, int offset) {
+        if(offset > 0){
+            this.offset = Utils.convertDpToPixel(animationView.getContext(),offset);
+        }
         setHorizontalShakeAnimator(animationView);
         setVerticalShakeAnimator(animationView);
     }
 
     private void setVerticalShakeAnimator(View newView) {
         //动画种类：X轴平移，后面的值为移动参数，正值为右，负值为左（Y轴正值为下，负值为上）
-        translationAnimatorY = ObjectAnimator.ofFloat(newView, "translationY", 0f, 15f, 0f, -15f, 0f, 15f, 0f, -15f, 0f);
+        translationAnimatorY = ObjectAnimator.ofFloat(newView, "translationY", 0f, offset, 0f, -offset, 0f, offset, 0f, -offset, 0f);
         //用于控制动画快慢节奏，此处使用系统自带的线性Interpolator（匀速），此外还有各种变速Interpolator
         translationAnimatorY.setInterpolator(new LinearInterpolator());
         //设置动画重复次数，ValueAnimator.INFINITE即-1表示用于一直重复
@@ -32,7 +52,7 @@ public class ViewShakeAnimation {
 
     private void setHorizontalShakeAnimator(View newView) {
         //动画种类：X轴平移，后面的值为移动参数，正值为右，负值为左（Y轴正值为下，负值为上）
-        translationAnimatorX = ObjectAnimator.ofFloat(newView, "translationX", 0f, 15f, 0f, -15f, 0f, 15f, 0f, -15f, 0f);
+        translationAnimatorX = ObjectAnimator.ofFloat(newView, "translationX", 0f, offset, 0f, -offset, 0f, offset, 0f, -offset, 0f);
         //用于控制动画快慢节奏，此处使用系统自带的线性Interpolator（匀速），此外还有各种变速Interpolator
         translationAnimatorX.setInterpolator(new LinearInterpolator());
         //设置动画重复次数，ValueAnimator.INFINITE即-1表示用于一直重复

@@ -1,11 +1,11 @@
-package com.example.wanandroidtv.card
+package com.txl.wanandroidtv.card
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.leanback.widget.Presenter
-import com.example.wanandroidtv.R
+import com.txl.wanandroidtv.R
 import com.txl.tvlib.card.IBaseViewHolder
 import com.txl.tvlib.card.TextCard
 import com.txl.tvlib.widget.BaseCustomCardView

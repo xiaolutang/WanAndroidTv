@@ -95,9 +95,6 @@ public class BaseCustomCardView extends BaseCardView implements ICheckView {
      */
     @Override
     public void setSelected(boolean selected) {
-//        if (selected && !isSelected()) {
-//            setChecked(true);
-//        }
         super.setSelected(selected);
     }
 
@@ -125,6 +122,9 @@ public class BaseCustomCardView extends BaseCardView implements ICheckView {
     public View focusSearch(int direction) {
         View focusView =  super.focusSearch(direction);
         Log.d(TAG,"focusSearch nextFocusView is null ? "+focusView);
+        if(focusView != null){
+            Log.d(TAG,"focusSearch nextFocusView name is  "+focusView.getClass().getSimpleName());
+        }
         if(focusView == null || focusView == this){
             _viewShakeAnimation.startAnimation(direction);
         }

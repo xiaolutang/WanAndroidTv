@@ -1,4 +1,4 @@
-package com.example.wanandroidtv.bean
+package com.txl.wanandroidtv.bean
 
 import android.os.Parcel
 import android.os.Parcelable
