@@ -1,4 +1,4 @@
-package com.txl.tvlib.utils;
+package com.txl.tvlib.widget.focus.shake;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -10,7 +10,7 @@ import com.txl.commonlibrary.utils.Utils;
 /**
  * View无法找到焦点元素的抖动动画
  * */
-public class ViewShakeAnimation {
+public class ViewShakeAnimation implements IFocusShake{
     //定义一个横向抖动的动画
     private ObjectAnimator translationAnimatorX;
     private ObjectAnimator translationAnimatorY;
@@ -62,6 +62,7 @@ public class ViewShakeAnimation {
     }
 
     //开始横向抖动动画的方法，非外部调用
+    @Override
     public void startHorizontalShakeAnimator() {
         //此处判断动画是否已经在run，若是则不重新调用start方法，避免重复触发导致抖动的不流畅
         if (translationAnimatorX != null && !translationAnimatorX.isRunning()) {
@@ -71,6 +72,7 @@ public class ViewShakeAnimation {
         }
     }
 
+    @Override
     public void startVerticalShakeAnimator() {
         //此处判断动画是否已经在run，若是则不重新调用start方法，避免重复触发导致抖动的不流畅
         if (translationAnimatorY != null && !translationAnimatorY.isRunning()) {
@@ -94,6 +96,7 @@ public class ViewShakeAnimation {
         }
     }
 
+    @Override
     public void startAnimation(int direction){
         if(direction == View.FOCUS_UP || direction == View.FOCUS_DOWN){
             startVerticalShakeAnimator();

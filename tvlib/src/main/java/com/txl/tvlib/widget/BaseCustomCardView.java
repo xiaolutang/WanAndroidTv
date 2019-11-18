@@ -1,20 +1,15 @@
 package com.txl.tvlib.widget;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.Checkable;
 
 import androidx.leanback.widget.BaseCardView;
 
-import com.txl.tvlib.R;
-import com.txl.tvlib.utils.ViewShakeAnimation;
+import com.txl.tvlib.widget.focus.shake.IFocusShake;
+import com.txl.tvlib.widget.focus.shake.ViewShakeAnimation;
 
 /**
  * 增加这个类为了方便以后的功能扩展
@@ -41,7 +36,7 @@ public class BaseCustomCardView extends BaseCardView implements ICheckView {
 
     private FocusTracker _focusTracker;
 
-    private ViewShakeAnimation _viewShakeAnimation;
+    private IFocusShake _viewShakeAnimation;
 
     public BaseCustomCardView(Context context) {
         super(context);
@@ -62,6 +57,10 @@ public class BaseCustomCardView extends BaseCardView implements ICheckView {
         _focusTracker = new FocusTracker();
         super.setOnFocusChangeListener(_focusTracker);
         _viewShakeAnimation = new ViewShakeAnimation(this);
+    }
+
+    public void setViewShakeAnimation(IFocusShake iFocusShake){
+        _viewShakeAnimation = iFocusShake;
     }
 
 
