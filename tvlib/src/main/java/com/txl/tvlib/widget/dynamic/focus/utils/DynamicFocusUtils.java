@@ -55,6 +55,7 @@ public class DynamicFocusUtils implements IDynamicFocusUtils {
      * 否则调用addFocusables对可获取焦点的View进行添加
      * 这个方法是层层向下调用的。
      * */
+    @Override
     public boolean dispatchAddFocusables(ArrayList<View> views, int direction, int focusableMode){
         if(lastFocusView instanceof IDynamicFocusViewGroup && lastFocusView instanceof ViewGroup){
             return ((IDynamicFocusViewGroup) lastFocusView).dispatchAddFocusables(views, direction, focusableMode);

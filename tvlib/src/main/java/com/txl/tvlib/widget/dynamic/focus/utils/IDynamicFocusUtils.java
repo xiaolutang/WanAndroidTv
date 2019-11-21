@@ -35,5 +35,11 @@ public interface IDynamicFocusUtils {
      * */
     boolean requestFocus(int direction, Rect previouslyFocusedRect);
 
+    /**
+     * 在添加可以获取焦点的元素的时候，通过ViewGroup的addFocusables开始调用这个方法
+     * 如果记忆的焦点是一个记忆焦点的容器那么向下再次寻找焦点
+     * 否则调用addFocusables对可获取焦点的View进行添加
+     * 这个方法是层层向下调用的。
+     * */
     boolean dispatchAddFocusables(ArrayList<View> views, int direction, int focusableMode);
 }
