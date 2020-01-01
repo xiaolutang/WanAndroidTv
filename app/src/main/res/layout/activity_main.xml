@@ -1,35 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:clipChildren="false"
-    android:clipToPadding="false">
-<!--    <include layout="@layout/top_bar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="@dimen/dp_100"-->
-<!--        android:layout_marginEnd="@dimen/dp_100"-->
-<!--        android:layout_marginTop="@dimen/dp_20"/>-->
-    <include layout="@layout/top_bar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_100"
-        android:layout_marginEnd="@dimen/dp_100"
-        android:layout_marginTop="@dimen/dp_20"/>
-    <com.txl.tvlib.widget.RadioGroupHorizontalGridView
-        android:id="@+id/nav_horizontal_recycler_view"
-        android:paddingTop="@dimen/dp_30"
-        android:paddingBottom="@dimen/dp_30"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp_100"
-        android:paddingEnd="@dimen/dp_100"
-        android:clipChildren="true"
-        android:clipToPadding="false"/>
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <com.huaqiyun.tvlib.widget.dynamic.focus.LibTvRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:background="#ff0"
+        android:id="@+id/recycler_nav"/>
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:id="@+id/main_view_pager"
+        android:visibility="gone"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

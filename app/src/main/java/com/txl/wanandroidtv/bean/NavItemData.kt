@@ -6,22 +6,33 @@ import android.os.Parcelable
 /**
  * 导航数据结构
  * */
-data class NavItemData(val type:String?,
+data class NavItemData(/**
+                        *导航的显示类型
+                        */
+                       val type:String?,
                        val title:String?,
                        var imageResId:String?,
-                       var imageUrl:String?):Parcelable {
+                       var imageUrl:String?,
+                       val isHome:Boolean = false,
+                       /**
+                        * 导航数据类型
+                        * -1为在开发中
+                        * */
+                       val navType:Int = -1):Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
-    }
+            parcel.readString(),
+            parcel.readInt()==1
+            )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(type)
         parcel.writeString(title)
         parcel.writeString(imageResId)
         parcel.writeString(imageUrl)
+        parcel.writeInt(if(isHome){1}else{0} )
     }
 
     override fun describeContents(): Int {

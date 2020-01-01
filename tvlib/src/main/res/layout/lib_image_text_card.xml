@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.huaqiyun.tvlib.widget.BaseCustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true"
+    android:id="@+id/image_text_card_root"
+    app:cardType="mainOnly"
+    app:hasFocusBorder="true"
+    app:selectBorderWidth="@dimen/dp_5">
+    <FrameLayout
+        android:layout_width="@dimen/dp_232"
+        android:layout_height="@dimen/dp_135"
+        android:focusable="false">
+        <ImageView
+            android:id="@+id/image_image_text_card_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:scaleType="centerCrop"
+            />
+        <TextView
+            android:id="@+id/tv_image_text_card_title"
+            android:layout_width="@dimen/dp_232"
+            android:layout_height="@dimen/dp_60"
+            android:focusable="false"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:textColor="@android:color/white"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_24"
+            android:text="@string/app_name">
+
+        </TextView>
+    </FrameLayout>
+</com.huaqiyun.tvlib.widget.BaseCustomCardView>

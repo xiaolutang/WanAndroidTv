@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.huaqiyun.tvlib.widget.CardFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true"
+    android:descendantFocusability="blocksDescendants"
+    android:focusableInTouchMode="true"
+    app:auto_add_focus_animation="true"
+    android:id="@+id/root_text_card">
+    <RadioButton
+        android:id="@+id/tv_text_card_title"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_60"
+        app:layout_viewType="main"
+        android:textSize="@dimen/sp_30"
+        android:gravity="center"
+        android:background="@drawable/b_menu_settled"
+        android:focusable="false"
+        android:textColor="@drawable/color_text_checked"
+        android:button="@null"
+        android:includeFontPadding="false"
+        android:text="45"/>
+
+</com.huaqiyun.tvlib.widget.CardFrameLayout>

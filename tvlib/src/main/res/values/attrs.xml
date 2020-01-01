@@ -23,5 +23,33 @@
     <attr name="scaleNum" format="float|reference"/>
     <!--焦点获取时候的背景selector-->
     <attr name="focusSelector" format="reference"/>
+    <!--焦点模式  default,priority,dynamic-->
+    <attr name="focusMode" format="string"/>
+
+    <declare-styleable name="CardFrameLayout">
+        <!--当查找不到焦点的时候是否抖动-->
+        <attr name="open_shake" format="boolean"/>
+        <!--自己添加上焦点的动画-->
+        <attr name="auto_add_focus_animation" format="boolean"/>
+        <!--这个功能暂未实现 焦点的优先级 默认为 -1 没有优先级-->
+        <attr name="priority" format="integer"/>
+        <attr name="hasFocusBorder" format="boolean"/>
+        <attr name="selectBorderWidth" format="dimension"/>
+        <attr name="borderColor" format="color"/>
+        <attr name="focusChecked" format="boolean"/>
+    </declare-styleable>
+
+<!--    <declare-styleable name="CardFrameLayout">-->
+<!--        &lt;!&ndash;当查找不到焦点的时候是否抖动&ndash;&gt;-->
+<!--        <attr name="open_shake" format="boolean"/>-->
+<!--        &lt;!&ndash;自己添加上焦点的动画&ndash;&gt;-->
+<!--        <attr name="auto_add_focus_animation" format="boolean"/>-->
+<!--        &lt;!&ndash;这个功能暂未实现 焦点的优先级 默认为 -1 没有优先级&ndash;&gt;-->
+<!--        <attr name="priority" format="integer"/>-->
+<!--        <attr name="hasFocusBorder" format="boolean"/>-->
+<!--        <attr name="selectBorderWidth" format="dimension"/>-->
+<!--        <attr name="borderColor" format="color"/>-->
+<!--        <attr name="focusChecked" format="boolean"/>-->
+<!--    </declare-styleable>-->
 
 </resources>
