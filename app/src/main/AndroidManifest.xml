@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         android:banner="@mipmap/ic_launcher_foreground"
-        android:name="androidx.multidex.MultiDexApplication">
+        android:name=".WanAndroidTvApplication">
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
