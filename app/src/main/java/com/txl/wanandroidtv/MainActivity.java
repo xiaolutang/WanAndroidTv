@@ -1,14 +1,12 @@
 package com.txl.wanandroidtv;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
-import com.huaqiyun.tvlib.widget.dynamic.focus.LibTvRecyclerView;
+import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView;
 import com.txl.screenadaptation.ScreenAdaptionBaseActivity;
 import com.txl.wanandroidtv.bean.Nav;
 import com.txl.wanandroidtv.utils.Utils;
