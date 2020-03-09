@@ -6,15 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200"
-        android:background="#ff0"
-        android:id="@+id/recycler_nav"/>
-    <androidx.viewpager.widget.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:id="@+id/main_view_pager"
-        android:visibility="gone"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/dp_90"
+        android:layout_marginEnd="@dimen/dp_90">
+        <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_200"
+            android:id="@+id/recycler_nav"/>
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_view_pager"
+            android:visibility="visible"/>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

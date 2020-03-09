@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.animation.LinearInterpolator;
 import android.widget.Checkable;
 
 import androidx.annotation.IntDef;
@@ -17,7 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.txl.commonlibrary.utils.ReflectUtils;
+import com.txl.tvlib.focushandler.IFocusSearchHelper;
 import com.txl.tvlib.widget.ICheckView;
 import com.txl.tvlib.widget.dynamic.focus.utils.DynamicFocusHelper;
 
@@ -64,13 +67,15 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
     @Retention(RetentionPolicy.SOURCE)
     @IntDef ({SCROLL_ALIGN,SCROLL_FOLLOW,SCROLL_BY_PAGE})
     public  @interface ScrollMode{}
-    @ScrollMode int mScrollMode = SCROLL_FOLLOW;
+    @ScrollMode int mScrollMode = SCROLL_ALIGN;
     /**
      * 当前被选中的位置
      */
     private int mCheckedPosition = RecyclerView.NO_POSITION;
 
     private HandleFocusScroll mHandleFocusScroll;
+
+    private OnFocusSearchFailedListener mFocusSearchFailedListener;
 
     /**
      * 当前焦点View是否全部可见
@@ -102,6 +107,8 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
 
     private DynamicFocusHelper mDynamicFocusUtils;
 
+    private View mNextFocusView;
+
     public LibTvRecyclerView(@NonNull Context context) {
         this(context, null);
     }
@@ -122,6 +129,24 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         super.setOnHierarchyChangeListener(mPassThroughHierarchyChangeListener);
         mDynamicFocusUtils = new DynamicFocusHelper();
         mDynamicFocusUtils.setOpenDynamic(false);
+        setChildDrawingOrderCallback(new ChildDrawingOrderCallback(){
+            @Override
+            public int onGetChildDrawingOrder(int childCount, int i){
+                final int tempFocusIndex = indexOfChild(getFocusedChild());
+                // View 根据Z-order来进行绘制，将焦点元素的z-order与Recycler的最后一个元素进行对换 焦点的order始终最大
+                //配合 requestChildFocus 时重新绘制对焦点元素不能放置在最上面进行处理
+                if (tempFocusIndex == -1) {
+                    return i;
+                }
+                if (tempFocusIndex == i) {
+                    return childCount - 1;
+                } else if (i == childCount - 1) {
+                    return tempFocusIndex;
+                } else {
+                    return i;
+                }
+            }
+        });
     }
 
     @Override
@@ -129,9 +154,25 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         mPassThroughHierarchyChangeListener.mOnHierarchyChangeListener = listener;
     }
 
+    public OnFocusSearchFailedListener getFocusSearchFailedListener() {
+        return mFocusSearchFailedListener;
+    }
+
+    public void setFocusSearchFailedListener(OnFocusSearchFailedListener focusSearchFailedListener) {
+        this.mFocusSearchFailedListener = focusSearchFailedListener;
+    }
+
     @Override
     public void onDraw(Canvas c) {
         super.onDraw(c);
+    }
+
+    @Override
+    public void requestLayout() {
+        if(!isFocusScroll){
+            super.requestLayout();
+        }
+
     }
 
     public void setFocusLeftSearch(boolean focusLeftSearch) {
@@ -142,6 +183,9 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         this.focusRightSearch = focusRightSearch;
     }
 
+    /**
+     * 注意：建议不要主动调用这个方法，有些逻辑还没有完善
+     * */
     public void setScrollMode(@ScrollMode int scrollMode) {
         this.mScrollMode = scrollMode;
     }
@@ -154,10 +198,8 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
             return super.focusSearch(focused, direction);
         }
         View result = null;
+        int selectedPosition = getAdapterPositionByView(this,focused);
         try {
-
-            int selectedPosition = getAdapterPositionByView(this,focused);
-
             if (direction == View.FOCUS_RIGHT && focusRightSearch) {
                 super.focusSearch(focused, FOCUS_DOWN);
                 if(selectedPosition+1 == adapter.getItemCount()){
@@ -179,8 +221,51 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(result == null && mFocusSearchFailedListener!= null){
+            mFocusSearchFailedListener.onFocusSearchFailed(focused,selectedPosition,direction);
+        }
         if (result != null) return result;
         return super.focusSearch(focused, direction);
+    }
+
+    /**
+     * @param focused 当前的焦点View
+     * */
+    private View focusSearch(View focused,View searchResult,int focusSearchDirect){
+        LayoutManager layoutManager = getLayoutManager();
+        Adapter adapter = getAdapter();
+        View result = searchResult;
+        if(checkViewIsMyChild(searchResult)){
+            return result;
+        }
+        if (layoutManager == null || adapter == null || adapter.getItemCount() == 0) {
+            return searchResult;
+        }
+
+        int selectedPosition = getAdapterPositionByView(this,focused);
+        try {
+            if (focusSearchDirect == View.FOCUS_RIGHT && focusRightSearch) {
+                super.focusSearch(focused, FOCUS_DOWN);
+                if(selectedPosition+1 == adapter.getItemCount()){//
+                    return getParent().focusSearch(focused,focusSearchDirect);
+                }
+                //向右需要查找到下一排的左侧第一个元素
+                int targetPosition = selectedPosition + 1;
+                result = searchRightFocus(layoutManager, targetPosition);
+            } else if (focusSearchDirect == View.FOCUS_LEFT && focusLeftSearch) {
+                super.focusSearch(focused, FOCUS_UP);
+                if(selectedPosition == 0){
+                    return getParent().focusSearch(focused,focusSearchDirect);
+                }
+                //向左需要查找到上一排的最后一个元素
+                int targetPosition = selectedPosition - 1;
+                result = searchLeftFocus(layoutManager, targetPosition);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @org.jetbrains.annotations.Nullable
@@ -188,7 +273,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         View result;
         for (; targetPosition >= 0; targetPosition--) {
             result = layoutManager.findViewByPosition(targetPosition);
-            result = finLastFocusAbleView(result);
+            result = findLastFocusAbleView(result);
             if (result != null) {
                 return result;
             }
@@ -213,17 +298,18 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
 
     private View finLastFocusAbleView(View targetFocusView) {
         if (viewCanFocus(targetFocusView)) return targetFocusView;
-        if (targetFocusView instanceof ViewGroup) {
-            ViewGroup temp = (ViewGroup) targetFocusView;
-            int childCount = temp.getChildCount();
-            for (int i = childCount - 1; i >= 0; i--) {
-                View focus = findLastFocusAbleView(temp.getChildAt(i));
-                if (viewCanFocus(focus)) {
-                    return focus;
-                }
-            }
-        }
-        return null;
+        return findLastFocusAbleView(targetFocusView);
+//        if (targetFocusView instanceof ViewGroup) {
+//            ViewGroup temp = (ViewGroup) targetFocusView;
+//            int childCount = temp.getChildCount();
+//            for (int i = childCount - 1; i >= 0; i--) {
+//                View focus = findLastFocusAbleView(temp.getChildAt(i));
+//                if (viewCanFocus(focus)) {
+//                    return focus;
+//                }
+//            }
+//        }
+//        return null;
     }
 
     /**
@@ -268,7 +354,9 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
 
     private View findFirstFocusAbleView(View targetFocusView) {
         if (viewCanFocus(targetFocusView)) return targetFocusView;
-        if (targetFocusView instanceof ViewGroup) {
+        if(targetFocusView instanceof IFocusSearchHelper){
+            return findFirstFocusAbleView(((IFocusSearchHelper) targetFocusView).findFirstFocusAbleView());
+        }else if (targetFocusView instanceof ViewGroup) {
             ViewGroup temp = (ViewGroup) targetFocusView;
             int childCount = temp.getChildCount();
             for (int i = 0; i < childCount; i++) {
@@ -283,7 +371,9 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
 
     private View findLastFocusAbleView(View targetFocusView) {
         if (viewCanFocus(targetFocusView)) return targetFocusView;
-        if (targetFocusView instanceof ViewGroup) {
+        if(targetFocusView instanceof IFocusSearchHelper){
+            return findLastFocusAbleView(((IFocusSearchHelper) targetFocusView).findLastFocusAbleView());
+        }else if (targetFocusView instanceof ViewGroup) {
             ViewGroup temp = (ViewGroup) targetFocusView;
             int childCount = temp.getChildCount();
             for (int i = childCount-1; i >= 0; i--) {
@@ -305,6 +395,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         if (isFocusScroll) {
             return true;
         }
+        focusSearchDirect = -1;
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (event.getKeyCode()) {
                 case KeyEvent.KEYCODE_DPAD_DOWN: {
@@ -340,6 +431,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         isFocusScroll = true;
         scrollByMode(child, focused);
         isFocusScroll = false;
+        invalidate();
     }
 
     private boolean isFocusViewAllVisible() {
@@ -396,7 +488,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                         if (DEBUG) {
                             Log.d(TAG, "scroll vertical offset is :" + offset);
                         }
-                        smoothScrollBy(0, (int) offset);
+                        smoothScrollBy(0, (int) offset,new LinearInterpolator(), 20);
                     } else {
                         float baseLine = getWidth() * mScrollAlignOffset;
                         float temp = mTempRect.left + mTempRect.width() * mScrollAlignOffset;
@@ -404,7 +496,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                         if (DEBUG) {
                             Log.d(TAG, "scroll HORIZONTAL offset is :" + offset);
                         }
-                        smoothScrollBy((int) offset, 0);
+                        smoothScrollBy((int) offset, 0,new LinearInterpolator(),20);
                     }
                     handle = true;
                 } else {
@@ -429,6 +521,9 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         return handle;
     }
 
+    /**
+     * 这个方法为了修复吗，当RecyclerView顶部的部分View不能获取焦点，向上滚动时将这一部分显示出来。感觉没有太大的必要，这个应该是RecyclerView的正常逻辑
+     * */
     private void requestFixFocusPosition(View focused){
         ViewParent parent = focused.getParent();
         View child = focused;
@@ -639,5 +734,14 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
     @Override
     public boolean dispatchAddFocusables(ArrayList<View> views, int direction, int focusableMode) {
         return mDynamicFocusUtils.dispatchAddFocusables(views, direction, focusableMode);
+    }
+
+    public interface OnFocusSearchFailedListener{
+        /**
+         * @param currentFocusView 当前拥有焦点的View
+         * @param viewPosition 当前焦点View在RecyclerView的位置
+         * @param direct 焦点搜索方向
+         * */
+        void onFocusSearchFailed(View currentFocusView,int viewPosition,int direct);
     }
 }

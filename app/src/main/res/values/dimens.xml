@@ -11,4 +11,8 @@
     <dimen name="dp_100">100dp</dimen>
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_200">200dp</dimen>
+    <dimen name="sp_32">32sp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
 </resources>

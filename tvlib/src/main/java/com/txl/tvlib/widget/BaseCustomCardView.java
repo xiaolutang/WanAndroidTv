@@ -97,6 +97,7 @@ public class BaseCustomCardView extends BaseCardView implements ICheckView {
             new ViewFocusChangeListener(this);
         }
         setFocusable(true);
+        setFocusableInTouchMode( true );
         setWillNotDraw(false);
     }
 
@@ -174,8 +175,9 @@ public class BaseCustomCardView extends BaseCardView implements ICheckView {
     public void setChecked(boolean checked) {
         if(_focusChangeCheckedState || checked != _checked){
             _checked = checked;
-            refreshDrawableState();
             dispatchSetChecked(checked);
+            refreshDrawableState();
+
             if(_onCheckedChangeListener != null){
                 _onCheckedChangeListener.onCheckedChanged(this,checked);
             }

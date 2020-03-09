@@ -2,11 +2,22 @@
 Tv 版WanAndroid客户端
 
 使用的技术框架
+
 jetpack
-组件化
+
+组件化 
+
+GSON
+
 自定义Tv开发焦点处理框架
+
 阿里 VLayout
+
 AutoSize
+
+
+
+
 
 计划实现功能
 
