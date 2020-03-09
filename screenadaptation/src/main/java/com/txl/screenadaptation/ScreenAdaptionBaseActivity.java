@@ -2,10 +2,13 @@ package com.txl.screenadaptation;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.txl.screenadaptation.utils.ScerenAdapterUtils;
+
+import me.jessyan.autosize.AutoSizeCompat;
 
 /**
  * 采用今日头条适配方案
@@ -70,6 +73,16 @@ public abstract class ScreenAdaptionBaseActivity extends FragmentActivity {
      * 进行屏幕适配，如果不需要直接继承这个方法空实现即可
      * */
     protected void screenAdaption(){
-        ScerenAdapterUtils.setCustomDensity(this,getApplication());
+//        ScerenAdapterUtils.setCustomDensity(this,getApplication());
+    }
+
+    @Override
+    public Resources getResources() {
+        autoSizeFix();
+        return super.getResources();
+    }
+
+    protected void autoSizeFix(){
+        AutoSizeCompat.autoConvertDensityOfGlobal((super.getResources()));
     }
 }
