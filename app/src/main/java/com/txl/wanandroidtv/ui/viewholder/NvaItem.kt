@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
+import com.txl.commonlibrary.utils.DrawableUtils
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.NavItemData
 import com.txl.wanandroidtv.ui.utils.ThemeUtils
@@ -44,6 +46,11 @@ class NavItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
             val white = radioTitle.resources.getColor(R.color.white)
             val colors = intArrayOf(white, themeColor,white)
             radioTitle.setTextColor(ColorStateList(states,colors))
+            val radius = itemView.resources.getDimensionPixelSize(R.dimen.dp_30)
+            val bgDrawable = DrawableUtils.makeFramelessStateListDrawable(Color.TRANSPARENT,themeColor,themeColor,radius.toFloat())
+//            itemView.background = ContextCompat.getDrawable(radioTitle.context,R.drawable.nav_item_bg)
+            //fixme 为什么通过xml渲染有问题？
+            itemView.background = bgDrawable
         }
     }
 }

@@ -2,4 +2,5 @@
 <resources>
     <color name="theme" >#060</color>
     <color name="white" >#fff</color>
+    <color name="nav_item_normal_bg" >#fff</color>
 </resources>
