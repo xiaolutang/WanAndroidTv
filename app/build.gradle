@@ -35,7 +35,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(path: ':commonlibrary')
     implementation project(path: ':skin')
+    implementation project(path: ':netModel')
+    implementation project(path: ':txllog')
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.tencent:mmkv:1.0.22'
 }
 repositories {
     mavenCentral()

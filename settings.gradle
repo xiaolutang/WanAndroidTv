@@ -1,2 +1,2 @@
-include ':app', ':screenadaptation', ':tvlib', ':commonlibrary', ':skin', ':netModel'
+include ':app', ':screenadaptation', ':tvlib', ':commonlibrary', ':skin', ':netModel', ':txllog'
 rootProject.name='WanAndroidTv'
