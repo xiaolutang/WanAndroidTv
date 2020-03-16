@@ -3,11 +3,13 @@ package com.txl.wanandroidtv.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
 import com.txl.wanandroidtv.R
+import com.txl.wanandroidtv.ui.adpater.NavRecyclerAdapter
 import com.txl.wanandroidtv.viewModel.*
 import java.util.*
 
@@ -31,7 +33,9 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         recyclerView = rootView?.findViewById(R.id.fragment_lib_recycler)
         smartRefreshLayout?.setEnableAutoLoadMore(true)//是否启用列表惯性滑动到底部时自动加载更多
         smartRefreshLayout?.setOnLoadMoreListener(this)
-        showLoading(0);
+        showLoading(0)
+        recyclerView?.layoutManager = GridLayoutManager(requireContext(),4)
+        recyclerView?.adapter = NavRecyclerAdapter(requireContext())
     }
 
     override fun initData() {

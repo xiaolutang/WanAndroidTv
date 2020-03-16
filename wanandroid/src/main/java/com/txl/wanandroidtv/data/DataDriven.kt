@@ -1,6 +1,4 @@
 package com.txl.wanandroidtv.data
-
-import com.google.gson.Gson
 import com.txl.netmodel.NetInvokerUtils
 import com.txl.txllog.AndroidLogWrapper
 import java.lang.Exception
