@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tencent.mmkv.MMKV;
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView;
 import com.txl.screenadaptation.ScreenAdaptionBaseActivity;
 import com.txl.wanandroidtv.bean.NavItemData;
@@ -22,12 +23,13 @@ public class MainActivity extends ScreenAdaptionBaseActivity {
 
     private LibTvRecyclerView navRecyclerView;
     private ViewPager viewPager;
-    private FragmentStatePagerAdapter viewpagerAdapter;
+    private MainNavPageAdapter viewpagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MMKV.initialize(this);
         initView();
         initData();
     }
@@ -36,22 +38,23 @@ public class MainActivity extends ScreenAdaptionBaseActivity {
         navRecyclerView = findViewById( R.id.recycler_nav );
         navRecyclerView.setLayoutManager( new LinearLayoutManager( this,LinearLayoutManager.HORIZONTAL,false ) );
         viewPager = findViewById(R.id.main_view_pager);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        viewPager.setOffscreenPageLimit(3);
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
 
     }
 
@@ -64,6 +67,7 @@ public class MainActivity extends ScreenAdaptionBaseActivity {
         NavRecyclerAdapter adapter = new NavRecyclerAdapter(navs,this);
         navRecyclerView.setAdapter( adapter );
         viewpagerAdapter = new MainNavPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, navs);
+
         viewPager.setAdapter(viewpagerAdapter);
     }
 }

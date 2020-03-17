@@ -20,7 +20,7 @@ import java.util.*
  * description：抽象的导航Fragment
  */
 abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
-    lateinit var viewModel: AbsNavItemListVIewModel<*>
+    private var viewModel: AbsNavItemListVIewModel<*>? = null
     var smartRefreshLayout: SmartRefreshLayout? = null
     var recyclerView: LibTvRecyclerView? = null
 
@@ -47,10 +47,10 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         initViewModel()
     }
 
-    protected fun initViewModel(){
+    private fun initViewModel(){
 
-        viewModel = HomeNavItemListViewModel()
-        viewModel.data.observe(viewLifecycleOwner,object: Observable(), Observer<ResourceBoundary<*>> {
+        viewModel = createViewModel()
+        viewModel?.data?.observe(viewLifecycleOwner,object: Observable(), Observer<ResourceBoundary<*>> {
             override fun onChanged(t: ResourceBoundary<*>?) {
                 if(t != null){
                     when(t.state){
@@ -71,6 +71,8 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         })
     }
 
+    abstract fun createViewModel(): AbsNavItemListVIewModel<*>?
+
     /**
      * @param currentPage 当前第几页数据在加载
      * */
@@ -90,10 +92,10 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
 
     override fun onDetach() {
         super.onDetach()
-        viewModel.resetData()
+        viewModel?.resetData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        viewModel.nextPage()
+        viewModel?.nextPage()
     }
 }

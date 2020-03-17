@@ -1,5 +1,7 @@
 package com.txl.wanandroidtv.ui.adpater;
 
+import android.util.SparseArray;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,14 +9,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.txl.txllog.AndroidLogWrapper;
 import com.txl.wanandroidtv.bean.NavItemData;
+import com.txl.wanandroidtv.ui.fragment.HomeNavFragment;
 import com.txl.wanandroidtv.ui.fragment.NavFragmentFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainNavPageAdapter extends FragmentStatePagerAdapter {
     private final String TAG = "MainNavPageAdapter";
-    private final HashMap<String,Fragment> fragmentList = new HashMap<>();
+    private final SparseArray<Fragment> fragmentList = new SparseArray<>();
     private final ArrayList<NavItemData> navs;
 
     public MainNavPageAdapter(@NonNull FragmentManager fm, int behavior, ArrayList<NavItemData> navs) {
@@ -28,10 +30,10 @@ public class MainNavPageAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         String category = navs.get(position).getCategory();
         AndroidLogWrapper.d(TAG,"position : "+position+"  category "+category );
-        Fragment fragment = fragmentList.get(category);
+        Fragment fragment = fragmentList.get(position);
         if(fragment == null){
             fragment = NavFragmentFactory.createFragmentByCategory(category);
-            fragmentList.put(category,fragment);
+            fragmentList.put(position,fragment);
         }
         return fragment;
     }
