@@ -11,6 +11,7 @@ import com.txl.wanandroidtv.R;
 import com.txl.wanandroidtv.bean.NavItemData;
 import com.txl.wanandroidtv.ui.viewholder.NavItemViewHolder;
 import com.txl.wanandroidtv.ui.viewholder.NvaItemViewHolderFactory;
+import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder;
 
 import java.util.Collection;
 
@@ -20,7 +21,7 @@ import java.util.Collection;
  * date：2020/1/1
  * description：
  */
-public class NavRecyclerAdapter extends BaseRecyclerAdapter<NavItemData, NavItemViewHolder>{
+public class NavRecyclerAdapter extends BaseRecyclerAdapter<NavItemData, BaseViewHolder>{
     private NvaItemViewHolderFactory nvaItemViewHolderFactory;
     public NavRecyclerAdapter(Context context) {
         super( context );
@@ -40,7 +41,7 @@ public class NavRecyclerAdapter extends BaseRecyclerAdapter<NavItemData, NavItem
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NavItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         holder.onBindViewHolder( position,getData().get( position ) );
     }
 }

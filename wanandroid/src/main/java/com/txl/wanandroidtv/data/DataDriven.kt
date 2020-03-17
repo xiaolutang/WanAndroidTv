@@ -1,7 +1,10 @@
 package com.txl.wanandroidtv.data
 import com.txl.netmodel.NetInvokerUtils
 import com.txl.txllog.AndroidLogWrapper
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.lang.Exception
+import java.lang.StringBuilder
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -24,12 +27,25 @@ object DataDriven {
     fun getHomeArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
         val url = "$BASE_URL/article/list/$page/json"
         var response: okhttp3.Response? = null
+        var originString = ""
         try {
             response = NetInvokerUtils.get(url)
             if(response?.code == 200){
                 response.body?.let {
                     val content = it.string()
-                    AndroidLogWrapper.d(TAG,"url is $url Api response:$content")
+//                    val inputStream = it.byteStream()
+//                    val inputReader = InputStreamReader(inputStream,"UTF-8");
+//                    //InputStreamReader inputReader = new InputStreamReader(ssq_is,"UTF-8");
+//                    val bufReader = BufferedReader(inputReader);
+//                    var line = "";
+//                    val stringBuilder = StringBuilder()
+//                    while (line != null){
+//                        stringBuilder.append(line)
+//                        line = bufReader.readLine()
+//
+//                    }
+//                    originString = String(stringBuilder)
+                    AndroidLogWrapper.d(TAG,"url is $url Api response:${content}")
                     return Response(true,content, null,"",content)
                 }
             }
@@ -42,7 +58,7 @@ object DataDriven {
         if(response == null){
             return Response(false,null, Error.newNetError("-1"),"response is null")
         }else{
-            return Response(false,"", null, response.message,"")
+            return Response(false,originString, null, response.message,originString)
         }
     }
 }

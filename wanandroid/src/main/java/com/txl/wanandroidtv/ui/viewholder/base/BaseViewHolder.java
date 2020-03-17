@@ -31,15 +31,6 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         currentPosition = position;
     }
 
-    /**
-     * 用于更新数据
-     * @param data 更新ui所需要的数据
-     * @param parentData 包含data数据的类
-     * */
-    public <T> void onBindViewHolder(int position,T data,Object parentData) {
-        currentPosition = position;
-    }
-
     public void resetCurrentPosition(int position ){
         currentPosition = position;
     }

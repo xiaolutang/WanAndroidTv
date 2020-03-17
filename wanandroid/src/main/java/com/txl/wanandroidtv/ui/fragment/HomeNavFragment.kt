@@ -14,8 +14,8 @@ class HomeNavFragment : BaseNavFragment() {
          return ViewModelProvider(this,HomeViewModelFactory()).get(HomeNavItemListViewModel::class.java)
     }
 
-    override fun getViewModelStore(): ViewModelStore {
-        return super.getViewModelStore()
+    override fun onDataReady(currentPage: Int, data: Any?) {
+        super.onDataReady(currentPage, data)
     }
 }
 

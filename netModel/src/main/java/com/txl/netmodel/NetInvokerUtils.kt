@@ -1,10 +1,7 @@
 package com.txl.netmodel
 
 import com.txl.netmodel.okhttp.okhttp.OkHttpUtils
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import java.lang.Exception
 import java.lang.StringBuilder
 import java.util.*

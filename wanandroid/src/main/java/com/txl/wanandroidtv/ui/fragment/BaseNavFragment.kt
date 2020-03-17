@@ -84,7 +84,7 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         }
     }
 
-    fun onDataReady(currentPage:Int,data :Any?){
+    protected open fun onDataReady(currentPage:Int,data :Any?){
         loadingViewUtils?.showLoadingView(false)
     }
 
