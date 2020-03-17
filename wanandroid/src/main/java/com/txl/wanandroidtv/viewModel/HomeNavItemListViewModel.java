@@ -2,7 +2,7 @@ package com.txl.wanandroidtv.viewModel;
 
 import com.google.gson.Gson;
 import com.txl.commonlibrary.utils.exector.AppExecutors;
-import com.txl.wanandroidtv.bean.com.besjon.pojo.JsonRootBean;
+import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData;
 import com.txl.wanandroidtv.data.DataDriven;
 import com.txl.wanandroidtv.data.Response;
 
@@ -35,7 +35,7 @@ public class HomeNavItemListViewModel extends AbsNavItemListVIewModel<Object> {
                 Response<String> response = DataDriven.INSTANCE.getHomeArticleList(getCurrentPage(),true);
                 if(response.getState()){
                     Gson g = new  Gson();
-                    JsonRootBean data = g.fromJson(response.getData(), JsonRootBean.class);
+                    HomeArticleListData data = g.fromJson(response.getData(), HomeArticleListData.class);
                     ResourceBoundary<Object>  resourceBoundary = new ResourceBoundary(STATE_LOADED,0,"success",data,getCurrentPage());
                     getData().postValue(resourceBoundary);
                 }else{

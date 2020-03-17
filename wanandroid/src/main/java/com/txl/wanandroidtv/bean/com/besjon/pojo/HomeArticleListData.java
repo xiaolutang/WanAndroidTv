@@ -9,7 +9,7 @@ package com.txl.wanandroidtv.bean.com.besjon.pojo;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class JsonRootBean {
+public class HomeArticleListData {
 
     private Data data;
     private int errorCode;

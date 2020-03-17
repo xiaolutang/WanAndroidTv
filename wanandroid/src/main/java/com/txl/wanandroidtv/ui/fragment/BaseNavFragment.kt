@@ -9,6 +9,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
 import com.txl.wanandroidtv.R
+import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
 import com.txl.wanandroidtv.ui.adpater.NavRecyclerAdapter
 import com.txl.wanandroidtv.viewModel.*
 import java.util.*
@@ -23,6 +24,8 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
     private var viewModel: AbsNavItemListVIewModel<*>? = null
     var smartRefreshLayout: SmartRefreshLayout? = null
     var recyclerView: LibTvRecyclerView? = null
+    var adapter:BaseRecyclerFactoryAdapter<*>? = null
+    private set
 
     override fun getLayoutRes(): Int {
         return R.layout.fragment_lib_nav_base
@@ -35,8 +38,12 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         smartRefreshLayout?.setOnLoadMoreListener(this)
         showLoading(0)
         recyclerView?.layoutManager = GridLayoutManager(requireContext(),4)
-        recyclerView?.adapter = NavRecyclerAdapter(requireContext())
+        //暂时不考虑阿里的VLayout 不需要那么复杂
+        adapter = createAdapter()
+        recyclerView?.adapter = adapter
     }
+
+    abstract fun createAdapter():BaseRecyclerFactoryAdapter<*>
 
     override fun initData() {
 
