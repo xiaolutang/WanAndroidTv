@@ -37,6 +37,7 @@ dependencies {
     implementation project(path: ':commonlibrary')
     implementation project(path: ':skin')
     implementation project(path: ':basic')
+
     //智能刷新框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
     implementation 'com.android.support:multidex:1.0.3'
