@@ -10,8 +10,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_20">
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/image_icon"
             android:layout_width="match_parent"
@@ -25,14 +24,15 @@
             android:textSize="@dimen/sp_28"
             android:text="Title"
             android:maxLines="2"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:padding="@dimen/dp_10"/>
         <TextView
             android:id="@+id/tv_publish_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
             android:maxLines="1"
             android:ellipsize="end"
+            android:padding="@dimen/dp_10"
             android:textSize="@dimen/sp_18"/>
     </LinearLayout>
 </com.txl.tvlib.widget.CardFrameLayout>

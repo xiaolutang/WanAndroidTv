@@ -21,10 +21,11 @@ class HomeGridDividerItemDecoration(private var decorationWidth: Int = 0): Recyc
         if (layoutManager is GridLayoutManager) {
             val spanCount = layoutManager.spanCount
             val count = adapter.itemCount
-            var left = decorationWidth
-            var right = decorationWidth
+            //grid会根据自身的宽度来自己分散摆放因此不需要左右的间距
+            var left = 0
+            var right = 0
             var top = decorationWidth
-            var bottom = decorationWidth
+            var bottom = 0
             if(position % spanCount == 0){//最左边
                 left = 0
             }
