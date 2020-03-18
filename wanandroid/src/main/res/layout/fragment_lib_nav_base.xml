@@ -4,8 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_lib_smart_refresh_layout"
-    android:clipChildren="false"
-    android:clipToPadding="false">
+    android:paddingStart="@dimen/dp_90"
+    android:paddingEnd="@dimen/dp_90"
+    android:paddingTop="@dimen/dp_50"
+    android:paddingBottom="@dimen/dp_50">
     <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
         android:id="@+id/fragment_lib_recycler"
         android:layout_width="match_parent"

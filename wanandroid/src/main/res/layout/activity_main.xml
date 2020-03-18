@@ -22,12 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main_view_pager"
-            android:paddingStart="@dimen/dp_90"
-            android:paddingEnd="@dimen/dp_90"
-            android:paddingTop="@dimen/dp_50"
-            android:paddingBottom="@dimen/dp_50"
-            android:visibility="visible"
-            android:clipChildren="false"
-            android:clipToPadding="false"/>
+            android:visibility="visible" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

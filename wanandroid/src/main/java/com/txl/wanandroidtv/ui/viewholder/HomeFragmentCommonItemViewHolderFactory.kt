@@ -39,8 +39,9 @@ class CommonItemViewHolder(itemView: View) : BaseViewHolder(itemView){
     private val cardFrameLayout = itemView as  CardFrameLayout
 
     init {
+        val with = cardFrameLayout.context.resources.getDimensionPixelSize(R.dimen.dp_5)
         cardFrameLayout.setBorderColor(ThemeUtils.getThemeColor(cardFrameLayout.context))
-        cardFrameLayout.setBorderWidth(cardFrameLayout.context.resources.getDimensionPixelSize(R.dimen.dp_5))
+        cardFrameLayout.setBorderWidth(with)
         cardFrameLayout.setHasSelectBorder(true)
         val  layoutParams = imageIcon.layoutParams
         val width = NavItemWidthUtils.getItemWidth(itemView.context, HOME_SPAN_COUNT,itemView.context.resources.getDimensionPixelSize(R.dimen.dp_50))
