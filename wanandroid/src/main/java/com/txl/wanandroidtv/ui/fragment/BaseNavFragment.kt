@@ -37,7 +37,6 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         smartRefreshLayout?.setEnableAutoLoadMore(true)//是否启用列表惯性滑动到底部时自动加载更多
         smartRefreshLayout?.setOnLoadMoreListener(this)
         showLoading(0)
-        recyclerView?.layoutManager = GridLayoutManager(requireContext(),4)
         //暂时不考虑阿里的VLayout 不需要那么复杂
         adapter = createAdapter()
         recyclerView?.adapter = adapter

@@ -3,9 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_lib_smart_refresh_layout">
+    android:id="@+id/fragment_lib_smart_refresh_layout"
+    android:clipChildren="false"
+    android:clipToPadding="false">
     <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
         android:id="@+id/fragment_lib_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"/>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

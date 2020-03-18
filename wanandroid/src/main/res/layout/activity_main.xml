@@ -9,19 +9,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginStart="@dimen/dp_90"
-        android:layout_marginEnd="@dimen/dp_90">
+        android:orientation="vertical">
         <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recycler_nav"
             android:layout_marginTop="@dimen/dp_30"
-            android:layout_marginBottom="@dimen/dp_30"/>
+            android:layout_marginBottom="@dimen/dp_30"
+            android:layout_marginStart="@dimen/dp_90"
+            android:layout_marginEnd="@dimen/dp_90"/>
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/main_view_pager"
-            android:visibility="visible"/>
+            android:paddingStart="@dimen/dp_90"
+            android:paddingEnd="@dimen/dp_90"
+            android:paddingTop="@dimen/dp_50"
+            android:paddingBottom="@dimen/dp_50"
+            android:visibility="visible"
+            android:clipChildren="false"
+            android:clipToPadding="false"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

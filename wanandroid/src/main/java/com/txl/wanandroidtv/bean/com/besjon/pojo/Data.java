@@ -13,7 +13,7 @@ import java.util.List;
 public class Data {
 
     private int curPage;
-    private List<Article> data;
+    private List<Article> datas;
     private int offset;
     private boolean over;
     private int pageCount;
@@ -27,10 +27,10 @@ public class Data {
      }
 
     public void setDatas(List<Article> data) {
-         this.data = data;
+         this.datas = data;
      }
      public List<Article> getDatas() {
-         return data;
+         return datas;
      }
 
     public void setOffset(int offset) {

@@ -25,6 +25,8 @@ abstract class BaseFragment : Fragment() {
             loadingViewUtils = applyLoadingView()
             val viewGroup = rootView as ViewGroup
             inflater.inflate(getLayoutRes(),viewGroup,true)
+            viewGroup.clipChildren = false
+            viewGroup.clipToPadding = false
             viewGroup.addView(loadingViewUtils?.loadingRootView)
         }else{
             rootView = inflater.inflate(getLayoutRes(),container,false)

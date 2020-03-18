@@ -1,6 +1,7 @@
 package com.txl.wanandroidtv.ui.adpater;
 
 import android.util.SparseArray;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,5 +42,11 @@ public class MainNavPageAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return navs.size();
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.destroyItem(container, position, object);
+        fragmentList.remove(position);
     }
 }

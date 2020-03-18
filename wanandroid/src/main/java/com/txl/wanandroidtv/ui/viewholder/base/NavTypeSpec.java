@@ -58,8 +58,8 @@ public class NavTypeSpec {
 
 
 
-    //定义普通元素
-    public static final int ELEMENT_COMMON = NavTypeSpec.makeMeasureSpec(0,MODE_COMMON_ELEMENT);
+    //首页普通元素
+    public static final int ELEMENT_HOME_COMMON = NavTypeSpec.makeMeasureSpec(0,MODE_COMMON_ELEMENT);
     /**
      * 501中的元素
      * */
