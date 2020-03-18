@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
@@ -40,6 +41,18 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         //暂时不考虑阿里的VLayout 不需要那么复杂
         adapter = createAdapter()
         recyclerView?.adapter = adapter
+        recyclerView?.focusSearchFailedListener = object: LibTvRecyclerView.OnFocusSearchFailedListener {
+            override fun onFocusSearchFailed(
+                    currentFocusView: View?,
+                    viewPosition: Int,
+                    direct: Int
+            ) {
+                //常规列表有4个元素一行，所以减4
+                if((direct == View.FOCUS_DOWN || direct == View.FOCUS_RIGHT) && adapter != null && viewPosition+1 >= adapter!!.itemCount-4 && viewPosition != RecyclerView.NO_POSITION){
+                    viewModel?.nextPage()
+                }
+            }
+        }
     }
 
     abstract fun createAdapter():BaseRecyclerFactoryAdapter<*>
