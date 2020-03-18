@@ -61,13 +61,19 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
      * 按页翻滚
      */
     public static final int SCROLL_BY_PAGE = 2;
+
+    /**
+     * 每秒 1200 px
+     * */
+    private final float SROLL_SPEED = 1200f / 1000;
+
     /**
      * 滚动方式
      */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef ({SCROLL_ALIGN,SCROLL_FOLLOW,SCROLL_BY_PAGE})
     public  @interface ScrollMode{}
-    @ScrollMode int mScrollMode = SCROLL_ALIGN;
+    @ScrollMode int mScrollMode = SCROLL_FOLLOW;
     /**
      * 当前被选中的位置
      */
@@ -488,6 +494,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                         if (DEBUG) {
                             Log.d(TAG, "scroll vertical offset is :" + offset);
                         }
+                        int time = (int)(offset / SROLL_SPEED);
                         smoothScrollBy(0, (int) offset,new LinearInterpolator(), 20);
                     } else {
                         float baseLine = getWidth() * mScrollAlignOffset;
@@ -496,6 +503,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                         if (DEBUG) {
                             Log.d(TAG, "scroll HORIZONTAL offset is :" + offset);
                         }
+                        int time = (int)(offset / SROLL_SPEED);
                         smoothScrollBy((int) offset, 0,new LinearInterpolator(),20);
                     }
                     handle = true;
