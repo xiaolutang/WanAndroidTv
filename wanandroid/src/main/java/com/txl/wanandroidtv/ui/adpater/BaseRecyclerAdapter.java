@@ -80,11 +80,12 @@ public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> 
     }
     public void appendData(Collection<T> data)
     {
+        int originSize = data.size();
         for(T item:data)
         {
             this.data.addLast(item);
         }
-        notifyDataSetChanged();
+        notifyItemRangeInserted(originSize,data.size());
     }
 
     @Override
