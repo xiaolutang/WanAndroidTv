@@ -10,9 +10,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/basic" />
             <option value="$PROJECT_DIR$/commonlibrary" />
             <option value="$PROJECT_DIR$/netModel" />
+            <option value="$PROJECT_DIR$/router" />
             <option value="$PROJECT_DIR$/screenadaptation" />
             <option value="$PROJECT_DIR$/skin" />
             <option value="$PROJECT_DIR$/tvlib" />
