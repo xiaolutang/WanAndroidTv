@@ -16,5 +16,6 @@
         android:textSize="@dimen/sp_28"
         android:text="@string/mine"
         android:button="@null"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:clickable="false"/>
 </com.txl.tvlib.widget.CardFrameLayout>
