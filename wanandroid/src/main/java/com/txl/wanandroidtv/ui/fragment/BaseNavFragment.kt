@@ -49,7 +49,8 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
             ) {
                 //常规列表有4个元素一行，所以减4
                 if((direct == View.FOCUS_DOWN || direct == View.FOCUS_RIGHT) && adapter != null && viewPosition+1 >= adapter!!.itemCount-4 && viewPosition != RecyclerView.NO_POSITION){
-                    viewModel?.nextPage()
+                    smartRefreshLayout?.autoLoadMore()
+//                    viewModel?.nextPage()
                 }
             }
         }
@@ -105,6 +106,7 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
 
     protected open fun onDataReady(currentPage:Int,data :Any?){
         loadingViewUtils?.showLoadingView(false)
+        smartRefreshLayout?.finishLoadMore()
     }
 
     fun onLoadDataError(currentPage:Int){}
