@@ -37,24 +37,9 @@ public class MainActivity extends ScreenAdaptionBaseActivity {
     private void initView(){
         navRecyclerView = findViewById( R.id.recycler_nav );
         navRecyclerView.setLayoutManager( new LinearLayoutManager( this,LinearLayoutManager.HORIZONTAL,false ) );
+        navRecyclerView.setOpenDynamicFocus(true);
         viewPager = findViewById(R.id.main_view_pager);
         viewPager.setOffscreenPageLimit(3);
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
 
     }
 
@@ -66,6 +51,7 @@ public class MainActivity extends ScreenAdaptionBaseActivity {
         ArrayList<NavItemData> navs = gson.fromJson(json, collectionType);
         NavRecyclerAdapter adapter = new NavRecyclerAdapter(navs,this);
         navRecyclerView.setAdapter( adapter );
+        navRecyclerView.bindViewPager(viewPager);
         viewpagerAdapter = new MainNavPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, navs);
 
         viewPager.setAdapter(viewpagerAdapter);

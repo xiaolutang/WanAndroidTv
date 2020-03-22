@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.txl.commonlibrary.utils.ReflectUtils;
 import com.txl.tvlib.focushandler.IFocusSearchHelper;
@@ -26,6 +27,7 @@ import com.txl.tvlib.widget.dynamic.focus.utils.DynamicFocusHelper;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -65,7 +67,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
     /**
      * 每秒 1200 px
      * */
-    private final float SROLL_SPEED = 1200f / 1000;
+    private final float SCROLL_SPEED = 1200f / 1000;
 
     /**
      * 滚动方式
@@ -114,6 +116,9 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
     private DynamicFocusHelper mDynamicFocusUtils;
 
     private View mNextFocusView;
+
+    private ViewPager mViewPager;
+    private ViewPager.OnPageChangeListener mPageChangeListener;
 
     public LibTvRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -179,6 +184,14 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
             super.requestLayout();
         }
 
+    }
+
+    /**
+     * 打开焦点记忆功能
+     * @param open true 打开  false 关闭
+     * */
+    public void setOpenDynamicFocus(boolean open){
+        mDynamicFocusUtils.setOpenDynamic(open);
     }
 
     public void setFocusLeftSearch(boolean focusLeftSearch) {
@@ -438,6 +451,12 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         scrollByMode(child, focused);
         isFocusScroll = false;
         invalidate();
+        if(mViewPager !=  null){
+            int position = getAdapterPositionByView(this,child);
+            if(position != RecyclerView.NO_POSITION){
+                mViewPager.setCurrentItem(position);
+            }
+        }
     }
 
     private boolean isFocusViewAllVisible() {
@@ -494,7 +513,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                         if (DEBUG) {
                             Log.d(TAG, "scroll vertical offset is :" + offset);
                         }
-                        int time = (int)(offset / SROLL_SPEED);
+                        int time = (int)(offset / SCROLL_SPEED);
                         smoothScrollBy(0, (int) offset,new LinearInterpolator(), 20);
                     } else {
                         float baseLine = getWidth() * mScrollAlignOffset;
@@ -503,7 +522,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                         if (DEBUG) {
                             Log.d(TAG, "scroll HORIZONTAL offset is :" + offset);
                         }
-                        int time = (int)(offset / SROLL_SPEED);
+                        int time = (int)(offset / SCROLL_SPEED);
                         smoothScrollBy((int) offset, 0,new LinearInterpolator(),20);
                     }
                     handle = true;
@@ -696,6 +715,8 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
             }
             if(isChecked && checkable instanceof View){
                 mCheckedPosition = getAdapterPositionByView(LibTvRecyclerView.this,(View) checkable);
+                View focused = (View) checkable;
+                mDynamicFocusUtils.requestChildFocus(focused,focused);
             }
             mProtectFromCheckedChange = false;
 
@@ -751,5 +772,53 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
          * @param direct 焦点搜索方向
          * */
         void onFocusSearchFailed(View currentFocusView,int viewPosition,int direct);
+    }
+
+    public void setCheckedPosition(int position){
+        LayoutManager layoutManager = getLayoutManager();
+        if(layoutManager == null){
+            throw new RuntimeException(" please set layout manager before call setCheckedPosition ");
+        }
+        smoothScrollToPosition(position);
+        View v = layoutManager.findViewByPosition(position);
+        if(v instanceof Checkable){
+            ((Checkable) v).setChecked(true);
+        }
+
+    }
+
+    public void bindViewPager(ViewPager viewPager){
+        if(mViewPager != null){
+            mViewPager.removeOnPageChangeListener(mPageChangeListener);
+        }
+        mViewPager = viewPager;
+        mPageChangeListener = new ViewPagerChangerListener(this);
+        mViewPager.addOnPageChangeListener(mPageChangeListener);
+    }
+
+    private static class ViewPagerChangerListener implements ViewPager.OnPageChangeListener{
+        private WeakReference<LibTvRecyclerView> weakReference;
+
+        public ViewPagerChangerListener(LibTvRecyclerView recyclerView) {
+            this.weakReference = new WeakReference<>(recyclerView);
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            LibTvRecyclerView  recyclerView = weakReference.get();
+            if(recyclerView != null){
+                recyclerView.setCheckedPosition(position);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 }
