@@ -2,4 +2,5 @@
 <resources>
     <dimen name="web_dp_30">30dp</dimen>
     <dimen name="web_sp_28">28sp</dimen>
+    <dimen name="web_dp_90">90dp</dimen>
 </resources>
