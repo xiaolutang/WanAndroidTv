@@ -30,5 +30,6 @@ ext {
     anko_version = '0.10.8'
 
     hdodenhof_circleimageview="2.2.0"//圆形图片
+    app_joint = "1.7"
 
 }

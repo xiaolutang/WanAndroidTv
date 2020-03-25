@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'app-joint'
 
 android {
     compileSdkVersion 28
@@ -37,6 +38,7 @@ dependencies {
     implementation project(path: ':commonlibrary')
     implementation project(path: ':skin')
     implementation project(path: ':router')
+    implementation project(path: ':web')
 
     //智能刷新框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
@@ -45,6 +47,7 @@ dependencies {
     implementation ('com.alibaba.android:vlayout:1.2.8@aar') {
         transitive = true
     }
+    implementation "io.github.prototypez:app-joint-core:$app_joint"
 }
 repositories {
     mavenCentral()

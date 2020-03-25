@@ -14,18 +14,7 @@ import java.util.List;
 /**
  */
 
-public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
-{
-    public interface ItemClickListener
-    {
-        void onItemClick(int index, boolean isFromAdaptor, BaseRecyclerAdapter adapter);
-    }
-
-    public void setItemClickListener(ItemClickListener listener){
-        this.itemClickListener = listener;
-    }
-    protected ItemClickListener itemClickListener;
-
+public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected CircularArray<T> data=new CircularArray<>();
     protected WeakReference<Context> contextRef;
     public BaseRecyclerAdapter(Context context)

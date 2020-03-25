@@ -2,8 +2,10 @@ package com.txl.wanandroidtv;
 
 import androidx.multidex.MultiDexApplication;
 
+import io.github.prototypez.appjoint.core.AppSpec;
 import skin.support.SkinCompatManager;
 
+@AppSpec
 public class WanAndroidTvApplication extends MultiDexApplication {
 
     @Override

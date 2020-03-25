@@ -514,7 +514,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                             Log.d(TAG, "scroll vertical offset is :" + offset);
                         }
                         int time = (int)(offset / SCROLL_SPEED);
-                        smoothScrollBy(0, (int) offset,new LinearInterpolator(), 20);
+                        smoothScrollBy(0, (int) offset,new LinearInterpolator(), time);
                     } else {
                         float baseLine = getWidth() * mScrollAlignOffset;
                         float temp = mTempRect.left + mTempRect.width() * mScrollAlignOffset;
@@ -523,7 +523,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                             Log.d(TAG, "scroll HORIZONTAL offset is :" + offset);
                         }
                         int time = (int)(offset / SCROLL_SPEED);
-                        smoothScrollBy((int) offset, 0,new LinearInterpolator(),20);
+                        smoothScrollBy((int) offset, 0,new LinearInterpolator(),time);
                     }
                     handle = true;
                 } else {

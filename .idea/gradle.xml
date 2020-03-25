@@ -17,7 +17,9 @@
             <option value="$PROJECT_DIR$/skin" />
             <option value="$PROJECT_DIR$/tvlib" />
             <option value="$PROJECT_DIR$/txllog" />
+            <option value="$PROJECT_DIR$/ui_basic" />
             <option value="$PROJECT_DIR$/wanandroid" />
+            <option value="$PROJECT_DIR$/web" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
