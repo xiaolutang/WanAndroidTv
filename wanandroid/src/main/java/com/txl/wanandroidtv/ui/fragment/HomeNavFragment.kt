@@ -27,7 +27,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         return mAdapter!!
     }
 
-    override fun createViewModel(): AbsNavItemListVIewModel<*>? {
+    override fun createViewModel(): AbsNavItemListVIewModel? {
         return ViewModelProvider(this, HomeViewModelFactory()).get(HomeNavItemListViewModel::class.java)
     }
 

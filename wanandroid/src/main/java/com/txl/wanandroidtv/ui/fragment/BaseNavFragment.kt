@@ -22,7 +22,7 @@ import java.util.*
  * description：抽象的导航Fragment
  */
 abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
-    private var viewModel: AbsNavItemListVIewModel<*>? = null
+    private var viewModel: AbsNavItemListVIewModel? = null
     var smartRefreshLayout: SmartRefreshLayout? = null
     var recyclerView: LibTvRecyclerView? = null
     var adapter:BaseRecyclerFactoryAdapter<*>? = null
@@ -91,7 +91,7 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         })
     }
 
-    abstract fun createViewModel(): AbsNavItemListVIewModel<*>?
+    abstract fun createViewModel(): AbsNavItemListVIewModel?
 
     /**
      * @param currentPage 当前第几页数据在加载

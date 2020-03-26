@@ -26,7 +26,7 @@ class SquareNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemCl
         return mAdapter!!
     }
 
-    override fun createViewModel(): AbsNavItemListVIewModel<*>? {
+    override fun createViewModel(): AbsNavItemListVIewModel? {
         return ViewModelProvider(this, SquareViewModelFactory()).get(SquareNavItemListViewModel::class.java)
     }
 
