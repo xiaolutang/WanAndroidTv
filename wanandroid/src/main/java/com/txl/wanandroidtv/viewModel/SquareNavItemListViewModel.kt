@@ -1,5 +1,6 @@
 package com.txl.wanandroidtv.viewModel
 
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.txl.commonlibrary.utils.exector.AppExecutors
 import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
@@ -11,7 +12,7 @@ import com.txl.wanandroidtv.data.DataDriven.getSquareArticleList
  * date：2020/3/26
  * description：
  */
-class SquareNavItemListViewModel: AbsNavItemListVIewModel<Any>() {
+class SquareNavItemListViewModel: AbsNavItemListVIewModel() {
     @Volatile
     private var resetData = false
     @Volatile
@@ -30,6 +31,10 @@ class SquareNavItemListViewModel: AbsNavItemListVIewModel<Any>() {
         loadData = true
         currentPage += 1
         getSquareNavItemListData()
+    }
+
+    override fun getViewModelData(): MutableLiveData<ResourceBoundary<Any>> {
+        return data
     }
 
     private fun getSquareNavItemListData() {

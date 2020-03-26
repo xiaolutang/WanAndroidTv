@@ -1,14 +1,18 @@
 package com.txl.wanandroidtv.viewModel;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.gson.Gson;
 import com.txl.commonlibrary.utils.exector.AppExecutors;
 import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData;
 import com.txl.wanandroidtv.data.DataDriven;
 import com.txl.wanandroidtv.data.Response;
 
+import org.jetbrains.annotations.NotNull;
+
 import static com.txl.wanandroidtv.viewModel.ResourceBoundaryKt.STATE_LOADED;
 
-public class HomeNavItemListViewModel extends AbsNavItemListVIewModel<Object> {
+public class HomeNavItemListViewModel extends AbsNavItemListVIewModel {
     private volatile boolean resetData = false;
     private volatile boolean loadData = false;
     @Override
@@ -50,5 +54,11 @@ public class HomeNavItemListViewModel extends AbsNavItemListVIewModel<Object> {
                 }
             }
         });
+    }
+
+    @NotNull
+    @Override
+    public MutableLiveData<ResourceBoundary<Object>> getViewModelData() {
+        return getData();
     }
 }
