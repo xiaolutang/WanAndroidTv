@@ -1,4 +1,5 @@
 package com.txl.wanandroidtv.data
+import android.text.TextUtils
 import com.txl.netmodel.NetInvokerUtils
 import com.txl.txllog.AndroidLogWrapper
 import java.io.BufferedReader
@@ -26,6 +27,15 @@ object DataDriven {
      * */
     fun getHomeArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
         val url = "$BASE_URL/article/list/$page/json"
+        return getData(url, useCache)
+    }
+
+    fun getSquareArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
+        val url = "$BASE_URL/user_article/list/$page/json"
+        return getData(url, useCache)
+    }
+
+    fun getData(url:String,useCache: Boolean):Response<String>{
         var response: okhttp3.Response? = null
         var originString = ""
         try {
@@ -33,32 +43,21 @@ object DataDriven {
             if(response?.code == 200){
                 response.body?.let {
                     val content = it.string()
-//                    val inputStream = it.byteStream()
-//                    val inputReader = InputStreamReader(inputStream,"UTF-8");
-//                    //InputStreamReader inputReader = new InputStreamReader(ssq_is,"UTF-8");
-//                    val bufReader = BufferedReader(inputReader);
-//                    var line = "";
-//                    val stringBuilder = StringBuilder()
-//                    while (line != null){
-//                        stringBuilder.append(line)
-//                        line = bufReader.readLine()
-//
-//                    }
-//                    originString = String(stringBuilder)
+                    originString = content
                     AndroidLogWrapper.d(TAG,"url is $url Api response:${content}")
-                    return Response(true,content, null,"",content)
                 }
             }
         }catch (e:Exception){
             e.printStackTrace()
         }
         if(useCache){
+            //保存接口数据
             //缓存中读取数据
         }
-        if(response == null){
-            return Response(false,null, Error.newNetError("-1"),"response is null")
+        if(!TextUtils.isEmpty(originString)){
+            return Response(true,originString, null, "",originString)
         }else{
-            return Response(false,originString, null, response.message,originString)
+            return Response(false,null, Error.newNetError("-1"),"response is null")
         }
     }
 }
