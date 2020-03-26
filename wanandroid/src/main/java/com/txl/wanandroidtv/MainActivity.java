@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.mmkv.MMKV;
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView;
-import com.txl.screenadaptation.ScreenAdaptionBaseActivity;
+import com.txl.ui_basic.BaseActivity;
 import com.txl.wanandroidtv.bean.NavItemData;
 import com.txl.wanandroidtv.ui.adpater.MainNavPageAdapter;
 import com.txl.wanandroidtv.ui.adpater.NavRecyclerAdapter;
@@ -19,7 +19,7 @@ import com.txl.wanandroidtv.utils.Utils;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class MainActivity extends ScreenAdaptionBaseActivity {
+public class MainActivity extends BaseActivity {
 
     private LibTvRecyclerView navRecyclerView;
     private ViewPager viewPager;

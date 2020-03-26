@@ -36,4 +36,5 @@ dependencies {
     api project(path: ':txllog')
     api project(path: ':netModel')
     api project(path: ':ui_basic')
+    api 'me.jessyan:autosize:1.2.1'
 }

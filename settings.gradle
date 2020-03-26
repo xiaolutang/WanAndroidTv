@@ -1,4 +1,4 @@
-include ':wanandroid', ':screenadaptation', ':tvlib', ':commonlibrary', ':skin', ':netModel', ':txllog'
+include ':wanandroid', ':tvlib', ':commonlibrary', ':skin', ':netModel', ':txllog'
 rootProject.name='WanAndroidTv'
 include ':router'
 include ':web'
