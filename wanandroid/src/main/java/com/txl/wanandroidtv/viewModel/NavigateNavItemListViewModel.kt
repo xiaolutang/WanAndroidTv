@@ -1,11 +1,10 @@
 package com.txl.wanandroidtv.viewModel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.txl.commonlibrary.utils.exector.AppExecutors
-import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
+import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateArticleListData
 import com.txl.wanandroidtv.data.DataDriven
 
 /**
@@ -20,7 +19,7 @@ class NavigateNavItemListViewModel: AbsNavItemListVIewModel() {
             val response = DataDriven.getNavigateArticleList()
             if (response.state) {
                 val g = Gson()
-                val result = g.fromJson(response.data, HomeArticleListData::class.java)
+                val result = g.fromJson(response.data, NavigateArticleListData::class.java)
                 val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "success", result, currentPage)
                 data.postValue(resourceBoundary)
             } else {

@@ -22,8 +22,8 @@ object ViewModelContainer {
     /**
      * 获取Model class,当没有category匹配的时候默认返回  NavItemListViewModel::class.java
      * */
-    fun  getViewModelClass(category:String):Class<out ViewModel>?{
-        return viewModels[category]
+    fun  getViewModelClass(category:String):Class<out ViewModel>{
+        return viewModels[category] ?: throw RuntimeException("viewModel class is not register in ")
     }
 
     fun putViewModelClass(category: String, modelClass :Class<out ViewModel>){

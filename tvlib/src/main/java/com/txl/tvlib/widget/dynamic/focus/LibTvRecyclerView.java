@@ -86,6 +86,11 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
     private OnFocusSearchFailedListener mFocusSearchFailedListener;
 
     /**
+     * 监听子View获取焦点
+     * */
+    private OnChildFocusListener mChildFocusListener;
+
+    /**
      * 当前焦点View是否全部可见
      */
     private boolean focusViewAllVisible;
@@ -438,6 +443,10 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         return super.dispatchKeyEvent(event);
     }
 
+    public void setChildFocusListener(OnChildFocusListener childFocusListener) {
+        this.mChildFocusListener = childFocusListener;
+    }
+
     @Override
     public void requestChildFocus(View child, View focused) {
         mDynamicFocusUtils.requestChildFocus(child, focused);
@@ -451,11 +460,14 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         scrollByMode(child, focused);
         isFocusScroll = false;
         invalidate();
+        int position = getAdapterPositionByView(this,child);
         if(mViewPager !=  null){
-            int position = getAdapterPositionByView(this,child);
             if(position != RecyclerView.NO_POSITION){
                 mViewPager.setCurrentItem(position);
             }
+        }
+        if(mChildFocusListener != null){
+            mChildFocusListener.onChildFocus(position,child);
         }
     }
 
@@ -820,5 +832,13 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         public void onPageScrollStateChanged(int state) {
 
         }
+    }
+
+    public interface OnChildFocusListener{
+        /**
+         * @param position 当前View在Adapter中的位置
+         * @param child 当前获取焦点的View
+         * */
+        void onChildFocus(int position,View child);
     }
 }

@@ -47,6 +47,7 @@ dependencies {
         transitive = true
     }
     implementation "io.github.prototypez:app-joint-core:$app_joint"
+    implementation 'com.google.android:flexbox:1.1.0'
 }
 repositories {
     mavenCentral()

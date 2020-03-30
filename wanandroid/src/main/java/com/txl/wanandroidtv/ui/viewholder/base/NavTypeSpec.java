@@ -61,9 +61,9 @@ public class NavTypeSpec {
     //首页普通元素
     public static final int ELEMENT_HOME_COMMON = NavTypeSpec.makeMeasureSpec(0,MODE_COMMON_ELEMENT);
     /**
-     * 501中的元素
+     * wanAndroid 导航流式布局
      * */
-    public static final int ELEMENT_501 = NavTypeSpec.makeMeasureSpec(1,MODE_COMMON_ELEMENT);
+    public static final int ELEMENT_NAVIGATE_FLEX_BOX = NavTypeSpec.makeMeasureSpec(1,MODE_COMMON_ELEMENT);
     /**
      * 502中的元素
      * */

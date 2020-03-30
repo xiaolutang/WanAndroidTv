@@ -13,6 +13,7 @@ import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
 import com.txl.wanandroidtv.viewModel.*
 import java.util.*
+import kotlin.Deprecated as Deprecated1
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -31,6 +32,9 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         return R.layout.fragment_lib_nav_base
     }
 
+    /**
+     * 这个不应该出现在这里，基础导航的公共类应该与ui无关
+     * */
     override fun initView() {
         smartRefreshLayout = rootView?.findViewById(R.id.fragment_lib_smart_refresh_layout)
         recyclerView = rootView?.findViewById(R.id.fragment_lib_recycler)
@@ -55,6 +59,10 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
         }
     }
 
+    /**
+     * 这个方法通过其他的方式移除掉
+     * */
+    @Deprecated()
     abstract fun createAdapter():BaseRecyclerFactoryAdapter<*>
 
     override fun initData() {
