@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
 import com.txl.wanandroidtv.R
+import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateArticleListData
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
 import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
+import com.txl.wanandroidtv.ui.viewholder.NavigateFlexBoxItemViewHolderFactory
 import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
 import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
 import com.txl.wanandroidtv.viewModel.AbsNavItemListVIewModel
@@ -42,7 +44,8 @@ class NavigateNavFragment: BaseNavFragment() {
     var refreshLayout:SmartRefreshLayout?  = null
     var contentNavRecyclerView:LibTvRecyclerView?  = null
 
-    var leftNavigateAdapter:BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
+    private var leftNavigateAdapter:BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
+    private var rightContentNavigateAdapter:BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
 
     override fun getLayoutRes(): Int {
         return R.layout.fragment_navigate_nav
@@ -56,7 +59,11 @@ class NavigateNavFragment: BaseNavFragment() {
 
         leftNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         leftNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(),LeftItemViewHolderFactory())
+        leftNavRecyclerView?.adapter = leftNavigateAdapter
 
+        contentNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+        rightContentNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(),NavigateFlexBoxItemViewHolderFactory())
+        contentNavRecyclerView?.adapter = rightContentNavigateAdapter
     }
 
     override fun createAdapter(): BaseRecyclerFactoryAdapter<*> {
@@ -73,7 +80,10 @@ class NavigateNavFragment: BaseNavFragment() {
 
     override fun onDataReady(currentPage: Int, data: Any?) {
         super.onDataReady(currentPage, data)
-
+        if(data is NavigateArticleListData){
+            leftNavigateAdapter?.appendData(data.data)
+            rightContentNavigateAdapter?.appendData(data.data)
+        }
     }
 
     override fun createViewModel(): AbsNavItemListVIewModel? {
@@ -97,7 +107,7 @@ class LeftItemViewHolderFactory:IViewHolderFactory<BaseViewHolder>{
 }
 
 class LeftItemViewHolder(view: View): BaseViewHolder(view) {
-    var radioButton:RadioButton = view.findViewById(R.id.tv_navigate_left_nav)
+    private var radioButton:RadioButton = view.findViewById(R.id.tv_navigate_left_nav)
 
     override fun <T : Any?> onBindViewHolder(position: Int, data: T) {
         super.onBindViewHolder(position, data)

@@ -1,10 +1,13 @@
 package com.txl.wanandroidtv.ui.viewholder
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.google.android.flexbox.FlexboxLayout
 import com.txl.wanandroidtv.R
+import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
 import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
 import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
@@ -28,14 +31,23 @@ class NavigateFlexBoxItemViewHolderFactory:IViewHolderFactory<BaseViewHolder> {
 
 
 class NavigateFlexBoxItemViewHolder(itemView:View):BaseViewHolder(itemView){
-    var flexBoxLayout:FlexboxLayout = itemView.findViewById(R.id.flex_box)
+    private var flexBoxLayout:FlexboxLayout = itemView.findViewById(R.id.flex_box)
 
     override fun <T : Any?> onBindViewHolder(position: Int, data: T) {
         super.onBindViewHolder(position, data)
+        flexBoxLayout.removeAllViews()
         if(data is NavigateCategoryData){
-
+            for (article in data.articles){
+                flexBoxLayout.addView(getChildView(article,flexBoxLayout.context))
+            }
         }
     }
 
+    private fun getChildView(article: Article,context:Context):View{
+        val child = LayoutInflater.from(context).inflate(R.layout.item_navigate_right_flex_box_content_child_item,null,false)
+        val textView = child.findViewById<TextView>(R.id.tv_content_item_name)
+        textView.text = article.title
+        return child
+    }
 
 }
