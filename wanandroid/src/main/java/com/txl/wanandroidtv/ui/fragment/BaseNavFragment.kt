@@ -3,15 +3,14 @@ package com.txl.wanandroidtv.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+import com.txl.ui_basic.fragment.BaseFragment
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
-import com.txl.wanandroidtv.ui.adpater.NavRecyclerAdapter
 import com.txl.wanandroidtv.viewModel.*
 import java.util.*
 

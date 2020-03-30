@@ -33,11 +33,14 @@ object ViewModelContainer {
         viewModels[category] = modelClass
     }
 
-    fun getViewModelFactoryClass(category: String): ViewModelProvider.Factory?{
+    /**
+     * 有没有必要在没获取到对应的 对象的情况下自己初始化？
+     * */
+    fun getViewModelFactory(category: String): ViewModelProvider.Factory?{
         return viewModelFactories[category]
     }
 
-    fun putViewModelFactoryClass(category: String,factory : ViewModelProvider.Factory){
+    fun putViewModelFactory(category: String, factory : ViewModelProvider.Factory){
         if(viewModelFactories.containsKey(category)){
             throw IllegalArgumentException("category  has been put in viewModelFactorys please check category is $category")
         }

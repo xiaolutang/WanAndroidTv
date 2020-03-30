@@ -10,8 +10,9 @@ import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
 import com.txl.wanandroidtv.ui.utils.PageJumpUtils.openPage
 import com.txl.wanandroidtv.ui.viewholder.HomeFragmentCommonItemViewHolderFactory
 import com.txl.wanandroidtv.ui.widget.HomeGridDividerItemDecoration
-import com.txl.wanandroidtv.viewModel.AbsNavItemListVIewModel
-import com.txl.wanandroidtv.viewModel.HomeNavItemListViewModel
+import com.txl.wanandroidtv.viewModel.*
+import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
+import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
 
 /**
  * wan android 首页导航
@@ -19,6 +20,15 @@ import com.txl.wanandroidtv.viewModel.HomeNavItemListViewModel
 const val HOME_SPAN_COUNT = 4
 class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClickListener {
 
+    companion object{
+        init {
+            //初始化factory
+            putViewModelFactory(CATEGORY_HOME, HomeViewModelFactory())
+
+            //初始化class
+            putViewModelClass(CATEGORY_HOME, HomeNavItemListViewModel::class.java)
+        }
+    }
 
     private var mAdapter:BaseRecyclerFactoryAdapter<Article>?=null
     override fun createAdapter(): BaseRecyclerFactoryAdapter<*> {

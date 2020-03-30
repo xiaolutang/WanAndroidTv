@@ -1,6 +1,5 @@
 package com.txl.wanandroidtv.ui.fragment
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.txl.wanandroidtv.R
@@ -10,13 +9,24 @@ import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
 import com.txl.wanandroidtv.ui.utils.PageJumpUtils.openPage
 import com.txl.wanandroidtv.ui.viewholder.HomeFragmentCommonItemViewHolderFactory
 import com.txl.wanandroidtv.ui.widget.HomeGridDividerItemDecoration
-import com.txl.wanandroidtv.viewModel.AbsNavItemListVIewModel
-import com.txl.wanandroidtv.viewModel.SquareNavItemListViewModel
+import com.txl.wanandroidtv.viewModel.*
+import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
+import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
 
 /**
  * wan android 首页导航
  * */
 class SquareNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClickListener {
+
+    companion object{
+        init {
+            //初始化factory
+            putViewModelFactory(CATEGORY_SQUARE, SquareViewModelFactory())
+
+            //初始化class
+            putViewModelClass(CATEGORY_SQUARE, SquareNavItemListViewModel::class.java)
+        }
+    }
 
 
     private var mAdapter:BaseRecyclerFactoryAdapter<Article>?=null
@@ -45,11 +55,5 @@ class SquareNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemCl
 
     override fun onItemClick(position: Int, data: Any?) {
         openPage(requireContext(), data)
-    }
-}
-
-class SquareViewModelFactory : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SquareNavItemListViewModel() as T
     }
 }

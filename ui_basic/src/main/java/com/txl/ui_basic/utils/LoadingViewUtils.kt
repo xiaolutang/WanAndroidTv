@@ -1,4 +1,4 @@
-package com.txl.wanandroidtv.ui.utils
+package com.txl.ui_basic.utils
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.txl.wanandroidtv.R
+import com.txl.ui_basic.R
 
 /**
  * 封装统一的页面加载效果

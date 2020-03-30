@@ -56,9 +56,9 @@ public class HomeNavItemListViewModel extends AbsNavItemListVIewModel {
         });
     }
 
-    @NotNull
+
     @Override
-    public MutableLiveData<ResourceBoundary<Object>> getViewModelData() {
-        return getData();
+    protected void getPageData() {
+        getHomeNavItemListData();
     }
 }

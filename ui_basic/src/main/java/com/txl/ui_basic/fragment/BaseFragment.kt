@@ -1,12 +1,13 @@
-package com.txl.wanandroidtv.ui.fragment
+package com.txl.ui_basic.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.ui.utils.LoadingViewUtils
+import com.txl.ui_basic.R
+import com.txl.ui_basic.utils.LoadingViewUtils
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -42,6 +43,10 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun applyLoadingView():LoadingViewUtils{
         return LoadingViewUtils(requireContext())
+    }
+
+    protected fun <T:View> findViewById(@IdRes id:Int):T?{
+        return rootView?.findViewById<T>(id)
     }
 
     /***

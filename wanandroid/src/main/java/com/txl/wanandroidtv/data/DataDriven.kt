@@ -35,6 +35,14 @@ object DataDriven {
         return getData(url, useCache)
     }
 
+    /**
+     * 获取导航数据
+     * */
+    fun getNavigateArticleList():Response<String>{
+        val url = "$BASE_URL/navi/json"
+        return getData(url,true)
+    }
+
     fun getData(url:String,useCache: Boolean):Response<String>{
         var response: okhttp3.Response? = null
         var originString = ""

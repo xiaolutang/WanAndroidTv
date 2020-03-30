@@ -6,26 +6,21 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.txl.commonlibrary.utils.exector.AppExecutors
 import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
-import com.txl.wanandroidtv.data.DataDriven.getSquareArticleList
+import com.txl.wanandroidtv.data.DataDriven
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.
  * author：txl
- * date：2020/3/26
+ * date：2020/3/27
  * description：
  */
-class SquareNavItemListViewModel: AbsNavItemListVIewModel() {
-
+class NavigateNavItemListViewModel: AbsNavItemListVIewModel() {
     override fun getPageData() {
-        getSquareNavItemListData()
-    }
-
-    private fun getSquareNavItemListData() {
         AppExecutors.execNetIo {
-            val (state, data1) = getSquareArticleList(currentPage, currentPage == 0)
-            if (state) {
+            val response = DataDriven.getNavigateArticleList()
+            if (response.state) {
                 val g = Gson()
-                val result = g.fromJson(data1, HomeArticleListData::class.java)
+                val result = g.fromJson(response.data, HomeArticleListData::class.java)
                 val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "success", result, currentPage)
                 data.postValue(resourceBoundary)
             } else {
@@ -40,10 +35,11 @@ class SquareNavItemListViewModel: AbsNavItemListVIewModel() {
             }
         }
     }
+
 }
 
-class SquareViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class NavigateNavViewModelFactory: ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SquareNavItemListViewModel() as T
+        return NavigateNavItemListViewModel() as T
     }
 }

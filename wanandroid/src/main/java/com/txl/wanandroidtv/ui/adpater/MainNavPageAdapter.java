@@ -10,8 +10,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.txl.txllog.AndroidLogWrapper;
 import com.txl.wanandroidtv.bean.NavItemData;
-import com.txl.wanandroidtv.ui.fragment.HomeNavFragment;
-import com.txl.wanandroidtv.ui.fragment.NavFragmentFactory;
+import com.txl.wanandroidtv.ui.fragment.NavFragmentCreateFactory;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class MainNavPageAdapter extends FragmentStatePagerAdapter {
         AndroidLogWrapper.d(TAG,"position : "+position+"  category "+category );
         Fragment fragment = fragmentList.get(position);
         if(fragment == null){
-            fragment = NavFragmentFactory.createFragmentByCategory(category);
+            fragment = NavFragmentCreateFactory.createFragmentByCategory(category);
             fragmentList.put(position,fragment);
         }
         return fragment;
