@@ -9,11 +9,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.mmkv.MMKV;
+import com.txl.tvlib.config.TvLibConfig;
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView;
 import com.txl.ui_basic.BaseActivity;
 import com.txl.wanandroidtv.bean.NavItemData;
 import com.txl.wanandroidtv.ui.adpater.MainNavPageAdapter;
 import com.txl.wanandroidtv.ui.adpater.NavRecyclerAdapter;
+import com.txl.wanandroidtv.ui.utils.ThemeUtils;
 import com.txl.wanandroidtv.utils.Utils;
 
 import java.lang.reflect.Type;
@@ -30,6 +32,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MMKV.initialize(this);
+        //初始化焦点框架，可以考虑放在application里面
+        TvLibConfig config = new TvLibConfig.Builder()
+                .setBorderColor(ThemeUtils.INSTANCE.getThemeColor(this))
+                .setBorderWidth(getResources().getDimensionPixelSize(R.dimen.dp_5))
+                .setHasSelectBorder(true)
+                .build();
+        TvLibConfig.Companion.setDefaultConfig(config);
         initView();
         initData();
     }

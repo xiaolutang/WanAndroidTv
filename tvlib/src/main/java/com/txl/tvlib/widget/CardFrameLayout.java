@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import androidx.leanback.widget.ShadowOverlayContainer;
 
 import com.txl.tvlib.R;
+import com.txl.tvlib.config.TvLibConfig;
 import com.txl.tvlib.focushandler.ViewFocusChangeListener;
 import com.txl.tvlib.widget.focus.shake.IFocusShake;
 import com.txl.tvlib.widget.focus.shake.ViewShakeAnimation;
@@ -86,9 +87,9 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
 
         openFocusShake = a.getBoolean(R.styleable.CardFrameLayout_open_shake, true);
         autoAddFocusAnimation = a.getBoolean(R.styleable.CardFrameLayout_auto_add_focus_animation, false);
-        mViewBorder.drawBorder = a.getBoolean(R.styleable.CardFrameLayout_hasFocusBorder,false);
-        mViewBorder.setBorderWidth(a.getDimensionPixelSize(R.styleable.CardFrameLayout_selectBorderWidth,10));
-        mViewBorder.setBorderColor(a.getColor(R.styleable.CardFrameLayout_borderColor,Color.WHITE));
+        mViewBorder.drawBorder = a.getBoolean(R.styleable.CardFrameLayout_hasFocusBorder,TvLibConfig.Companion.getDefaultConfig().getHasSelectBorder());
+        mViewBorder.setBorderWidth(a.getDimensionPixelSize(R.styleable.CardFrameLayout_selectBorderWidth, TvLibConfig.Companion.getDefaultConfig().getBorderWidth()));
+        mViewBorder.setBorderColor(a.getColor(R.styleable.CardFrameLayout_borderColor,TvLibConfig.Companion.getDefaultConfig().getBorderColor()));
         mFocusChecked = a.getBoolean(R.styleable.CardFrameLayout_focusChecked,true);
         a.recycle();
         _focusTracker = new FocusTracker();
