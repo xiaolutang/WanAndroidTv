@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
     private void initView(){
         navRecyclerView = findViewById( R.id.recycler_nav );
         navRecyclerView.setLayoutManager( new LinearLayoutManager( this,LinearLayoutManager.HORIZONTAL,false ) );
-        navRecyclerView.setOpenDynamicFocus(true);
+        navRecyclerView.openFocusDynamic(true);
         viewPager = findViewById(R.id.main_view_pager);
         viewPager.setOffscreenPageLimit(3);
 

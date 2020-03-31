@@ -9,6 +9,7 @@ import com.google.android.flexbox.FlexboxLayout
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
+import com.txl.wanandroidtv.ui.utils.PageJumpUtils
 import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
 import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
 import com.txl.wanandroidtv.ui.viewholder.base.NavTypeSpec
@@ -47,6 +48,9 @@ class NavigateFlexBoxItemViewHolder(itemView:View):BaseViewHolder(itemView){
         val child = LayoutInflater.from(context).inflate(R.layout.item_navigate_right_flex_box_content_child_item,null,false)
         val textView = child.findViewById<TextView>(R.id.tv_content_item_name)
         textView.text = article.title
+        child.setOnClickListener {
+            PageJumpUtils.openPage(it.context,article)
+        }
         return child
     }
 

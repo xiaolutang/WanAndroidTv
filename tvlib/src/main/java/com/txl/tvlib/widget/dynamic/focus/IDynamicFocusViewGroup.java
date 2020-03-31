@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface IDynamicFocusViewGroup {
     boolean dispatchAddFocusables(ArrayList<View> views, int direction, int focusableMode);
+    void openFocusDynamic(boolean open);
 }

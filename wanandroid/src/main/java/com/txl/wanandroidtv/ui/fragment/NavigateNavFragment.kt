@@ -57,7 +57,7 @@ class NavigateNavFragment: BaseNavFragment() {
 
     override fun initView() {
         leftNavRecyclerView =  findViewById(R.id.tv_recycler_left_nav)
-        leftNavRecyclerView?.setOpenDynamicFocus(true)
+        leftNavRecyclerView?.openFocusDynamic(true)
         leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPosition(position) }
         refreshLayout =  findViewById(R.id.fragment_lib_smart_refresh_layout)
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
@@ -67,9 +67,12 @@ class NavigateNavFragment: BaseNavFragment() {
         leftNavRecyclerView?.adapter = leftNavigateAdapter
 
         contentNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        contentNavRecyclerView?.setOpenDynamicFocus(true)
+        contentNavRecyclerView?.openFocusDynamic(false)
         rightContentNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(),NavigateFlexBoxItemViewHolderFactory())
         contentNavRecyclerView?.adapter = rightContentNavigateAdapter
+        contentNavRecyclerView?.setChildFocusListener{ position, child ->
+            leftNavRecyclerView?.setCheckedPosition(position)
+        }
     }
 
     override fun createAdapter(): BaseRecyclerFactoryAdapter<*> {

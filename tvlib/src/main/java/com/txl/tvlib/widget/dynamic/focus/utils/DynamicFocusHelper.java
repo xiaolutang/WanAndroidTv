@@ -16,6 +16,15 @@ public class DynamicFocusHelper implements IDynamicFocusHelper {
      * */
     private boolean openDynamic = true;
 
+    /**
+     * 需要拥有焦点记忆的View
+     * */
+    private ViewGroup targetView;
+
+    public DynamicFocusHelper(ViewGroup targetView) {
+        this.targetView = targetView;
+    }
+
     public void setOpenDynamic(boolean openDynamic) {
         this.openDynamic = openDynamic;
     }
@@ -28,6 +37,10 @@ public class DynamicFocusHelper implements IDynamicFocusHelper {
     @Override
     public boolean addFocusables(ArrayList<View> views, int direction, int focusableMode) {
         if(!openDynamic){//关闭焦点记忆功能，不进行处理
+            return false;
+        }
+        //当前焦点元素在RecyclerView内部，不走焦点记忆处理逻辑
+        if(targetView.getFocusedChild() != null){
             return false;
         }
         //焦点在记录的View上，不进行处理

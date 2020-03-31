@@ -1,58 +1,41 @@
-package com.txl.tvlib.widget.dynamic.focus;
+package com.txl.wanandroidtv.ui.widget;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
-
+import com.google.android.flexbox.FlexboxLayout;
+import com.txl.tvlib.widget.dynamic.focus.IDynamicFocusViewGroup;
 import com.txl.tvlib.widget.dynamic.focus.utils.DynamicFocusHelper;
 
 import java.util.ArrayList;
 
 /**
- * 具有焦点记忆功能的LinearLayout,暂时先这样命名，后面可以考虑加入焦点优先级功能
- * */
-public class DynamicLinearLayout extends LinearLayout implements IDynamicFocusViewGroup{
+ * Copyright (c) 2020 唐小陆 All rights reserved.
+ * author：txl
+ * date：2020/3/31
+ * description：
+ */
+public class DynamicFlexboxLayout extends FlexboxLayout implements IDynamicFocusViewGroup {
     private DynamicFocusHelper dynamicFocusUtils;
-
-    public DynamicLinearLayout(Context context) {
+    public DynamicFlexboxLayout(Context context) {
         super(context);
         init();
     }
 
-    public DynamicLinearLayout(Context context, @Nullable AttributeSet attrs) {
+    public DynamicFlexboxLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public DynamicLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DynamicFlexboxLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public DynamicLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
     private void init(){
         dynamicFocusUtils = new DynamicFocusHelper(this);
-    }
-
-    public void openFocusDynamic(boolean open){
-        dynamicFocusUtils.setOpenDynamic(open);
-    }
-
-    @Override
-    public View focusSearch(View focused, int direction) {
-        return super.focusSearch(focused, direction);
     }
 
     @Override
@@ -89,5 +72,10 @@ public class DynamicLinearLayout extends LinearLayout implements IDynamicFocusVi
     @Override
     public boolean dispatchAddFocusables(ArrayList<View> views, int direction, int focusableMode) {
         return dynamicFocusUtils.dispatchAddFocusables(views, direction, focusableMode);
+    }
+
+    @Override
+    public void openFocusDynamic(boolean open) {
+        dynamicFocusUtils.setOpenDynamic(open);
     }
 }

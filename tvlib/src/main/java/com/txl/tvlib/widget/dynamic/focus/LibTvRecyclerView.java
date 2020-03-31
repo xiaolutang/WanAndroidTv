@@ -143,7 +143,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         mChildOnCheckedChangeListener = new CheckedStateTracker();
         mPassThroughHierarchyChangeListener = new PassThroughHierarchyChangeListener();
         super.setOnHierarchyChangeListener(mPassThroughHierarchyChangeListener);
-        mDynamicFocusUtils = new DynamicFocusHelper();
+        mDynamicFocusUtils = new DynamicFocusHelper(this);
         mDynamicFocusUtils.setOpenDynamic(false);
         setChildDrawingOrderCallback(new ChildDrawingOrderCallback(){
             @Override
@@ -189,14 +189,6 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
             super.requestLayout();
         }
 
-    }
-
-    /**
-     * 打开焦点记忆功能
-     * @param open true 打开  false 关闭
-     * */
-    public void setOpenDynamicFocus(boolean open){
-        mDynamicFocusUtils.setOpenDynamic(open);
     }
 
     public void setFocusLeftSearch(boolean focusLeftSearch) {
@@ -749,8 +741,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
 
     @Override
     public void addFocusables(ArrayList<View> views, int direction, int focusableMode) {
-        //当前焦点元素在RecyclerView内部，不走焦点记忆处理逻辑
-        if(getFocusedChild() != null || !mDynamicFocusUtils.addFocusables(views,direction,focusableMode)){
+        if(!mDynamicFocusUtils.addFocusables(views,direction,focusableMode)){
             super.addFocusables(views, direction, focusableMode);
         }
     }
@@ -778,6 +769,11 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         return mDynamicFocusUtils.dispatchAddFocusables(views, direction, focusableMode);
     }
 
+    @Override
+    public void openFocusDynamic(boolean open) {
+        mDynamicFocusUtils.setOpenDynamic(open);
+    }
+
     public interface OnFocusSearchFailedListener{
         /**
          * @param currentFocusView 当前拥有焦点的View
@@ -797,7 +793,8 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         if(v instanceof Checkable){
             ((Checkable) v).setChecked(true);
         }
-
+        //标记下一次可以获取焦点的View
+        mDynamicFocusUtils.requestChildFocus(v,v);
     }
 
     public void bindViewPager(ViewPager viewPager){
