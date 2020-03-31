@@ -749,7 +749,8 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
 
     @Override
     public void addFocusables(ArrayList<View> views, int direction, int focusableMode) {
-        if(!mDynamicFocusUtils.addFocusables(views,direction,focusableMode)){
+        //当前焦点元素在RecyclerView内部，不走焦点记忆处理逻辑
+        if(getFocusedChild() != null || !mDynamicFocusUtils.addFocusables(views,direction,focusableMode)){
             super.addFocusables(views, direction, focusableMode);
         }
     }
