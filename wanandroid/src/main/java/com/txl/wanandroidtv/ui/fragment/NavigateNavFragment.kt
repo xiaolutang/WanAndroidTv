@@ -58,7 +58,7 @@ class NavigateNavFragment: BaseNavFragment() {
     override fun initView() {
         leftNavRecyclerView =  findViewById(R.id.tv_recycler_left_nav)
         leftNavRecyclerView?.openFocusDynamic(true)
-        leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPosition(position) }
+        leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPositionAndTop(position) }
         refreshLayout =  findViewById(R.id.fragment_lib_smart_refresh_layout)
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
 

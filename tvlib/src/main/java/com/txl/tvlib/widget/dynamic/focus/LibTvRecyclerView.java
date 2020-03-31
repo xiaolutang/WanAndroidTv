@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -806,6 +807,18 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         mViewPager.addOnPageChangeListener(mPageChangeListener);
     }
 
+    public void smoothScrollToPositionAndTop(int position){
+        TopSmoothScroller topSmoothScroller = new TopSmoothScroller( getContext() );
+        topSmoothScroller.setTargetPosition( position );
+        LayoutManager layoutManager = getLayoutManager();
+        if (layoutManager == null) {
+            Log.e(TAG, "Cannot smooth scroll without a LayoutManager set. "
+                    + "Call setLayoutManager with a non-null argument.");
+            return;
+        }
+        layoutManager.startSmoothScroll(topSmoothScroller);
+    }
+
     private static class ViewPagerChangerListener implements ViewPager.OnPageChangeListener{
         private WeakReference<LibTvRecyclerView> weakReference;
 
@@ -838,5 +851,19 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
          * @param child 当前获取焦点的View
          * */
         void onChildFocus(int position,View child);
+    }
+
+    private class TopSmoothScroller extends LinearSmoothScroller {
+        TopSmoothScroller(Context context) {
+            super(context);
+        }
+        @Override
+        protected int getHorizontalSnapPreference() {
+            return SNAP_TO_START;
+        }
+        @Override
+        protected int getVerticalSnapPreference() {
+            return SNAP_TO_START;
+        }
     }
 }

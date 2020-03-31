@@ -6,4 +6,5 @@
     android:focusable="false"
     android:id="@+id/flex_box"
     app:flexWrap="wrap"
-    android:layout_marginTop="@dimen/dp_50"/>
+    android:paddingTop="@dimen/dp_20"
+    android:paddingBottom="@dimen/dp_20"/>
