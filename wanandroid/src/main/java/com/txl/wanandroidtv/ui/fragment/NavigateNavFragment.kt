@@ -60,6 +60,7 @@ class NavigateNavFragment: BaseNavFragment() {
         leftNavRecyclerView?.openFocusDynamic(true)
         leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPositionAndTop(position) }
         refreshLayout =  findViewById(R.id.fragment_lib_smart_refresh_layout)
+        refreshLayout?.setPadding(resources.getDimensionPixelSize(R.dimen.dp_90),resources.getDimensionPixelSize(R.dimen.dp_20),resources.getDimensionPixelSize(R.dimen.dp_90),resources.getDimensionPixelSize(R.dimen.dp_20))
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
 
         leftNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)

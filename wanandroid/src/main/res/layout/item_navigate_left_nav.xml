@@ -6,7 +6,7 @@
     android:focusable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusableInTouchMode="true"
-    app:auto_add_focus_animation="true">
+    app:auto_add_focus_animation="false">
     <RadioButton
         android:id="@+id/tv_navigate_left_nav"
         android:layout_width="match_parent"

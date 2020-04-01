@@ -544,7 +544,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
                 break;
             }
             case SCROLL_FOLLOW:{
-                requestFixFocusPosition(focused);
+//                requestFixFocusPosition(focused);
                 handle = true;
                 break;
             }
