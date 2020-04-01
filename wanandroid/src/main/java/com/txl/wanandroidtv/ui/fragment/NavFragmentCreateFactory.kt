@@ -20,13 +20,19 @@ const val CATEGORY_SQUARE = "2"
  * 导航
  * */
 const val CATEGORY_NAVIGATE = "3"
+/**
+ * 问答
+ * */
+const val CATEGORY_QUESTION_AND_ANSWER = "4"
 
 class NavFragmentCreateFactory {
     companion object {
         @JvmStatic
         fun createFragmentByCategory(category: String, vararg args: Any): BaseFragment {
             when (category) {
-                CATEGORY_HOME,CATEGORY_SQUARE-> {
+                CATEGORY_HOME,
+                CATEGORY_SQUARE,
+                CATEGORY_QUESTION_AND_ANSWER-> {
                     return HomeNavFragment.newInstance(category)
                 }
 //                CATEGORY_SQUARE->{

@@ -15,5 +15,10 @@
     "type": "text",
     "title": "导航",
     "category": "3"
+  },
+  {
+    "type": "text",
+    "title": "问答",
+    "category": "4"
   }
 ]

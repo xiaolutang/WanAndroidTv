@@ -43,7 +43,12 @@ object DataDriven {
         return getData(url,true)
     }
 
-    fun getData(url:String,useCache: Boolean):Response<String>{
+    fun getQANavArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
+        val url = "$BASE_URL/wenda/list/$page/json"
+        return getData(url, useCache)
+    }
+
+    private fun getData(url:String,useCache: Boolean):Response<String>{
         var response: okhttp3.Response? = null
         var originString = ""
         try {

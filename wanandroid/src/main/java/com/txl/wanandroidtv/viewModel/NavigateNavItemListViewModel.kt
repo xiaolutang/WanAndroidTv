@@ -13,7 +13,7 @@ import com.txl.wanandroidtv.data.DataDriven
  * date：2020/3/27
  * description：
  */
-class NavigateNavItemListViewModel: AbsNavItemListVIewModel() {
+class NavigateNavItemListViewModel: AbsNavItemListViewModel() {
     override fun getPageData() {
         AppExecutors.execNetIo {
             val response = DataDriven.getNavigateArticleList()

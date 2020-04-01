@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.txl.commonlibrary.utils.DrawableUtils
@@ -20,10 +19,8 @@ import com.txl.wanandroidtv.ui.utils.ThemeUtils
 import com.txl.wanandroidtv.ui.viewholder.NavigateFlexBoxItemViewHolderFactory
 import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
 import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
-import com.txl.wanandroidtv.viewModel.AbsNavItemListVIewModel
 import com.txl.wanandroidtv.viewModel.NavigateNavItemListViewModel
 import com.txl.wanandroidtv.viewModel.NavigateNavViewModelFactory
-import com.txl.wanandroidtv.viewModel.ViewModelContainer
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
 
