@@ -1,9 +1,5 @@
 [
-  {
-    "type": "text",
-    "title": "我的",
-    "category": "0"
-  },
+
   {
     "type": "text",
     "title": "首页",
@@ -19,40 +15,5 @@
     "type": "text",
     "title": "导航",
     "category": "3"
-  },
-  {
-    "type": "text",
-    "title": "问答",
-    "category": "4"
-  },
-  {
-    "type": "text",
-    "title": "体系",
-    "category": "5"
-  },
-  {
-    "type": "text",
-    "title": "项目",
-    "category": "6"
-  },
-  {
-    "type": "text",
-    "title": "公众号",
-    "category": "7"
-  },
-  {
-    "type": "text",
-    "title": "项目分类",
-    "category": "8"
-  },
-  {
-    "type": "text",
-    "title": "工具",
-    "category": "9"
-  },
-  {
-    "type": "text",
-    "title": "收藏",
-    "category": "10"
   }
 ]

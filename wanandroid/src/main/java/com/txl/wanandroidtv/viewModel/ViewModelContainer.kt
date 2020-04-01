@@ -16,17 +16,17 @@ object ViewModelContainer {
     /**
      * 保存每种导航类型的 ViewModel 的class
      * */
-    private val viewModels = HashMap<String,Class<out ViewModel>>()
+    private val viewModels = HashMap<String,Class<out AbsNavItemListVIewModel>>()
     private val viewModelFactories = HashMap<String, ViewModelProvider.Factory>()
 
     /**
      * 获取Model class,当没有category匹配的时候默认返回  NavItemListViewModel::class.java
      * */
-    fun  getViewModelClass(category:String):Class<out ViewModel>{
+    fun  getViewModelClass(category:String):Class<out AbsNavItemListVIewModel>{
         return viewModels[category] ?: throw RuntimeException("viewModel class is not register in ")
     }
 
-    fun putViewModelClass(category: String, modelClass :Class<out ViewModel>){
+    fun putViewModelClass(category: String, modelClass :Class<out AbsNavItemListVIewModel>){
         if(viewModels.containsKey(category)){
             throw IllegalArgumentException("category  has been put in viewModels please check category is $category")
         }
@@ -36,8 +36,8 @@ object ViewModelContainer {
     /**
      * 有没有必要在没获取到对应的 对象的情况下自己初始化？
      * */
-    fun getViewModelFactory(category: String): ViewModelProvider.Factory?{
-        return viewModelFactories[category]
+    fun getViewModelFactory(category: String): ViewModelProvider.Factory{
+        return viewModelFactories[category] ?: throw RuntimeException("has not register category $category in")
     }
 
     fun putViewModelFactory(category: String, factory : ViewModelProvider.Factory){

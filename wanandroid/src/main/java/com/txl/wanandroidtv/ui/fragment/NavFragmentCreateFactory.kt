@@ -26,17 +26,17 @@ class NavFragmentCreateFactory {
         @JvmStatic
         fun createFragmentByCategory(category: String, vararg args: Any): BaseFragment {
             when (category) {
-                CATEGORY_HOME-> {
-                    return HomeNavFragment::class.java.newInstance()
+                CATEGORY_HOME,CATEGORY_SQUARE-> {
+                    return HomeNavFragment.newInstance(category)
                 }
-                CATEGORY_SQUARE->{
-                    return SquareNavFragment::class.java.newInstance()
-                }
+//                CATEGORY_SQUARE->{
+//                    return SquareNavFragment::class.java.newInstance()
+//                }
                 CATEGORY_NAVIGATE->{
-                    return NavigateNavFragment::class.java.newInstance()
+                    return NavigateNavFragment.newInstance(category)
                 }
                 else -> {
-                    return HomeNavFragment::class.java.newInstance()
+                    return HomeNavFragment.newInstance(category)
                 }
             }
         }

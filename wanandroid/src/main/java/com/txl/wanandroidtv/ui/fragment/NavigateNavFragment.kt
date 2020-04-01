@@ -2,6 +2,7 @@ package com.txl.wanandroidtv.ui.fragment
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,14 @@ class NavigateNavFragment: BaseNavFragment() {
             //初始化class
             putViewModelClass(CATEGORY_NAVIGATE, NavigateNavItemListViewModel::class.java)
         }
+
+        fun newInstance(category:String):NavigateNavFragment{
+            val fragment = NavigateNavFragment()
+            val bundle = Bundle()
+            bundle.putString(CATEGORY,category)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     var leftNavRecyclerView:LibTvRecyclerView?  = null
@@ -76,32 +85,22 @@ class NavigateNavFragment: BaseNavFragment() {
         }
     }
 
-    override fun createAdapter(): BaseRecyclerFactoryAdapter<*> {
-        return BaseRecyclerFactoryAdapter<Any>(requireContext(),object :IViewHolderFactory<BaseViewHolder>{
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        })
-    }
 
     override fun onDataReady(currentPage: Int, data: Any?) {
-        super.onDataReady(currentPage, data)
+        loadingViewUtils?.showLoadingView(false)
+        refreshLayout?.finishLoadMore()
         if(data is NavigateArticleListData){
             leftNavigateAdapter?.appendData(data.data)
             rightContentNavigateAdapter?.appendData(data.data)
         }
     }
 
-    override fun createViewModel(): AbsNavItemListVIewModel? {
-        val viewModel = ViewModelProvider(this).get(ViewModelContainer.getViewModelClass(CATEGORY_NAVIGATE))
-        if(viewModel is AbsNavItemListVIewModel){
-            return viewModel
+    override fun showLoading(currentPage: Int) {
+        if(currentPage == 0){
+            loadingViewUtils?.showLoadingView(true)
+        }else{
+            refreshLayout?.autoLoadMore()
         }
-        return null
     }
 }
 
