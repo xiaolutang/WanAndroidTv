@@ -48,6 +48,22 @@ object DataDriven {
         return getData(url, useCache)
     }
 
+    /**
+     * 获取体系数据
+     * */
+    fun getSetUpNavData():Response<String>{
+        val url = "$BASE_URL/tree/json"
+        return getData(url, true)
+    }
+
+    /**
+     * 知识体系下的文章
+     * */
+    fun getSetUpNavItemListData(page:Int,useCache:Boolean = page == 0,cid:Int):Response<String>{
+        val url = "$BASE_URL/article/list/$page/json?cid=$cid"
+        return getData(url, useCache)
+    }
+
     private fun getData(url:String,useCache: Boolean):Response<String>{
         var response: okhttp3.Response? = null
         var originString = ""
