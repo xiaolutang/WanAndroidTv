@@ -3,13 +3,19 @@ package com.txl.wanandroidtv.ui.widget;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.google.android.flexbox.FlexboxLayout;
+import com.txl.tvlib.focushandler.IFocusSearchHelper;
 import com.txl.tvlib.widget.dynamic.focus.IDynamicFocusViewGroup;
 import com.txl.tvlib.widget.dynamic.focus.utils.DynamicFocusHelper;
 
 import java.util.ArrayList;
+
+import static com.txl.tvlib.utils.ViewExtKt.viewCanFocus;
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.
@@ -36,6 +42,64 @@ public class DynamicFlexboxLayout extends FlexboxLayout implements IDynamicFocus
 
     private void init(){
         dynamicFocusUtils = new DynamicFocusHelper(this);
+    }
+
+    @Override
+    public View focusSearch(View focused, int direction) {
+
+        int index = findFocusIndex(focused);
+        Log.e("DynamicFlexboxLayout","focusSearch index :: "+index+"  is right "+(direction == View.FOCUS_RIGHT));
+        if(index != -1){
+            if(direction == View.FOCUS_RIGHT){
+                if(index != getChildCount()-1){
+                    View nextFocus = getChildAt(index+1);
+                    nextFocus = findFirstFocusAbleView(nextFocus);
+                    Log.e("DynamicFlexboxLayout","focusSearch index :: "+index+"  is right "+nextFocus);
+                    if(nextFocus != null){
+                        return nextFocus;
+                    }
+                }
+            }else if(direction == View.FOCUS_LEFT){
+                if(index != 0){
+                    View nextFocus = getChildAt(index-1);
+                    nextFocus = findFirstFocusAbleView(nextFocus);
+                    if(nextFocus != null){
+                        return nextFocus;
+                    }
+                }
+            }
+        }
+        return super.focusSearch(focused, direction);
+    }
+
+    private int findFocusIndex(View focused){
+        View f = focused;
+        ViewParent parent = focused.getParent();
+        while (parent != null){
+            if(parent == this){
+                return indexOfChild(f);
+            }
+            f = (View) parent;
+            parent = f.getParent();
+        }
+        return -1;
+    }
+
+    private View findFirstFocusAbleView(View targetFocusView) {
+        if (viewCanFocus(targetFocusView)) return targetFocusView;
+        if(targetFocusView instanceof IFocusSearchHelper){
+            return findFirstFocusAbleView(((IFocusSearchHelper) targetFocusView).findFirstFocusAbleView());
+        }else if (targetFocusView instanceof ViewGroup) {
+            ViewGroup temp = (ViewGroup) targetFocusView;
+            int childCount = temp.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View focus = findFirstFocusAbleView(temp.getChildAt(i));
+                if (viewCanFocus(focus)) {
+                    return focus;
+                }
+            }
+        }
+        return null;
     }
 
     @Override

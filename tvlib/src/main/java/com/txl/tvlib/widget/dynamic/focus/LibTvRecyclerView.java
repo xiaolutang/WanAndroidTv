@@ -410,6 +410,7 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (isFocusScroll) {
+            Log.e(TAG,"dispatchKeyEvent  isFocusScroll "+isFocusScroll);
             return true;
         }
         focusSearchDirect = -1;
