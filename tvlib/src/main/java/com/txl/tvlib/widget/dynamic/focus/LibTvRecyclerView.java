@@ -9,12 +9,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Checkable;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
@@ -30,6 +32,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import static androidx.core.view.ViewCompat.TYPE_TOUCH;
 
 /**
  * 为androidTv开发的Recycler库
@@ -90,6 +94,11 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
      * 监听子View获取焦点
      * */
     private OnChildFocusListener mChildFocusListener;
+
+    /**
+     * 是否会马上调用  super.requestChildFocus(child, focused)方法
+     * */
+    private boolean willRequestChildFocus = false;
 
     /**
      * 当前焦点View是否全部可见
@@ -449,7 +458,9 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         if (DEBUG) {
             Log.d(TAG, "requestChildFocus focusViewAllVisible :: " + focusViewAllVisible);
         }
+        willRequestChildFocus = true;
         super.requestChildFocus(child, focused);
+        willRequestChildFocus = false;
         isFocusScroll = true;
         scrollByMode(child, focused);
         isFocusScroll = false;
@@ -463,6 +474,28 @@ public class LibTvRecyclerView extends RecyclerView implements IDynamicFocusView
         if(mChildFocusListener != null){
             mChildFocusListener.onChildFocus(position,child);
         }
+    }
+
+    private void handleFocusScroll(int dx, int dy){
+        if(dy < 0 && computeVerticalScrollOffset() > getHeight()){//向上滑动并且当前的滚动位置大于高度的1/2不进行处理
+            return;
+        }
+        int nestedScrollAxis = ViewCompat.SCROLL_AXIS_NONE |ViewCompat.SCROLL_AXIS_VERTICAL;
+        startNestedScroll(nestedScrollAxis, TYPE_TOUCH);
+        dispatchNestedPreScroll(dx, dy, new int[2], new int[2], TYPE_TOUCH);
+        stopNestedScroll(TYPE_TOUCH);
+    }
+
+    @Override
+    public void scrollBy(int x, int y) {
+        handleFocusScroll(x, y);
+        super.scrollBy(x, y);
+    }
+
+    @Override
+    public void smoothScrollBy(int dx, int dy, @Nullable Interpolator interpolator,int duration) {
+        handleFocusScroll(dx, dy);
+        super.smoothScrollBy(dx, dy, interpolator,duration);
     }
 
     private boolean isFocusViewAllVisible() {
