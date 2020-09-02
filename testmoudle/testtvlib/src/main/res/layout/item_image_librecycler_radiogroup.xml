@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.txl.tvlib.widget.CardFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginEnd="@dimen/dp_45"
+    android:focusable="true"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    app:auto_add_focus_animation="true"
+    app:hasFocusBorder="false"
+    android:padding="@dimen/dp_5"
+    android:background="@drawable/vip">
+    <RadioButton android:id="@+id/rb_item"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:focusable="false"
+        android:background="#0000"
+        android:clickable="false"
+        android:button="@null"
+        android:text="  "/>
+</com.txl.tvlib.widget.CardFrameLayout>

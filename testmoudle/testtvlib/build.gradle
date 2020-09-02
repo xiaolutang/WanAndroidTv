@@ -3,13 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 28
     buildToolsVersion "30.0.0"
 
     defaultConfig {
         applicationId "com.txl.testtvlib"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         multiDexEnabled true

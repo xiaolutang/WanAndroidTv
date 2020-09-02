@@ -29,6 +29,10 @@ public class LibTvRecyclerView2 extends RecyclerView {
     // when true, mOnCheckedChangeListener discards events
     private boolean mProtectFromCheckedChange = false;
 
+    public void setOnCheckedChangeListener(OnCheckedChangeListener mOnCheckedChangeListener) {
+        this.mOnCheckedChangeListener = mOnCheckedChangeListener;
+    }
+
     private OnCheckedChangeListener mOnCheckedChangeListener;
 
     private LibTvRecyclerView2.PassThroughHierarchyChangeListener mPassThroughHierarchyChangeListener;

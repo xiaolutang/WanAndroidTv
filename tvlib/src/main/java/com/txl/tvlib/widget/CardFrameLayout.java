@@ -5,22 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.SoundEffectConstants;
 import android.view.View;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.autofill.AutofillManager;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 
 import androidx.leanback.widget.ShadowOverlayContainer;
-
-import com.txl.commonlibrary.utils.ReflectUtils;
 import com.txl.tvlib.R;
 import com.txl.tvlib.config.TvLibConfig;
 import com.txl.tvlib.focushandler.ViewFocusChangeListener;
@@ -28,7 +19,7 @@ import com.txl.tvlib.widget.focus.shake.IFocusShake;
 import com.txl.tvlib.widget.focus.shake.ViewShakeAnimation;
 
 /**
- * 自己定义RecyclerView的 公共抽象元素 替换掉{@link BaseCustomCardView}
+ * 具有RadioButton的能力，当元素焦点改变时会触发checked,在失去焦点的时候或将check置为false select置为true {@link FocusTracker#onFocusChange}
  * */
 public class CardFrameLayout extends FrameLayout implements ICheckView {
 
@@ -188,7 +179,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
     /**
      * Change the checked state of the view
      *
-     * @param checked The new checked state
+     * @param checked 触发是否被选中 checked 为false 时会将select置为false
      */
     @Override
     public void setChecked(boolean checked) {
