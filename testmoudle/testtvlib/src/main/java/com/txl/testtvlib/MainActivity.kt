@@ -47,7 +47,11 @@ class MainActivity : AppCompatActivity() {
         init {
             if(itemView is CardFrameLayout){
                 itemView.setOnCheckedChangeListener(ICheckView.OnCheckedChangeListener { checkable, isChecked ->
-                    Log.d("TestViewHolder","$checkable is checked $isChecked  isSelect ${itemView.isSelected}")
+                    itemView.postDelayed(object :Runnable{
+                        override fun run() {
+                            Log.d("TestViewHolder","$checkable is checked $isChecked  isSelect ${itemView.isSelected}")
+                        }
+                    },500)
                 })
             }
         }

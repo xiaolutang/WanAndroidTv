@@ -24,7 +24,7 @@ public class ViewFocusHandler implements IFocusHandler  {
 
     @Override
     public void onItemFocused(View view, boolean hasFocus) {
-        view.setSelected(hasFocus);
+//        view.setSelected(hasFocus);
         getOrCreateAnimator(view).animateFocus(hasFocus, false);
     }
 
