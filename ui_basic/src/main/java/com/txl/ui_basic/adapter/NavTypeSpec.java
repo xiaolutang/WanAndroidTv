@@ -1,4 +1,4 @@
-package com.txl.wanandroidtv.ui.viewholder.base;
+package com.txl.ui_basic.adapter;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;

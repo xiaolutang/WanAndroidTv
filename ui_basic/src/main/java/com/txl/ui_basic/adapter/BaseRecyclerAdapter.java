@@ -1,4 +1,4 @@
-package com.txl.wanandroidtv.ui.adpater;
+package com.txl.ui_basic.adapter;
 
 import android.content.Context;
 
@@ -6,6 +6,7 @@ import androidx.collection.CircularArray;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 
 public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
-    protected CircularArray<T> data=new CircularArray<>();
+    protected ArrayList<T> data=new ArrayList<>();
     protected WeakReference<Context> contextRef;
     public BaseRecyclerAdapter(Context context)
     {
@@ -25,10 +26,7 @@ public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> 
     public BaseRecyclerAdapter(Collection<T> data, Context context)
     {
         contextRef=new WeakReference<>(context);
-        for(T item:data)
-        {
-            this.data.addLast(item);
-        }
+        this.data.addAll(data);
     }
 
     public final Context getContext()
@@ -36,7 +34,7 @@ public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> 
         return contextRef.get();
     }
 
-    public CircularArray<T> getData() {
+    public ArrayList<T> getData() {
         return data;
     }
 
@@ -45,7 +43,7 @@ public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> 
     public void appendAllFirst(List<T> data){
         Collections.reverse(data);
         for(T item:data){
-            this.data.addFirst(item);
+            this.data.add(0,item);
         }
         notifyDataSetChanged();
     }
@@ -54,26 +52,20 @@ public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> 
         if(data!=null)
         {
             this.data.clear();
-            for(T item:data)
-            {
-                this.data.addLast(item);
-            }
+            this.data.addAll(data);
             this.notifyDataSetChanged();
         }
     }
 
     public void appendData(T data)
     {
-        this.data.addLast(data);
+        this.data.add(data);
         this.notifyDataSetChanged();
     }
     public void appendData(Collection<T> data)
     {
         int originSize = data.size();
-        for(T item:data)
-        {
-            this.data.addLast(item);
-        }
+        this.data.addAll(data);
         notifyItemRangeInserted(originSize,data.size());
     }
 

@@ -6,14 +6,21 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.autofill.AutofillManager;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 
 import androidx.leanback.widget.ShadowOverlayContainer;
 
+import com.txl.commonlibrary.utils.ReflectUtils;
 import com.txl.tvlib.R;
 import com.txl.tvlib.config.TvLibConfig;
 import com.txl.tvlib.focushandler.ViewFocusChangeListener;
@@ -26,6 +33,10 @@ import com.txl.tvlib.widget.focus.shake.ViewShakeAnimation;
 public class CardFrameLayout extends FrameLayout implements ICheckView {
 
     private static final String TAG = CardFrameLayout.class.getSimpleName();
+
+    private static final int[] CHECKED_STATE_SET = {
+            android.R.attr.state_checked
+    };
 
     private boolean _checked;
 
@@ -185,6 +196,9 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
             _checked = checked;
             refreshDrawableState();
             dispatchSetChecked(checked);
+            if(!checked){
+                setSelected(false);
+            }
             if(_onCheckedChangeListener != null){
                 _onCheckedChangeListener.onCheckedChanged(this,checked);
             }
@@ -192,6 +206,15 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
                 _onCheckedChangeWidgetListener.onCheckedChanged(this,checked);
             }
         }
+    }
+
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        if (isChecked()) {
+            mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+        }
+        return drawableState;
     }
 
     @Override
@@ -273,7 +296,6 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
     }
 
     private class FocusTracker implements OnFocusChangeListener{
-        Rect ogiginPadding = new Rect();
         private OnFocusChangeListener focusChangeListener;
         /**
          * Called when the focus state of a view has changed.
@@ -283,37 +305,11 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
          */
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
-            //上焦点的时候增加padding
-//            if(hasFocus){
-//                ogiginPadding.left = getPaddingLeft();
-//                ogiginPadding.right = getPaddingRight();
-//                ogiginPadding.top = getPaddingTop();
-//                ogiginPadding.bottom = getPaddingBottom();
-//                if(mViewBorder.drawBorder){
-//                    setPadding(ogiginPadding.left+mViewBorder.borderWidth,
-//                            ogiginPadding.top+mViewBorder.borderWidth,
-//                            ogiginPadding.right+mViewBorder.borderWidth,
-//                            ogiginPadding.bottom+mViewBorder.borderWidth);
-//                }
-//            }else {
-//                setPadding(ogiginPadding.left,
-//                        ogiginPadding.top,
-//                        ogiginPadding.right,
-//                        ogiginPadding.bottom);
-//            }
-
-            if(mFocusChecked){
-                setChecked(!hasFocus);
-            }
-            if(!mFocusChecked){
-                if(hasFocus && isChecked()){
-                    setChecked(false);
-                    setCheckedWhenFocusLost = true;
-                }
-                if(setCheckedWhenFocusLost && !hasFocus){
-                    setChecked(true);
-                    setCheckedWhenFocusLost = false;
-                }
+            if(hasFocus){//元素获取焦点的时候触发checked
+                setChecked(true);
+            }else {
+                setChecked(false);
+                setSelected(true);
             }
             if(focusChangeListener != null){
                 focusChangeListener.onFocusChange(v,hasFocus);

@@ -1,14 +1,6 @@
 package com.txl.wanandroidtv.ui.fragment
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
-import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
-import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
-import com.txl.wanandroidtv.ui.utils.PageJumpUtils.openPage
-import com.txl.wanandroidtv.ui.viewholder.HomeFragmentCommonItemViewHolderFactory
-import com.txl.wanandroidtv.ui.widget.HomeGridDividerItemDecoration
+import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.wanandroidtv.viewModel.*
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory

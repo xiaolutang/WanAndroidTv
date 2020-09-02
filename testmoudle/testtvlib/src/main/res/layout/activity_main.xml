@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="01"
+            android:gravity="center"
+            android:background="@drawable/item_test_focus_bg"
+            android:layout_marginStart="30dp"
+            android:focusable="true"/>
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="02"
+            android:gravity="center"
+            android:background="@drawable/item_test_focus_bg"
+            android:layout_marginStart="30dp"
+            android:focusable="auto"/>
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="03"
+            android:gravity="center"
+            android:background="@drawable/item_test_focus_bg"
+            android:layout_marginStart="30dp"
+            android:focusable="true"/>
+    </RadioGroup>
+    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
+        android:id="@+id/tv_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"/>
+
+</LinearLayout>

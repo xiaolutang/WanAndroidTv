@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import androidx.core.content.ContextCompat
 import com.txl.commonlibrary.utils.DrawableUtils
+import com.txl.ui_basic.viewholder.BaseViewHolder
+import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.NavItemData
 import com.txl.wanandroidtv.ui.utils.ThemeUtils
-import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
-import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.

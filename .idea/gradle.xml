@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$/netModel" />
             <option value="$PROJECT_DIR$/router" />
             <option value="$PROJECT_DIR$/skin" />
+            <option value="$PROJECT_DIR$/testmoudle" />
+            <option value="$PROJECT_DIR$/testmoudle/testtvlib" />
             <option value="$PROJECT_DIR$/tvlib" />
             <option value="$PROJECT_DIR$/txllog" />
             <option value="$PROJECT_DIR$/ui_basic" />

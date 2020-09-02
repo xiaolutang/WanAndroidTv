@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.flexbox.FlexboxLayout
+import com.txl.ui_basic.adapter.NavTypeSpec
+import com.txl.ui_basic.viewholder.BaseViewHolder
+import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
 import com.txl.wanandroidtv.ui.utils.PageJumpUtils
-import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
-import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
-import com.txl.wanandroidtv.ui.viewholder.base.NavTypeSpec
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.
@@ -20,7 +20,7 @@ import com.txl.wanandroidtv.ui.viewholder.base.NavTypeSpec
  * date：2020/3/30
  * description：wanAndroid 导航数据显示
  */
-class NavigateFlexBoxItemViewHolderFactory:IViewHolderFactory<BaseViewHolder> {
+class NavigateFlexBoxItemViewHolderFactory: IViewHolderFactory<BaseViewHolder> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return NavigateFlexBoxItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_navigate_right_flex_box_content,parent,false))
     }

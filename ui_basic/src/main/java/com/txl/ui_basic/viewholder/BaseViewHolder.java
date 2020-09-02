@@ -1,4 +1,4 @@
-package com.txl.wanandroidtv.ui.viewholder.base;
+package com.txl.ui_basic.viewholder;
 
 import android.view.View;
 

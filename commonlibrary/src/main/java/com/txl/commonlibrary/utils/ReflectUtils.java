@@ -72,9 +72,12 @@ public class ReflectUtils {
      * @param params 参数类型
      * */
     public static void reflectPrivateMethod(Object object,String methodName, Object[] args,Class<?>... params){
+        reflectPrivateMethod(object, object.getClass(),methodName, args, params);
+    }
+
+    public static void reflectPrivateMethod(Object object,Class className, String methodName, Object[] args,Class<?>... params){
         try {
-            Class objectClass = object.getClass();
-            Method method = objectClass.getDeclaredMethod(methodName,params);
+            Method method = className.getDeclaredMethod(methodName,params);
             method.setAccessible(true);
             method.invoke(object,args);
         } catch (Exception ex) {

@@ -1,3 +1,5 @@
+include ':testmoudle:testtvlib'
+include ':testmoudle'
 include ':wanandroid', ':tvlib', ':commonlibrary', ':skin', ':netModel', ':txllog'
 rootProject.name='WanAndroidTv'
 include ':router'

@@ -14,11 +14,11 @@ import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateArticleListData
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
-import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
+import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
+import com.txl.ui_basic.viewholder.BaseViewHolder
+import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.ui.utils.ThemeUtils
 import com.txl.wanandroidtv.ui.viewholder.NavigateFlexBoxItemViewHolderFactory
-import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
-import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
 import com.txl.wanandroidtv.viewModel.NavigateNavItemListViewModel
 import com.txl.wanandroidtv.viewModel.NavigateNavViewModelFactory
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
@@ -54,8 +54,8 @@ class NavigateNavFragment: BaseNavFragment() {
     var refreshLayout:SmartRefreshLayout?  = null
     var contentNavRecyclerView:LibTvRecyclerView?  = null
 
-    private var leftNavigateAdapter:BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
-    private var rightContentNavigateAdapter:BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
+    private var leftNavigateAdapter: BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
+    private var rightContentNavigateAdapter: BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
 
     override fun getLayoutRes(): Int {
         return R.layout.fragment_navigate_nav
@@ -70,12 +70,12 @@ class NavigateNavFragment: BaseNavFragment() {
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
 
         leftNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        leftNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(),LeftItemViewHolderFactory())
+        leftNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(), LeftItemViewHolderFactory())
         leftNavRecyclerView?.adapter = leftNavigateAdapter
 
         contentNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         contentNavRecyclerView?.openFocusDynamic(false)
-        rightContentNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(),NavigateFlexBoxItemViewHolderFactory())
+        rightContentNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(), NavigateFlexBoxItemViewHolderFactory())
         contentNavRecyclerView?.adapter = rightContentNavigateAdapter
         contentNavRecyclerView?.setChildFocusListener{ position, child ->
             leftNavRecyclerView?.setCheckedPosition(position)
@@ -101,7 +101,7 @@ class NavigateNavFragment: BaseNavFragment() {
     }
 }
 
-class LeftItemViewHolderFactory:IViewHolderFactory<BaseViewHolder>{
+class LeftItemViewHolderFactory: IViewHolderFactory<BaseViewHolder> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return LeftItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_navigate_left_nav,parent,false))
     }

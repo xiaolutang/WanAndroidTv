@@ -1,17 +1,15 @@
 package com.txl.wanandroidtv.ui.adpater;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.txl.wanandroidtv.R;
+import com.txl.ui_basic.adapter.BaseRecyclerAdapter;
+import com.txl.ui_basic.viewholder.BaseViewHolder;
 import com.txl.wanandroidtv.bean.NavItemData;
 import com.txl.wanandroidtv.ui.viewholder.NavItemViewHolder;
 import com.txl.wanandroidtv.ui.viewholder.NvaItemViewHolderFactory;
-import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder;
 
 import java.util.Collection;
 
@@ -21,7 +19,7 @@ import java.util.Collection;
  * date：2020/1/1
  * description：
  */
-public class NavRecyclerAdapter extends BaseRecyclerAdapter<NavItemData, BaseViewHolder>{
+public class NavRecyclerAdapter extends BaseRecyclerAdapter<NavItemData, BaseViewHolder> {
     private NvaItemViewHolderFactory nvaItemViewHolderFactory;
     public NavRecyclerAdapter(Context context) {
         super( context );

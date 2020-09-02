@@ -1,4 +1,4 @@
-package com.txl.wanandroidtv.ui.adpater;
+package com.txl.ui_basic.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -6,12 +6,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.txl.wanandroidtv.bean.NavItemData;
-import com.txl.wanandroidtv.ui.utils.PageJumpUtils;
-import com.txl.wanandroidtv.ui.viewholder.NavItemViewHolder;
-import com.txl.wanandroidtv.ui.viewholder.NvaItemViewHolderFactory;
-import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder;
-import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory;
+
+import com.txl.ui_basic.viewholder.BaseViewHolder;
+import com.txl.ui_basic.viewholder.IViewHolderFactory;
 
 import java.util.Collection;
 

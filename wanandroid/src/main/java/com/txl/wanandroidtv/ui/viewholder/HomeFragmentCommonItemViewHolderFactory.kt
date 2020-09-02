@@ -7,14 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.txl.tvlib.widget.CardFrameLayout
+import com.txl.ui_basic.adapter.NavTypeSpec
+import com.txl.ui_basic.viewholder.BaseViewHolder
+import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
 import com.txl.wanandroidtv.ui.NavItemWidthUtils
 import com.txl.wanandroidtv.ui.fragment.HOME_SPAN_COUNT
-import com.txl.wanandroidtv.ui.utils.ThemeUtils
-import com.txl.wanandroidtv.ui.viewholder.base.BaseViewHolder
-import com.txl.wanandroidtv.ui.viewholder.base.IViewHolderFactory
-import com.txl.wanandroidtv.ui.viewholder.base.NavTypeSpec
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.

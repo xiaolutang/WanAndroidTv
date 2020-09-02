@@ -11,7 +11,7 @@ import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
 import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
-import com.txl.wanandroidtv.ui.adpater.BaseRecyclerFactoryAdapter
+import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.wanandroidtv.ui.utils.PageJumpUtils.openPage
 import com.txl.wanandroidtv.ui.viewholder.HomeFragmentCommonItemViewHolderFactory
 import com.txl.wanandroidtv.ui.widget.HomeGridDividerItemDecoration
@@ -47,9 +47,9 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         }
     }
 
-    private var mAdapter:BaseRecyclerFactoryAdapter<Article>?=null
+    private var mAdapter: BaseRecyclerFactoryAdapter<Article>?=null
 
-    var adapter:BaseRecyclerFactoryAdapter<*>? = null
+    var adapter: BaseRecyclerFactoryAdapter<*>? = null
 
     var recyclerView: LibTvRecyclerView? = null
         private set
