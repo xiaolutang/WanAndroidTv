@@ -70,12 +70,12 @@ class NavigateNavFragment: BaseNavFragment() {
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
 
         leftNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        leftNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(), LeftItemViewHolderFactory())
+        leftNavigateAdapter = BaseRecyclerFactoryAdapter( LeftItemViewHolderFactory())
         leftNavRecyclerView?.adapter = leftNavigateAdapter
 
         contentNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         contentNavRecyclerView?.openFocusDynamic(false)
-        rightContentNavigateAdapter = BaseRecyclerFactoryAdapter(requireContext(), NavigateFlexBoxItemViewHolderFactory())
+        rightContentNavigateAdapter = BaseRecyclerFactoryAdapter( NavigateFlexBoxItemViewHolderFactory())
         contentNavRecyclerView?.adapter = rightContentNavigateAdapter
         contentNavRecyclerView?.setChildFocusListener{ position, child ->
             leftNavRecyclerView?.setCheckedPosition(position)

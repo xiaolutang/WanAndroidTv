@@ -38,4 +38,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api "androidx.leanback:leanback:$appcompat"
     implementation project(path: ':commonlibrary')
+    api ('com.alibaba.android:vlayout:1.2.8@aar') {
+        transitive = true
+    }
 }

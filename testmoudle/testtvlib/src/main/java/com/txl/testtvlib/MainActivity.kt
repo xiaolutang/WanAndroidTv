@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView(){
         tv_recycler_view.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         tv_recycler_view.setOnCheckedChangeListener { group, checkedView, position -> Log.d("TestViewHolder","checked position is $position") }
-        val adapter = BaseRecyclerFactoryAdapter<String>(this,object :IViewHolderFactory<BaseViewHolder>{
+        val adapter = BaseRecyclerFactoryAdapter<String>(object :IViewHolderFactory<BaseViewHolder>{
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
                 if(viewType == 0){
                     return TestViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_test_librecycler_radiogroup,parent,false))

@@ -21,13 +21,12 @@ import java.util.Collection;
 public class BaseRecyclerFactoryAdapter<T> extends BaseRecyclerAdapter<T, BaseViewHolder>{
     private IViewHolderFactory mViewHolderFactory;
     private OnItemClickListener mItemClickListener;
-    public BaseRecyclerFactoryAdapter(Context context,IViewHolderFactory viewHolderFactory) {
-        super( context );
+    public BaseRecyclerFactoryAdapter(IViewHolderFactory viewHolderFactory) {
         mViewHolderFactory = viewHolderFactory;
     }
 
-    public BaseRecyclerFactoryAdapter(Collection<T> data, Context context,IViewHolderFactory viewHolderFactory) {
-        super( data, context );
+    public BaseRecyclerFactoryAdapter(Collection<T> data,IViewHolderFactory viewHolderFactory) {
+        super( data );
         mViewHolderFactory = viewHolderFactory;
     }
 

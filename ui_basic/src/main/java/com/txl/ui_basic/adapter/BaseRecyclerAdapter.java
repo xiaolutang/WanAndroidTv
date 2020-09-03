@@ -17,21 +17,13 @@ import java.util.List;
 
 public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected ArrayList<T> data=new ArrayList<>();
-    protected WeakReference<Context> contextRef;
-    public BaseRecyclerAdapter(Context context)
+    public BaseRecyclerAdapter()
     {
-        contextRef=new WeakReference<>(context);
     }
 
-    public BaseRecyclerAdapter(Collection<T> data, Context context)
+    public BaseRecyclerAdapter(Collection<T> data)
     {
-        contextRef=new WeakReference<>(context);
         this.data.addAll(data);
-    }
-
-    public final Context getContext()
-    {
-        return contextRef.get();
     }
 
     public ArrayList<T> getData() {

@@ -21,12 +21,12 @@ import java.util.Collection;
  */
 public class NavRecyclerAdapter extends BaseRecyclerAdapter<NavItemData, BaseViewHolder> {
     private NvaItemViewHolderFactory nvaItemViewHolderFactory;
-    public NavRecyclerAdapter(Context context) {
-        super( context );
+    public NavRecyclerAdapter() {
+
     }
 
-    public NavRecyclerAdapter(Collection<NavItemData> data, Context context) {
-        super( data, context );
+    public NavRecyclerAdapter(Collection<NavItemData> data) {
+        super( data );
     }
 
     @NonNull

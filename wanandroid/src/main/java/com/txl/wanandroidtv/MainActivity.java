@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity {
         Gson gson = new Gson();
         Type collectionType = new TypeToken<ArrayList<NavItemData>>(){}.getType();
         ArrayList<NavItemData> navs = gson.fromJson(json, collectionType);
-        NavRecyclerAdapter adapter = new NavRecyclerAdapter(navs,this);
+        NavRecyclerAdapter adapter = new NavRecyclerAdapter(navs);
         navRecyclerView.setAdapter( adapter );
         navRecyclerView.bindViewPager(viewPager);
         viewpagerAdapter = new MainNavPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, navs);

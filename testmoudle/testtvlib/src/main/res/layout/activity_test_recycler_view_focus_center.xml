@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".testrecyclerview.item.center.TestRecyclerViewFocusCenterActivity"
+    android:orientation="vertical">
+    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
+        android:id="@+id/recycler_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="@dimen/dp_20"/>
+    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
+        android:id="@+id/recycler_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:clipChildren="false"/>
+</LinearLayout>

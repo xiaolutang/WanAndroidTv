@@ -57,7 +57,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
     var smartRefreshLayout: SmartRefreshLayout? = null
 
     private fun createAdapter(): BaseRecyclerFactoryAdapter<*> {
-        mAdapter = BaseRecyclerFactoryAdapter(requireContext(), HomeFragmentCommonItemViewHolderFactory())
+        mAdapter = BaseRecyclerFactoryAdapter( HomeFragmentCommonItemViewHolderFactory())
         mAdapter?.setItemClickListener(this)
         return mAdapter!!
     }

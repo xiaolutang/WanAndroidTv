@@ -2,8 +2,12 @@ package com.txl.tvlib.widget.dynamic.focus;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.FocusFinder;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Checkable;
 
 import androidx.annotation.NonNull;
@@ -19,6 +23,8 @@ import com.txl.tvlib.widget.ICheckView;
  * description：
  */
 public class LibTvRecyclerView2 extends RecyclerView {
+    private final String TAG = LibTvRecyclerView2.class.getSimpleName();
+
     /**
      * 当子元素上焦点的时候是否触发选中
      * */
@@ -64,6 +70,179 @@ public class LibTvRecyclerView2 extends RecyclerView {
         mChildOnCheckedChangeListener = new CheckedStateTracker();
         mPassThroughHierarchyChangeListener = new LibTvRecyclerView2.PassThroughHierarchyChangeListener();
         super.setOnHierarchyChangeListener(mPassThroughHierarchyChangeListener);
+        setChildDrawingOrderCallback(new ChildDrawingOrderCallback(){
+            @Override
+            public int onGetChildDrawingOrder(int childCount, int i){
+                final int tempFocusIndex = indexOfChild(getFocusedChild());
+                // View 根据Z-order来进行绘制，将焦点元素的z-order与Recycler的最后一个元素进行对换 焦点的order始终最大
+                //配合 requestChildFocus 时重新绘制对焦点元素不能放置在最上面进行处理
+                if (tempFocusIndex == -1) {
+                    return i;
+                }
+                if (tempFocusIndex == i) {
+                    return childCount - 1;
+                } else if (i == childCount - 1) {
+                    return tempFocusIndex;
+                } else {
+                    return i;
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return super.dispatchKeyEvent(event);
+    }
+
+    public boolean executeKeyEvent(KeyEvent event){
+        if (!canScroll()) {
+            if (isFocused() && event.getKeyCode() != KeyEvent.KEYCODE_BACK) {
+                View currentFocused = findFocus();
+                if (currentFocused == this) currentFocused = null;
+                View nextFocused = FocusFinder.getInstance().findNextFocus(this,
+                        currentFocused, View.FOCUS_DOWN);
+                return nextFocused != null
+                        && nextFocused != this
+                        && nextFocused.requestFocus(View.FOCUS_DOWN);
+            }
+            return false;
+        }
+        boolean handled = false;
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_DPAD_UP:
+                    handled = verticalScroll(View.FOCUS_UP);
+                    break;
+                case KeyEvent.KEYCODE_DPAD_DOWN:
+                    handled = verticalScroll(View.FOCUS_DOWN);
+                    break;
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                    break;
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    break;
+            }
+        }
+
+        return handled;
+    }
+
+    private boolean canScroll(){
+        return canScrollVertically(-1) || canScrollVertically(1) || canScrollHorizontally(-1) || canScrollHorizontally(1);
+    }
+
+    private boolean horizontalScroll(int direction){
+        boolean right = direction == View.FOCUS_RIGHT;
+        View currentFocus = findFocus();
+        int realCanUseHeight = getWidth() - getPaddingEnd() - getPaddingStart();
+        if(currentFocus.getWidth() < realCanUseHeight){
+            scrollBy(0,right?currentFocus.getWidth()/2:-currentFocus.getWidth()/2);//原来焦点在中间，因此移动1/2应该没有什么问题
+        }else {
+            int dealt = currentFocus.getWidth() - realCanUseHeight + realCanUseHeight/2 + 6;
+            scrollBy(0,right?dealt:-dealt);
+        }
+
+
+        View nextFocus = FocusFinder.getInstance().findNextFocus(this,currentFocus,direction);
+        if(nextFocus != null){
+            makeViewHorizontalCenter(nextFocus);
+            final View n = nextFocus;
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    n.requestFocus(View.FOCUS_DOWN);
+                }
+            });
+        }else {
+            if(!canScrollVertically(right?-1:1)){//不能向指定的方向移动,左向上右边最后一个元素获取焦点；向右
+                return false;
+            }
+        }
+        return nextFocus != null && nextFocus != this;
+    }
+
+    private boolean verticalScroll(int direction){
+        boolean down = direction == View.FOCUS_DOWN;
+        if(!canScrollVertically(down?-1:1)){
+            return false;
+        }
+        View currentFocus = findFocus();
+        int realCanUseHeight = getHeight() - getPaddingBottom() - getPaddingTop();
+        if(currentFocus.getHeight() < realCanUseHeight){
+            scrollBy(0,down?currentFocus.getHeight()/2:-currentFocus.getHeight()/2);//原来焦点在中间，因此移动1/2应该没有什么问题
+        }else {
+            int dealt = currentFocus.getHeight() - realCanUseHeight + realCanUseHeight/2 + 6;
+            scrollBy(0,down?dealt:-dealt);
+        }
+
+
+        View nextFocus = FocusFinder.getInstance().findNextFocus(this,currentFocus,direction);
+        if(nextFocus != null){
+            makeViewVerticalCenter(nextFocus);
+            final View n = nextFocus;
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    n.requestFocus(View.FOCUS_DOWN);
+                }
+            });
+        }
+        return nextFocus != null && nextFocus != this;
+    }
+
+    private void makeViewVerticalCenter(View view){
+        if(view == null){
+            return;
+        }
+        if(view.getHeight() > (getHeight() - getPaddingTop() - getPaddingBottom())){//这个时候顶部对齐
+            scrollBy(0, currentViewTop(view));
+            return;
+        }
+        float offsetTop = currentViewTop(view) + view.getHeight()/2.0f;//fixme 当view的父容器超出recyclerView的范围会不会导致计算有问题?
+        float middle = getHeight()/2.0f;
+        offsetTop = offsetTop - middle;
+        Log.d(TAG,"makeViewVerticalCenter 偏差："+offsetTop);
+        scrollBy(0, (int) (offsetTop));
+//        float offsetLeft = currentViewLeft(view) + view.getWidth()/2.0f;
+//        middle = getWidth()/2.0f;
+//        offsetLeft = offsetLeft - middle;
+//        if(Math.abs(offsetLeft) <200 && Math.abs(offsetTop)<200){
+//            return;
+//        }
+//
+//        if(userSmoothCenter){
+//            smoothScrollBy((int) offsetLeft, (int) (offsetTop),null,5);
+//        }else {
+//
+//        }
+    }
+
+    private void makeViewHorizontalCenter(View view){
+        float offsetLeft = currentViewLeft(view) + view.getWidth()/2.0f;
+        float middle = getWidth()/2.0f;
+        offsetLeft = offsetLeft - middle;
+        Log.d(TAG,"makeViewHorizontalCenter 偏差："+offsetLeft);
+        scrollBy(0, (int) (offsetLeft));
+    }
+
+    private int currentViewTop(View view){
+        ViewGroup parent = (ViewGroup) view.getParent();
+        int top = view.getTop();
+        while (parent != null  && parent != this){
+            top = top + parent.getTop();
+            parent = (ViewGroup) parent.getParent();
+        }
+        return top;
+    }
+
+    private int currentViewLeft(View view){
+        ViewGroup parent = (ViewGroup) view.getParent();
+        int left = view.getLeft();
+        while (parent != null  && parent != this){
+            left = left + parent.getLeft();
+            parent = (ViewGroup) parent.getParent();
+        }
+        return left;
     }
 
     @Override
