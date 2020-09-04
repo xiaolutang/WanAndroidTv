@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.vlayout.DelegateAdapter
 import com.alibaba.android.vlayout.VirtualLayoutManager
 import com.txl.testtvlib.R
+import com.txl.testtvlib.testrecyclerview.item.center.viewholder.ContentViewHolder
 import com.txl.testtvlib.testrecyclerview.item.center.viewholder.TitleViewHolder
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
@@ -40,15 +41,7 @@ class TestRecyclerViewFocusCenterActivity : AppCompatActivity() {
                 return 0
             }
         })
-        recycler_title.adapter=  titleAdapter
-        titleAdapter.appendData("正常列表中元素居中")
-        titleAdapter.appendData("嵌套高度较小RecyclerView")
-        titleAdapter.appendData("嵌套高度较小LibTvRecyclerView2")
-        titleAdapter.appendData("嵌套高度较大RecyclerView")
-        titleAdapter.appendData("嵌套高度较大LibTvRecyclerView2")
-        recycler_title.setOnCheckedChangeListener { group, checkedView, position ->
 
-        }
         val layoutManager = VirtualLayoutManager(this)
         recycler_content.layoutManager = layoutManager
         val delegateAdapter = DelegateAdapter(layoutManager, false)
@@ -56,12 +49,27 @@ class TestRecyclerViewFocusCenterActivity : AppCompatActivity() {
 
         val adapter1 = BaseRecyclerFactoryAdapter<String>(object :IViewHolderFactory<BaseViewHolder>{
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-                TODO("Not yet implemented")
+                return ContentViewHolder.onCreateViewHolder(parent)
             }
 
             override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
-                TODO("Not yet implemented")
+                return 0
             }
         })
+        for (i in 0..20){
+            adapter1.appendData("$i")
+        }
+
+        recycler_title.adapter=  titleAdapter
+        titleAdapter.appendData("正常列表中元素居中")
+        titleAdapter.appendData("嵌套高度较小RecyclerView")
+        titleAdapter.appendData("嵌套高度较小LibTvRecyclerView2")
+        titleAdapter.appendData("嵌套高度较大RecyclerView")
+        titleAdapter.appendData("嵌套高度较大LibTvRecyclerView2")
+        recycler_title.setOnCheckedChangeListener { group, checkedView, position ->
+            if(position == 0){
+
+            }
+        }
     }
 }
