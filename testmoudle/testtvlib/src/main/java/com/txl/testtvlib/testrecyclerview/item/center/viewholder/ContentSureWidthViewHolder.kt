@@ -13,16 +13,16 @@ import com.txl.ui_basic.viewholder.BaseViewHolder
  * date：2020/9/4
  * description：
  */
-class ContentViewHolder(itemView:View):BaseViewHolder(itemView) {
+class ContentSureWidthViewHolder(itemView:View):BaseViewHolder(itemView) {
     companion object{
-        fun onCreateViewHolder(parent: ViewGroup): ContentViewHolder{
-            return ContentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_image_and_text,parent,false))
+        fun onCreateViewHolder(parent: ViewGroup): ContentSureWidthViewHolder{
+            return ContentSureWidthViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_sure_width_image_and_text,parent,false))
         }
     }
 
 
     override fun <T : Any?> onBindViewHolder(position: Int, data: T) {
         super.onBindViewHolder(position, data)
-        itemView.findViewById<TextView>(R.id.tv_text_item).text = "第${position}个"
+        itemView.findViewById<TextView>(R.id.tv_text_item).text = "第${position}个元素"
     }
 }

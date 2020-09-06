@@ -7,7 +7,6 @@ import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.Checkable;
 
 import androidx.annotation.NonNull;
@@ -91,8 +90,21 @@ public class LibTvRecyclerView2 extends RecyclerView {
     }
 
     @Override
+    public void requestChildFocus(View child, View focused) {
+        super.requestChildFocus(child, focused);
+        //bug 解决焦点View被其它子View覆盖的问题
+        invalidate();
+    }
+
+    @Override
+    public View focusSearch(View focused, int direction) {
+        View focusView = FocusFinder.getInstance().findNextFocus(this,focused,direction);
+        return  focusView != null? focusView : super.focusSearch(focused,direction);
+    }
+
+    @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        return super.dispatchKeyEvent(event);
+        return super.dispatchKeyEvent(event) || executeKeyEvent(event);
     }
 
     public boolean executeKeyEvent(KeyEvent event){
@@ -118,8 +130,10 @@ public class LibTvRecyclerView2 extends RecyclerView {
                     handled = verticalScroll(View.FOCUS_DOWN);
                     break;
                 case KeyEvent.KEYCODE_DPAD_LEFT:
+                    handled = horizontalScroll(View.FOCUS_LEFT);
                     break;
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    handled = horizontalScroll(View.FOCUS_RIGHT);
                     break;
             }
         }
@@ -134,12 +148,12 @@ public class LibTvRecyclerView2 extends RecyclerView {
     private boolean horizontalScroll(int direction){
         boolean right = direction == View.FOCUS_RIGHT;
         View currentFocus = findFocus();
-        int realCanUseHeight = getWidth() - getPaddingEnd() - getPaddingStart();
-        if(currentFocus.getWidth() < realCanUseHeight){
-            scrollBy(0,right?currentFocus.getWidth()/2:-currentFocus.getWidth()/2);//原来焦点在中间，因此移动1/2应该没有什么问题
+        int realCanUseWidth = getWidth() - getPaddingEnd() - getPaddingStart();
+        if(currentFocus.getWidth() < realCanUseWidth){
+            scrollBy(right?currentFocus.getWidth()/2:-currentFocus.getWidth()/2,0);//原来焦点在中间，因此移动1/2应该没有什么问题
         }else {
-            int dealt = currentFocus.getWidth() - realCanUseHeight + realCanUseHeight/2 + 6;
-            scrollBy(0,right?dealt:-dealt);
+            int dealt = currentFocus.getWidth() - realCanUseWidth + realCanUseWidth/2 + 6;
+            scrollBy(right?dealt:-dealt,0);
         }
 
 
@@ -154,8 +168,10 @@ public class LibTvRecyclerView2 extends RecyclerView {
                 }
             });
         }else {
-            if(!canScrollVertically(right?-1:1)){//不能向指定的方向移动,左向上右边最后一个元素获取焦点；向右
+            if(!canScrollVertically(right?1:-1)){//不能向指定的方向移动,左向上右边最后一个元素获取焦点；向右
                 return false;
+            }else {
+
             }
         }
         return nextFocus != null && nextFocus != this;
@@ -163,7 +179,7 @@ public class LibTvRecyclerView2 extends RecyclerView {
 
     private boolean verticalScroll(int direction){
         boolean down = direction == View.FOCUS_DOWN;
-        if(!canScrollVertically(down?-1:1)){
+        if(!canScrollVertically(down?1:-1)){
             return false;
         }
         View currentFocus = findFocus();
@@ -203,18 +219,6 @@ public class LibTvRecyclerView2 extends RecyclerView {
         offsetTop = offsetTop - middle;
         Log.d(TAG,"makeViewVerticalCenter 偏差："+offsetTop);
         scrollBy(0, (int) (offsetTop));
-//        float offsetLeft = currentViewLeft(view) + view.getWidth()/2.0f;
-//        middle = getWidth()/2.0f;
-//        offsetLeft = offsetLeft - middle;
-//        if(Math.abs(offsetLeft) <200 && Math.abs(offsetTop)<200){
-//            return;
-//        }
-//
-//        if(userSmoothCenter){
-//            smoothScrollBy((int) offsetLeft, (int) (offsetTop),null,5);
-//        }else {
-//
-//        }
     }
 
     private void makeViewHorizontalCenter(View view){
@@ -222,7 +226,7 @@ public class LibTvRecyclerView2 extends RecyclerView {
         float middle = getWidth()/2.0f;
         offsetLeft = offsetLeft - middle;
         Log.d(TAG,"makeViewHorizontalCenter 偏差："+offsetLeft);
-        scrollBy(0, (int) (offsetLeft));
+        scrollBy((int) offsetLeft, 0);
     }
 
     private int currentViewTop(View view){

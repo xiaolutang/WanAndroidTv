@@ -5,18 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".testrecyclerview.item.center.TestRecyclerViewFocusCenterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusable="false">
     <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
         android:id="@+id/recycler_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:padding="@dimen/dp_20"/>
+        android:padding="@dimen/dp_5"
+        android:focusable="false" />
     <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
         android:id="@+id/recycler_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:clipChildren="false"/>
+        android:clipChildren="false"
+        android:focusable="false"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"/>
 </LinearLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:clipToPadding="false"
+    android:clipChildren="false">
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="高度较大的 Grid LibTvRecyclerView2"/>
+    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_item_content"
+        >
+
+    </com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2>
+</LinearLayout>
