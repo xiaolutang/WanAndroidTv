@@ -7,12 +7,14 @@ import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Checkable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.txl.tvlib.focushandler.IFocusSearchHelper;
 import com.txl.tvlib.widget.ICheckView;
 
 /**
@@ -158,8 +160,10 @@ public class LibTvRecyclerView2 extends RecyclerView {
 
 
         View nextFocus = FocusFinder.getInstance().findNextFocus(this,currentFocus,direction);
+        nextFocus = findNextFocusViewJumpRow(currentFocus,direction);
         if(nextFocus != null){
             makeViewHorizontalCenter(nextFocus);
+            makeViewVerticalCenter(nextFocus);
             final View n = nextFocus;
             post(new Runnable() {
                 @Override
@@ -167,14 +171,126 @@ public class LibTvRecyclerView2 extends RecyclerView {
                     n.requestFocus(View.FOCUS_DOWN);
                 }
             });
-        }else {
-            if(!canScrollVertically(right?1:-1)){//不能向指定的方向移动,左向上右边最后一个元素获取焦点；向右
-                return false;
-            }else {
-
-            }
         }
         return nextFocus != null && nextFocus != this;
+    }
+
+    private int getAdapterPositionByView(LibTvRecyclerView2 root,View view) {
+        if (view == null || !checkViewIsMyChild(view)) {
+            return NO_POSITION;
+        }
+        View dirChild = view;
+        ViewParent parent = view.getParent();
+        while (parent != root && parent != null) {
+            dirChild = (View) parent;
+            parent = dirChild.getParent();
+        }
+        LayoutParams params = (LayoutParams) dirChild.getLayoutParams();
+        if (params == null || params.isItemRemoved()) {
+            // when item is removed, the position value can be any value.
+            return NO_POSITION;
+        }
+        return params.getViewAdapterPosition();
+    }
+
+    /**
+     * @param targetView 需要被检查的目标View
+     * @return true即将获取焦点的View是当前ViewGroup的直接或间接子元素
+     */
+    private boolean checkViewIsMyChild(View targetView) {
+        ViewParent parent = null;
+        View temp = targetView;
+        while (temp != null) {
+            parent = temp.getParent();
+            if (parent == this) {//理论上从RecyclerView中搜索焦点一定能够找到这个。
+                return true;
+            }
+            if (parent instanceof View) {//这样子来找有点耗时,有条件的时候优化
+                temp = (View) parent;
+            } else {
+                break;
+            }
+        }
+        return false;
+    }
+
+    /***
+     * 左右按键跨行寻找下一个可以获取焦点的View
+     * */
+    private View findNextFocusViewJumpRow(View currentFocus,int direct){
+        boolean isRight = direct == View.FOCUS_RIGHT;
+        //原来向右左向
+        int position = isRight?(getAdapterPositionByView(this,currentFocus)+1):(getAdapterPositionByView(this,currentFocus)-1);
+        return isRight?searchRightFocus(getLayoutManager(),position):searchLeftFocus(getLayoutManager(), position);
+    }
+
+
+    private View searchLeftFocus(LayoutManager layoutManager, int targetPosition) {
+        View result;
+        for (; targetPosition >= 0; targetPosition--) {
+            result = layoutManager.findViewByPosition(targetPosition);
+            result = findLastFocusAbleView(result);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 向右查找焦点
+     * */
+    private View searchRightFocus(LayoutManager layoutManager, int targetPosition) {
+        if(layoutManager==null){
+            return null;
+        }
+        View result;
+        for (; targetPosition < getAdapter().getItemCount(); targetPosition++) {
+            result = layoutManager.findViewByPosition(targetPosition);
+            result = findFirstFocusAbleView(result);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    private View findFirstFocusAbleView(View targetFocusView) {
+        if (viewCanFocus(targetFocusView)) return targetFocusView;
+        if(targetFocusView instanceof IFocusSearchHelper){
+            return findFirstFocusAbleView(((IFocusSearchHelper) targetFocusView).findFirstFocusAbleView());
+        }else if (targetFocusView instanceof ViewGroup) {
+            ViewGroup temp = (ViewGroup) targetFocusView;
+            int childCount = temp.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View focus = findFirstFocusAbleView(temp.getChildAt(i));
+                if (viewCanFocus(focus)) {
+                    return focus;
+                }
+            }
+        }
+        return null;
+    }
+
+    private View findLastFocusAbleView(View targetFocusView) {
+        if (viewCanFocus(targetFocusView)) return targetFocusView;
+        if(targetFocusView instanceof IFocusSearchHelper){
+            return findLastFocusAbleView(((IFocusSearchHelper) targetFocusView).findLastFocusAbleView());
+        }else if (targetFocusView instanceof ViewGroup) {
+            ViewGroup temp = (ViewGroup) targetFocusView;
+            int childCount = temp.getChildCount();
+            for (int i = childCount-1; i >= 0; i--) {
+                View focus = findLastFocusAbleView(temp.getChildAt(i));
+                if (viewCanFocus(focus)) {
+                    return focus;
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean viewCanFocus(View targetFocusView) {
+        return targetFocusView != null && targetFocusView.isFocusable() && targetFocusView.getVisibility() == View.VISIBLE;
     }
 
     private boolean verticalScroll(int direction){

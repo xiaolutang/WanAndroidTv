@@ -1,7 +1,6 @@
 package com.txl.testtvlib.testrecyclerview.item.center
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -62,7 +61,7 @@ class TestRecyclerViewFocusCenterActivity : AppCompatActivity() {
             }
 
             override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
-                return 0
+                return 1
             }
         },layoutHelper)
         for (i in 0..20){
@@ -72,19 +71,19 @@ class TestRecyclerViewFocusCenterActivity : AppCompatActivity() {
         //嵌套RecyclerView  Grid
         val singleLayoutHelper = SingleLayoutHelper()
         singleLayoutHelper.marginTop = resources.getDimensionPixelSize(R.dimen.dp_5)
-        val adapter2 = BaseVLayoutAdapter<String,RecyclerViewViewHolder>(object :IViewHolderFactory<RecyclerViewViewHolder>{
+        val gridRecyclerAdapter = BaseVLayoutAdapter<String,RecyclerViewViewHolder>(object :IViewHolderFactory<RecyclerViewViewHolder>{
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewViewHolder {
                 return RecyclerViewViewHolder.onCreateViewHolder(parent)
             }
 
             override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
-                return 0
+                return 2
             }
         },singleLayoutHelper)
-        adapter2.appendData("我是第二个")
+        gridRecyclerAdapter.appendData("我是第二个")
 
-        //嵌套RecyclerView  Grid
-        val singleLayoutHelper2 = SingleLayoutHelper()
+        //嵌套RecyclerView  水平滚动
+        val singleLayoutHelper3 = SingleLayoutHelper()
         singleLayoutHelper.marginTop = resources.getDimensionPixelSize(R.dimen.dp_5)
         val adapter3 = BaseVLayoutAdapter<String,RecyclerViewHorizontalViewHolder>(object :IViewHolderFactory<RecyclerViewHorizontalViewHolder>{
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHorizontalViewHolder {
@@ -92,10 +91,39 @@ class TestRecyclerViewFocusCenterActivity : AppCompatActivity() {
             }
 
             override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
-                return 0
+                return 3
             }
-        },singleLayoutHelper2)
+        },singleLayoutHelper3)
         adapter3.appendData("我是第三个")
+
+        //正常列表
+        val layoutHelper4 = GridLayoutHelper(4)
+        layoutHelper4.setGap(resources.getDimensionPixelSize(R.dimen.dp_5))
+        val adapter4 = BaseVLayoutAdapter<String,ContentViewHolder>(object :IViewHolderFactory<ContentViewHolder>{
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentViewHolder {
+                return ContentViewHolder.onCreateViewHolder(parent)
+            }
+
+            override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
+                return 4
+            }
+        },layoutHelper4)
+        for (i in 0..20){
+            adapter4.appendData("$i")
+        }
+
+        val singleLayoutHelper5 = SingleLayoutHelper()
+        singleLayoutHelper.marginTop = resources.getDimensionPixelSize(R.dimen.dp_5)
+        val adapter5 = BaseVLayoutAdapter<String,RecyclerViewHorizontalViewHolder>(object :IViewHolderFactory<RecyclerViewHorizontalViewHolder>{
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHorizontalViewHolder {
+                return RecyclerViewHorizontalViewHolder.onCreateViewHolder(parent)
+            }
+
+            override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
+                return 5
+            }
+        },singleLayoutHelper5)
+        adapter5.appendData("我是第三个")
 
         recycler_title.adapter=  titleAdapter
         titleAdapter.appendData("正常列表中元素居中")
@@ -104,9 +132,12 @@ class TestRecyclerViewFocusCenterActivity : AppCompatActivity() {
         titleAdapter.appendData("嵌套高度较大RecyclerView")
         titleAdapter.appendData("嵌套高度较大LibTvRecyclerView2")
         recycler_title.visibility = View.GONE
+        // FIXME: 2020/9/6 8.0系统跨越gridLayoutManager 会出现焦点不能正常搜索且崩溃的bug
         delegateAdapter.addAdapter(adapter1)
         delegateAdapter.addAdapter(adapter3)
-        delegateAdapter.addAdapter(adapter2)
+//        delegateAdapter.addAdapter(adapter1)
+        delegateAdapter.addAdapter(adapter4)
+//        delegateAdapter.addAdapter(adapter5)
 //        recycler_title.setOnCheckedChangeListener { group, checkedView, position ->
 //            Log.d(TAG,"选中 position $position")
 //            if(position == 0){
