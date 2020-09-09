@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
             adapter.appendData("我是$i")
         }
         tv_recycler_view.adapter = adapter
+//        tv_recycler_view.postDelayed({},1500)tv_recycler_view.setCheckedPosition(5)
+        tv_recycler_view.setCheckedPosition(5)
     }
 
     class TestViewHolder(itemView: View):BaseViewHolder(itemView){

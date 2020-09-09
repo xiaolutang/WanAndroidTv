@@ -159,8 +159,7 @@ public class LibTvRecyclerView2 extends RecyclerView {
         }
 
 
-        View nextFocus = FocusFinder.getInstance().findNextFocus(this,currentFocus,direction);
-        nextFocus = findNextFocusViewJumpRow(currentFocus,direction);
+        View nextFocus = findNextFocusViewJumpRow(currentFocus,direction);
         if(nextFocus != null){
             makeViewHorizontalCenter(nextFocus);
             makeViewVerticalCenter(nextFocus);
@@ -368,6 +367,26 @@ public class LibTvRecyclerView2 extends RecyclerView {
     @Override
     public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
         mPassThroughHierarchyChangeListener.mOnHierarchyChangeListener = listener;
+    }
+
+    public void setCheckedPosition(final int position){
+
+        scrollToPosition(position);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                LayoutManager layoutManager = getLayoutManager();
+                if(layoutManager != null){
+                    final View targetView = layoutManager.findViewByPosition(position);
+                    if(targetView instanceof ICheckView){
+                        ((ICheckView) targetView).setChecked(true);
+                        makeViewHorizontalCenter(targetView);
+                        makeViewVerticalCenter(targetView);
+                    }
+                }
+            }
+        });
+        mCheckedPosition = position;
     }
 
     @Override
