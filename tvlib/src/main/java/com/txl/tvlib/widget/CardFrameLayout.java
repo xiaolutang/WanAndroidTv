@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -329,6 +330,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
         int borderWidth = 5;
         int borderColor = Color.WHITE;
         Paint paint = new Paint();
+        Drawable focusDrawable;
 
         ViewBorder() {
             paint.setStyle(Paint.Style.STROKE);
@@ -340,6 +342,10 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
         void drawableBorder(Canvas canvas){
             if(drawBorder){
                 Log.d(TAG,"drawableBorder width: "+getWidth()+" height: "+getHeight());
+                if(focusDrawable != null){
+                    focusDrawable.setBounds(0,0,getWidth(),getHeight());
+                    focusDrawable.draw(canvas);
+                }
                 //除2.0的原因是绘制会从线的中心点画
                 canvas.drawRect(borderWidth/2.0f,borderWidth/2.0f, getWidth()-borderWidth/2.0f,getHeight()-borderWidth/2.0f,paint);
             }
