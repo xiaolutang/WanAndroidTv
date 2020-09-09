@@ -1,6 +1,7 @@
 package com.txl.tvlib.widget.dynamic.focus;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.FocusFinder;
@@ -16,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.txl.tvlib.focushandler.IFocusSearchHelper;
 import com.txl.tvlib.widget.ICheckView;
+import com.txl.tvlib.widget.dynamic.focus.utils.DynamicFocusHelper;
+
+import java.util.ArrayList;
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.
@@ -23,7 +27,7 @@ import com.txl.tvlib.widget.ICheckView;
  * date：2020/9/2
  * description：
  */
-public class LibTvRecyclerView2 extends RecyclerView {
+public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusViewGroup{
     private final String TAG = LibTvRecyclerView2.class.getSimpleName();
 
     /**
@@ -52,6 +56,8 @@ public class LibTvRecyclerView2 extends RecyclerView {
      *当前选中的position
      * */
     private int mCheckedPosition = RecyclerView.INVALID_TYPE;
+
+    private DynamicFocusHelper mDynamicFocusHelper;
 
 
     public LibTvRecyclerView2(@NonNull Context context) {
@@ -89,11 +95,48 @@ public class LibTvRecyclerView2 extends RecyclerView {
                 }
             }
         });
+        mDynamicFocusHelper = new DynamicFocusHelper(this);
+    }
+
+    public void openFocusDynamic(boolean open){
+        mDynamicFocusHelper.setOpenDynamic(open);
+    }
+
+
+    @Override
+    public void addFocusables(ArrayList<View> views, int direction, int focusableMode) {
+        if(!mDynamicFocusHelper.addFocusables(views,direction,focusableMode)){
+            super.addFocusables(views, direction, focusableMode);
+        }
+    }
+
+    @Override
+    public void clearFocus() {
+        mDynamicFocusHelper.clearFocus();
+        super.clearFocus();
+    }
+
+    @Override
+    public void clearChildFocus(View child) {
+        mDynamicFocusHelper.clearChildFocus();
+        super.clearChildFocus(child);
+    }
+
+    @Override
+    public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+        mDynamicFocusHelper.requestFocus(direction, previouslyFocusedRect);
+        return super.requestFocus(direction, previouslyFocusedRect);
+    }
+
+    @Override
+    public boolean dispatchAddFocusables(ArrayList<View> views, int direction, int focusableMode) {
+        return mDynamicFocusHelper.dispatchAddFocusables(views, direction, focusableMode);
     }
 
     @Override
     public void requestChildFocus(View child, View focused) {
         super.requestChildFocus(child, focused);
+        mDynamicFocusHelper.requestChildFocus(child, focused);
         //bug 解决焦点View被其它子View覆盖的问题
         invalidate();
     }
@@ -476,6 +519,8 @@ public class LibTvRecyclerView2 extends RecyclerView {
     private void setCheckedView(View checkedView){
         if(checkedView instanceof ICheckView){
             mCheckedView = (ICheckView) checkedView;
+            //选中的View能够正常获取焦点
+            mDynamicFocusHelper.requestChildFocus(checkedView, null);
             RecyclerView.LayoutParams params = (LayoutParams) checkedView.getLayoutParams();
             mCheckedPosition = params.getViewAdapterPosition();
             if (mOnCheckedChangeListener != null) {
