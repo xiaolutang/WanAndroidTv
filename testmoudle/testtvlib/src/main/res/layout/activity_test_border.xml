@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".testborder.TestBorderActivity">
+
+    <ImageView
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@color/colorAccentAlpha"
+        android:background="@drawable/select_border" />
+
+    <ImageView
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@color/colorAccentAlpha"
+        android:background="@drawable/border"/>
+</LinearLayout>

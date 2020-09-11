@@ -9,7 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_20">
         <com.txl.tvlib.widget.CardFrameLayout
             android:id="@+id/card_frame_01"
             android:layout_width="match_parent"
@@ -37,6 +39,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
                 android:text="测试元素居中能力"
+                android:textSize="@dimen/sp_15"
+                android:gravity="center"/>
+        </com.txl.tvlib.widget.CardFrameLayout>
+        <com.txl.tvlib.widget.CardFrameLayout
+            android:id="@+id/card_frame_03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_test_focus_bg"
+            android:layout_marginTop="@dimen/dp_10"
+            app:auto_add_focus_animation="true"
+            app:hasFocusBorder="false">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:text=".9画border"
+                android:textSize="@dimen/sp_15"
+                android:gravity="center"/>
+        </com.txl.tvlib.widget.CardFrameLayout>
+        <com.txl.tvlib.widget.CardFrameLayout
+            android:id="@+id/card_frame_04"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_test_focus_bg"
+            android:layout_marginTop="@dimen/dp_10"
+            app:auto_add_focus_animation="true"
+            app:hasFocusBorder="false">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:text="飞框测试 "
                 android:textSize="@dimen/sp_15"
                 android:gravity="center"/>
         </com.txl.tvlib.widget.CardFrameLayout>
