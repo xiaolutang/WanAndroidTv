@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<com.txl.tvlib.border.DrawBorderFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        android:theme="@style/ThemeOverlay.AppCompat">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_28"
-            android:textColor="#fff"
-            android:text="WanAndroidTv"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:focusable="true"/>
-        <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recycler_nav"
-            android:layout_marginTop="@dimen/dp_30"
-            android:layout_marginBottom="@dimen/dp_30"
-            android:layout_marginStart="@dimen/dp_90"
-            android:layout_marginEnd="@dimen/dp_90"/>
-    </com.google.android.material.appbar.AppBarLayout>
-    <com.txl.wanandroidtv.ui.widget.NavViewPager
+    android:layout_height="match_parent"
+    android:focusable="false">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_view_pager"
-        android:visibility="visible"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:focusable="false">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:theme="@style/ThemeOverlay.AppCompat"
+            android:focusable="false"
+            android:background="#0fff"
+            app:elevation="0dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_28"
+                android:textColor="#fff"
+                android:text="WanAndroidTv"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:focusable="false"/>
+            <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_nav"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginBottom="@dimen/dp_30"
+                android:layout_marginStart="@dimen/dp_90"
+                android:layout_marginEnd="@dimen/dp_90"
+                android:focusable="false"/>
+        </com.google.android.material.appbar.AppBarLayout>
+        <com.txl.wanandroidtv.ui.widget.NavViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_view_pager"
+            android:visibility="visible"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:focusable="false"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.txl.tvlib.border.DrawBorderFrameLayout>
+

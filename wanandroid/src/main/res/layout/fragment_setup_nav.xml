@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
         android:id="@+id/recycler_left_nav"
         android:layout_width="@dimen/dp_200"
         android:layout_height="match_parent"
@@ -14,7 +14,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         app:layout_constraintStart_toStartOf="parent" />
-    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
         android:id="@+id/recycler_second_nav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recycler_left_nav">
-        <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+        <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
             android:id="@+id/recycler_content"
             android:layout_width="0dp"
             android:layout_height="0dp"

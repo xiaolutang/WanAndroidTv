@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import com.txl.commonlibrary.utils.DrawableUtils
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
@@ -38,18 +39,16 @@ class NavItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
         if(data is NavItemData){
             radioTitle.text = data.title
             val states = arrayOfNulls<IntArray>(3)
-            states[0] = intArrayOf(android.R.attr.state_focused)
+            states[0] = intArrayOf(android.R.attr.state_selected)
             states[1] = intArrayOf(android.R.attr.state_checked)
             states[2] = intArrayOf()
             val themeColor = ThemeUtils.getThemeColor(radioTitle.context)
             val white = radioTitle.resources.getColor(R.color.white)
-            val colors = intArrayOf(white, themeColor,white)
+            val colors = intArrayOf(themeColor,white ,white)
             radioTitle.setTextColor(ColorStateList(states,colors))
             val radius = itemView.resources.getDimensionPixelSize(R.dimen.dp_30)
-            val bgDrawable = DrawableUtils.makeFramelessStateListDrawable(Color.TRANSPARENT,themeColor,themeColor,radius.toFloat())
-//            itemView.background = ContextCompat.getDrawable(radioTitle.context,R.drawable.nav_item_bg)
-            //fixme 为什么通过xml渲染有问题？
-            itemView.background = bgDrawable
+//            val bgDrawable = DrawableUtils.makeFramelessStateListDrawable(Color.TRANSPARENT,themeColor,themeColor,radius.toFloat())
+            itemView.background = ContextCompat.getDrawable(radioTitle.context,R.drawable.nav_item_bg)
         }
     }
 }

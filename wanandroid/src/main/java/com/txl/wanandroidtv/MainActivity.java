@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
         TvLibConfig config = new TvLibConfig.Builder()
                 .setBorderColor(ThemeUtils.INSTANCE.getThemeColor(this))
                 .setBorderWidth(getResources().getDimensionPixelSize(R.dimen.dp_5))
-                .setHasSelectBorder(true)
+                .setHasSelectBorder(false)
                 .build();
         TvLibConfig.Companion.setDefaultConfig(config);
         initView();

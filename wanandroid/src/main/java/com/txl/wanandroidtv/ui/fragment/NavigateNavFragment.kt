@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.txl.commonlibrary.utils.DrawableUtils
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateArticleListData
 import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
@@ -50,9 +51,9 @@ class NavigateNavFragment: BaseNavFragment() {
         }
     }
 
-    var leftNavRecyclerView:LibTvRecyclerView?  = null
+    var leftNavRecyclerView:LibTvRecyclerView2?  = null
     var refreshLayout:SmartRefreshLayout?  = null
-    var contentNavRecyclerView:LibTvRecyclerView?  = null
+    var contentNavRecyclerView: LibTvRecyclerView2?  = null
 
     private var leftNavigateAdapter: BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
     private var rightContentNavigateAdapter: BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
@@ -64,7 +65,7 @@ class NavigateNavFragment: BaseNavFragment() {
     override fun initView() {
         leftNavRecyclerView =  findViewById(R.id.tv_recycler_left_nav)
         leftNavRecyclerView?.openFocusDynamic(true)
-        leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPositionAndTop(position) }
+//        leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPositionAndTop(position) }
         refreshLayout =  findViewById(R.id.fragment_lib_smart_refresh_layout)
         refreshLayout?.setPadding(resources.getDimensionPixelSize(R.dimen.dp_90),resources.getDimensionPixelSize(R.dimen.dp_20),resources.getDimensionPixelSize(R.dimen.dp_90),resources.getDimensionPixelSize(R.dimen.dp_20))
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
@@ -77,9 +78,9 @@ class NavigateNavFragment: BaseNavFragment() {
         contentNavRecyclerView?.openFocusDynamic(false)
         rightContentNavigateAdapter = BaseRecyclerFactoryAdapter( NavigateFlexBoxItemViewHolderFactory())
         contentNavRecyclerView?.adapter = rightContentNavigateAdapter
-        contentNavRecyclerView?.setChildFocusListener{ position, child ->
-            leftNavRecyclerView?.setCheckedPosition(position)
-        }
+//        contentNavRecyclerView?.setChildFocusListener{ position, child ->
+//            leftNavRecyclerView?.setCheckedPosition(position)
+//        }
     }
 
 

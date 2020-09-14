@@ -39,7 +39,7 @@ object DataDriven {
         return getData(url)
     }
 
-    fun getSquareArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
+    fun getSquareArticleList(page:Int):Response<String>{
         val url = "$BASE_URL/user_article/list/$page/json"
         return getData(url)
     }
@@ -88,11 +88,11 @@ object DataDriven {
         }catch (e:Exception){
             e.printStackTrace()
         }
-        if(!TextUtils.isEmpty(originString)){
+        return if(!TextUtils.isEmpty(originString)){
             val type = genericType<Response<T>>()
-            return Response(true,Gson().fromJson(originString, type), null, "",originString)
+            Response(true,Gson().fromJson(originString, type), null, "",originString)
         }else{
-            return Response(false,null, Error.newNetError("-1"),"response is null")
+            Response(false,null, Error.newNetError("-1"),"response is null")
         }
     }
 

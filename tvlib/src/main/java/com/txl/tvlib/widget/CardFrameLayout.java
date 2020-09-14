@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import androidx.leanback.widget.ShadowOverlayContainer;
 import com.txl.tvlib.R;
+import com.txl.tvlib.border.ICustomBorderView;
 import com.txl.tvlib.config.TvLibConfig;
 import com.txl.tvlib.focushandler.ViewFocusChangeListener;
 import com.txl.tvlib.widget.focus.shake.IFocusShake;
@@ -22,7 +23,7 @@ import com.txl.tvlib.widget.focus.shake.ViewShakeAnimation;
 /**
  * 具有RadioButton的能力，当元素焦点改变时会触发checked,在失去焦点的时候或将check置为false select置为true {@link FocusTracker#onFocusChange}
  * */
-public class CardFrameLayout extends FrameLayout implements ICheckView {
+public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomBorderView {
 
     private static final String TAG = CardFrameLayout.class.getSimpleName();
 
@@ -31,6 +32,8 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
     };
 
     private boolean _checked;
+
+    private boolean hasFocusBorder;
 
     /**
      * 不管当前状态强制更改选中状态
@@ -90,7 +93,8 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
 
         openFocusShake = a.getBoolean(R.styleable.CardFrameLayout_open_shake, true);
         autoAddFocusAnimation = a.getBoolean(R.styleable.CardFrameLayout_auto_add_focus_animation, false);
-        mViewBorder.drawBorder = a.getBoolean(R.styleable.CardFrameLayout_hasFocusBorder,TvLibConfig.Companion.getDefaultConfig().getHasSelectBorder());
+        hasFocusBorder = a.getBoolean(R.styleable.CardFrameLayout_hasFocusBorder,TvLibConfig.Companion.getDefaultConfig().getHasSelectBorder());
+        mViewBorder.drawBorder = true;
         mViewBorder.setBorderWidth(a.getDimensionPixelSize(R.styleable.CardFrameLayout_selectBorderWidth, TvLibConfig.Companion.getDefaultConfig().getBorderWidth()));
         mViewBorder.setBorderColor(a.getColor(R.styleable.CardFrameLayout_borderColor,TvLibConfig.Companion.getDefaultConfig().getBorderColor()));
         mFocusChecked = a.getBoolean(R.styleable.CardFrameLayout_focusChecked,true);
@@ -188,6 +192,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
             _checked = checked;
             refreshDrawableState();
             dispatchSetChecked(checked);
+            //元素丢失焦点时会触发select,并且将状态转换为un_checked;要是通一个父容器里面有其它元素被选中，会触checked为false
             if(!checked){
                 setSelected(false);
             }
@@ -287,6 +292,21 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
         mFocusChecked = focusChecked;
     }
 
+    @Override
+    public boolean drawBorderBySelf() {
+        return hasFocusBorder;
+    }
+
+    @Override
+    public String focusScale() {
+        return null;
+    }
+
+    @Override
+    public boolean hasFocusAnimation() {
+        return false;
+    }
+
     private class FocusTracker implements OnFocusChangeListener{
         private OnFocusChangeListener focusChangeListener;
         /**
@@ -299,6 +319,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
         public void onFocusChange(View v, boolean hasFocus) {
             if(hasFocus){//元素获取焦点的时候触发checked
                 setChecked(true);
+                setSelected(false);
             }else {
                 setChecked(false);
                 setSelected(true);
@@ -340,7 +361,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView {
         }
 
         void drawableBorder(Canvas canvas){
-            if(drawBorder){
+            if(false){//暂时屏蔽自己绘制border的能力
                 Log.d(TAG,"drawableBorder width: "+getWidth()+" height: "+getHeight());
                 if(focusDrawable != null){
                     focusDrawable.setBounds(0,0,getWidth(),getHeight());

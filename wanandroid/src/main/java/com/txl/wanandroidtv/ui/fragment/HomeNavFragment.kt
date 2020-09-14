@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
 import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
@@ -51,7 +52,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
 
     var adapter: BaseRecyclerFactoryAdapter<*>? = null
 
-    var recyclerView: LibTvRecyclerView? = null
+    var recyclerView: LibTvRecyclerView2? = null
         private set
 
     var smartRefreshLayout: SmartRefreshLayout? = null
@@ -83,19 +84,19 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         //暂时不考虑阿里的VLayout 不需要那么复杂
         adapter = createAdapter()
         recyclerView?.adapter = adapter
-        recyclerView?.focusSearchFailedListener = object: LibTvRecyclerView.OnFocusSearchFailedListener {
-            override fun onFocusSearchFailed(
-                    currentFocusView: View?,
-                    viewPosition: Int,
-                    direct: Int
-            ) {
-                //常规列表有4个元素一行，所以减4
-                if((direct == View.FOCUS_DOWN || direct == View.FOCUS_RIGHT) && adapter != null && viewPosition+1 >= adapter!!.itemCount-4 && viewPosition != RecyclerView.NO_POSITION){
-                    smartRefreshLayout?.autoLoadMore()
-//                    viewModel?.nextPage()
-                }
-            }
-        }
+//        recyclerView?.focusSearchFailedListener = object: LibTvRecyclerView.OnFocusSearchFailedListener {
+//            override fun onFocusSearchFailed(
+//                    currentFocusView: View?,
+//                    viewPosition: Int,
+//                    direct: Int
+//            ) {
+//                //常规列表有4个元素一行，所以减4
+//                if((direct == View.FOCUS_DOWN || direct == View.FOCUS_RIGHT) && adapter != null && viewPosition+1 >= adapter!!.itemCount-4 && viewPosition != RecyclerView.NO_POSITION){
+//                    smartRefreshLayout?.autoLoadMore()
+////                    viewModel?.nextPage()
+//                }
+//            }
+//        }
         recyclerView?.layoutManager = GridLayoutManager(requireContext(),HOME_SPAN_COUNT)
         recyclerView?.addItemDecoration(HomeGridDividerItemDecoration(resources.getDimensionPixelSize(R.dimen.dp_50)))
     }

@@ -21,7 +21,7 @@ class SquareNavItemListViewModel: AbsNavItemListViewModel() {
 
     private fun getSquareNavItemListData() {
         AppExecutors.execNetIo {
-            val (state, data1) = getSquareArticleList(currentPage, currentPage == 0)
+            val (state, data1) = getSquareArticleList(currentPage)
             if (state) {
                 val g = Gson()
                 val result = g.fromJson(data1, HomeArticleListData::class.java)
