@@ -1,11 +1,12 @@
 package com.txl.wanandroidtv.data
 import android.text.TextUtils
-import com.txl.netmodel.NetInvokerUtils
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.txl.wanandroidtv.ui.utils.WanAndroidNetInvokerUtils
 import com.txl.txllog.AndroidLogWrapper
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import com.txl.wanandroidtv.bean.home.BannerItemData
 import java.lang.Exception
-import java.lang.StringBuilder
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -19,6 +20,14 @@ object DataDriven {
 
 
     /**
+     * 获取首页banner
+     * */
+    fun getHomeBanner():Response<List<BannerItemData>>{
+        val url = "$BASE_URL/banner/json"
+        return getData(url)
+    }
+
+    /**
      * 获取玩Android首页文章列表数据
      * @param page 第几页数据
      * @param useCache 是否对数据进行缓存
@@ -27,12 +36,12 @@ object DataDriven {
      * */
     fun getHomeArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
         val url = "$BASE_URL/article/list/$page/json"
-        return getData(url, useCache)
+        return getData(url)
     }
 
     fun getSquareArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
         val url = "$BASE_URL/user_article/list/$page/json"
-        return getData(url, useCache)
+        return getData(url)
     }
 
     /**
@@ -40,12 +49,12 @@ object DataDriven {
      * */
     fun getNavigateArticleList():Response<String>{
         val url = "$BASE_URL/navi/json"
-        return getData(url,true)
+        return getData(url)
     }
 
     fun getQANavArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
         val url = "$BASE_URL/wenda/list/$page/json"
-        return getData(url, useCache)
+        return getData(url)
     }
 
     /**
@@ -53,7 +62,7 @@ object DataDriven {
      * */
     fun getSetUpNavData():Response<String>{
         val url = "$BASE_URL/tree/json"
-        return getData(url, true)
+        return getData(url)
     }
 
     /**
@@ -61,14 +70,14 @@ object DataDriven {
      * */
     fun getSetUpNavItemListData(page:Int,useCache:Boolean = page == 0,cid:Int):Response<String>{
         val url = "$BASE_URL/article/list/$page/json?cid=$cid"
-        return getData(url, useCache)
+        return getData(url)
     }
 
-    private fun getData(url:String,useCache: Boolean):Response<String>{
+    private fun <T>getData(url:String):Response<T>{
         var response: okhttp3.Response? = null
         var originString = ""
         try {
-            response = NetInvokerUtils.get(url)
+            response = WanAndroidNetInvokerUtils.get(url)
             if(response?.code == 200){
                 response.body?.let {
                     val content = it.string()
@@ -79,14 +88,18 @@ object DataDriven {
         }catch (e:Exception){
             e.printStackTrace()
         }
-        if(useCache){
-            //保存接口数据
-            //缓存中读取数据
-        }
         if(!TextUtils.isEmpty(originString)){
-            return Response(true,originString, null, "",originString)
+            val type = genericType<Response<T>>()
+            return Response(true,Gson().fromJson(originString, type), null, "",originString)
         }else{
             return Response(false,null, Error.newNetError("-1"),"response is null")
         }
+    }
+
+    private inline fun <reified T> genericType() = object : TypeToken<T>() {}.type!!
+
+    private fun getGson():Gson {
+        val builder = GsonBuilder()
+        return builder.create()
     }
 }

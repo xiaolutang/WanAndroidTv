@@ -24,9 +24,9 @@ import com.txl.tvlib.R;
  * 通过View的方式来实现焦点框
  */
 public class BorderViewPainter {
-//    private NinePatchDrawable mNinePatchDrawable;
-//    private Drawable mDrawable;
-//    private Rect mBorderPaddingRect;
+    private NinePatchDrawable mNinePatchDrawable;
+    private Drawable mDrawable;
+    private Rect mBorderPaddingRect;
     private ViewBoundHolder mViewBoundHolder;
     private View mLastView;
     private View mParent;
@@ -46,7 +46,13 @@ public class BorderViewPainter {
         mParent = parent;
         mViewBoundHolder = new ViewBoundHolder();
         imageBorderView = drawBorderView;
-        imageBorderView.setBackgroundResource(resId);
+        mDrawable = context.getResources().getDrawable(resId);
+        mViewBoundHolder = new ViewBoundHolder();
+        if (mDrawable instanceof NinePatchDrawable) {
+            mNinePatchDrawable = (NinePatchDrawable) mDrawable;
+            mNinePatchDrawable.getPadding(mBorderPaddingRect);
+        }
+        imageBorderView.setBackground(mDrawable);
     }
 
     public void setView(View view) {
@@ -64,26 +70,31 @@ public class BorderViewPainter {
             return;
         }
         mLastView = view;
+        setDrawBound();
         startAnimation(rect);
+    }
+
+    private void setDrawBound(){
+        if (mNinePatchDrawable != null) {
+            mNinePatchDrawable.setBounds(mViewBoundHolder.getLeft() - mBorderPaddingRect.left,
+                    mViewBoundHolder.getTop() - mBorderPaddingRect.top,
+                    mViewBoundHolder.getLeft() + mViewBoundHolder.getWidth() + mBorderPaddingRect.right,
+                    mViewBoundHolder.getTop() + mViewBoundHolder.getHeight() + mBorderPaddingRect.bottom);
+//            mNinePatchDrawable.draw(canvas);
+        } else {
+            mDrawable.setBounds(mViewBoundHolder.getLeft(),
+                    mViewBoundHolder.getTop(),
+                    mViewBoundHolder.getLeft() + mViewBoundHolder.getWidth(),
+                    mViewBoundHolder.getTop() + mViewBoundHolder.getHeight());
+//            mDrawable.draw(canvas);
+        }
     }
 
 //    public void draw(Canvas canvas) {
 //        if (mLastView == null) {
 //            return;
 //        }
-//        if (mNinePatchDrawable != null) {
-//            mNinePatchDrawable.setBounds(mViewBoundHolder.getLeft() - mBorderPaddingRect.left,
-//                    mViewBoundHolder.getTop() - mBorderPaddingRect.top,
-//                    mViewBoundHolder.getLeft() + mViewBoundHolder.getWidth() + mBorderPaddingRect.right,
-//                    mViewBoundHolder.getTop() + mViewBoundHolder.getHeight() + mBorderPaddingRect.bottom);
-//            mNinePatchDrawable.draw(canvas);
-//        } else {
-//            mDrawable.setBounds(mViewBoundHolder.getLeft(),
-//                    mViewBoundHolder.getTop(),
-//                    mViewBoundHolder.getLeft() + mViewBoundHolder.getWidth(),
-//                    mViewBoundHolder.getTop() + mViewBoundHolder.getHeight());
-//            mDrawable.draw(canvas);
-//        }
+
 //    }
 
     private Rect getViewPositionInParent(View view) {

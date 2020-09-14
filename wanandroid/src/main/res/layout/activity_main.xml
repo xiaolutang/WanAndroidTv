@@ -19,7 +19,7 @@
             android:text="WanAndroidTv"
             app:layout_scrollFlags="scroll|enterAlways"
             android:focusable="true"/>
-        <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
+        <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recycler_nav"

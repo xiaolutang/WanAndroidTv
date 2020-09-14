@@ -1,16 +1,38 @@
 package com.txl.wanandroidtv.viewModel;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.gson.Gson;
 import com.txl.commonlibrary.utils.exector.AppExecutors;
 import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData;
+import com.txl.wanandroidtv.bean.home.BannerItemData;
 import com.txl.wanandroidtv.data.DataDriven;
 import com.txl.wanandroidtv.data.Response;
+
+import java.util.List;
 
 import static com.txl.wanandroidtv.viewModel.ResourceBoundaryKt.STATE_LOADED;
 
 public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
     private volatile boolean resetData = false;
     private volatile boolean loadData = false;
+
+    private MutableLiveData<Response<List<BannerItemData>>> bannerData = new MutableLiveData<>();
+
+    public MutableLiveData<Response<List<BannerItemData>>> getBannerData() {
+        return bannerData;
+    }
+
+    public void fetchBannerData(){
+        AppExecutors.execNetIo(new Runnable() {
+            @Override
+            public void run() {
+                Response<List<BannerItemData>> response = DataDriven.INSTANCE.getHomeBanner();
+                bannerData.postValue(response);
+            }
+        });
+    }
+
     @Override
     public void resetData() {
         resetData = true;

@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.mmkv.MMKV;
 import com.txl.tvlib.config.TvLibConfig;
-import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView;
+import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2;
 import com.txl.ui_basic.BaseActivity;
 import com.txl.wanandroidtv.bean.NavItemData;
 import com.txl.wanandroidtv.ui.adpater.MainNavPageAdapter;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
 
-    private LibTvRecyclerView navRecyclerView;
+    private LibTvRecyclerView2 navRecyclerView;
     private ViewPager viewPager;
     private MainNavPageAdapter viewpagerAdapter;
 
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
         ArrayList<NavItemData> navs = gson.fromJson(json, collectionType);
         NavRecyclerAdapter adapter = new NavRecyclerAdapter(navs);
         navRecyclerView.setAdapter( adapter );
-        navRecyclerView.bindViewPager(viewPager);
+//        navRecyclerView.bindViewPager(viewPager);
         viewpagerAdapter = new MainNavPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, navs);
 
         viewPager.setAdapter(viewpagerAdapter);

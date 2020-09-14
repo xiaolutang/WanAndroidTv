@@ -1,4 +1,4 @@
-package com.txl.netmodel
+package com.txl.wanandroidtv.ui.utils
 
 import com.txl.netmodel.okhttp.okhttp.OkHttpUtils
 import okhttp3.*
@@ -12,8 +12,8 @@ import java.util.*
  * date：2020/3/11
  * description：网络数据请求工具封装
  */
-object NetInvokerUtils {
-    const val TAG = "NetInvokerUtils"
+object WanAndroidNetInvokerUtils {
+    const val TAG = "WanAndroidNetInvokerUtils"
 
     private fun getOkHttpClient(): OkHttpClient {
         return OkHttpUtils.getOkHttpClient()

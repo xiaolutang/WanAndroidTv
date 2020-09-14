@@ -17,8 +17,9 @@ import androidx.core.view.ViewCompat;
 
 /**
  * Created by liutao on 12/16/15.
+ * 从网上copy的原始版本  https://github.com/EZJasonBoy/FocusChangeAnimation
  */
-public class BorderPainter {
+public class BorderPainterOrigin {
     private NinePatchDrawable mNinePatchDrawable;
     private Drawable mDrawable;
     private Rect mBorderPaddingRect;
@@ -28,7 +29,7 @@ public class BorderPainter {
     private AnimatorSet mAnimator;
     private ValueUpdateListener mAnimateUpdateListener;
 
-    public BorderPainter(View parent, int resId) {
+    public BorderPainterOrigin(View parent, int resId) {
         Context context = parent.getContext();
         mParent = parent;
         mBorderPaddingRect = new Rect();
@@ -62,12 +63,6 @@ public class BorderPainter {
         if (mLastView == null) {
             return;
         }
-        if(mLastView instanceof  ICustomBorderView){
-            ICustomBorderView  borderView = (ICustomBorderView) mLastView;
-            if(borderView.drawBorderBySelf()){//自己进行绘制
-                return;
-            }
-        }
         if (mNinePatchDrawable != null) {
             mNinePatchDrawable.setBounds(mViewBoundHolder.getLeft() - mBorderPaddingRect.left,
                     mViewBoundHolder.getTop() - mBorderPaddingRect.top,
@@ -88,17 +83,10 @@ public class BorderPainter {
         point.x = view.getLeft();
         point.y = view.getTop();
         ViewParent parent = view.getParent();
-        while (parent != null && parent != mParent) {//fixme 当设置的View和传递进来的parent是同一个View的时候如何处理？
+        while (parent != null && parent != mParent) {
             point.x += ((View) parent).getLeft();
             point.y += ((View) parent).getTop();
             parent = parent.getParent();
-        }
-        if(mLastView instanceof  ICustomBorderView){
-            ICustomBorderView  borderView = (ICustomBorderView) mLastView;
-            if(borderView.hasFocusAnimation()){
-
-            }
-            String focusScale = borderView.focusScale();
         }
         return new Rect(point.x, point.y, point.x + view.getMeasuredWidth(), point.y + view.getMeasuredHeight());
     }

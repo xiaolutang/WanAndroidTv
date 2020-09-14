@@ -5,21 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".testborder.TestBorderActivity">
+    tools:context=".testborder.TestBorderActivity"
+    android:focusable="false">
 
-    <ImageView
-        android:layout_marginTop="@dimen/dp_30"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@color/colorAccentAlpha"
-        android:background="@drawable/select_border" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@color/colorAccentAlpha"
+            android:background="@drawable/border"
+            android:focusable="auto"/>
 
-    <ImageView
-        android:layout_marginTop="@dimen/dp_30"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@color/colorAccentAlpha"
-        android:background="@drawable/border"/>
+        <ImageView
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@color/colorAccentAlpha"
+            android:background="@drawable/border"
+            android:focusable="true"/>
+    </LinearLayout>
+
 </com.txl.tvlib.border.DrawBorderFrameLayout>

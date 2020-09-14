@@ -21,7 +21,7 @@ public class DrawBorderGridLayout extends GridLayout implements View.OnFocusChan
 
     public DrawBorderGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mBorderPainter = new BorderPainter(this, R.drawable.border);
+        mBorderPainter = new BorderPainter(this, R.drawable.select_border);
     }
 
     @Override
