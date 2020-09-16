@@ -16,22 +16,22 @@ import com.txl.wanandroidtv.data.DataDriven
 class NavigateNavItemListViewModel: AbsNavItemListViewModel() {
     override fun getPageData() {
         AppExecutors.execNetIo {
-            val response = DataDriven.getNavigateArticleList()
-            if (response.state) {
-                val g = Gson()
-                val result = g.fromJson(response.data, NavigateArticleListData::class.java)
-                val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "success", result, currentPage)
-                data.postValue(resourceBoundary)
-            } else {
-                val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "failed to load data ", null, currentPage)
-                data.postValue(resourceBoundary)
-            }
-            if (resetData) {
-                resetData = false
-            }
-            if (loadData) {
-                loadData = false
-            }
+//            val response = DataDriven.getNavigateArticleList()
+//            if (response.state) {
+//                val g = Gson()
+//                val result = g.fromJson(response.data, NavigateArticleListData::class.java)
+//                val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "success", result, currentPage)
+//                data.postValue(resourceBoundary)
+//            } else {
+//                val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "failed to load data ", null, currentPage)
+//                data.postValue(resourceBoundary)
+//            }
+//            if (resetData) {
+//                resetData = false
+//            }
+//            if (loadData) {
+//                loadData = false
+//            }
         }
     }
 

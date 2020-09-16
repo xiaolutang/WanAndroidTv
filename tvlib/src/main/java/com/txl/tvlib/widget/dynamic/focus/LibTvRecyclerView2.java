@@ -14,6 +14,7 @@ import android.widget.Checkable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.txl.tvlib.focushandler.IFocusSearchHelper;
 import com.txl.tvlib.widget.ICheckView;
@@ -59,6 +60,9 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
 
     private DynamicFocusHelper mDynamicFocusHelper;
 
+    private ViewPager mViewPager;
+    private ViewPager.OnPageChangeListener mPageChangeListener;
+
 
     public LibTvRecyclerView2(@NonNull Context context) {
         this(context,null);
@@ -102,6 +106,30 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
         mDynamicFocusHelper.setOpenDynamic(open);
     }
 
+
+    public void bindViewPager(ViewPager viewPager){
+        if(mViewPager != null){
+            mViewPager.removeOnPageChangeListener(mPageChangeListener);
+        }
+        mViewPager = viewPager;
+        mPageChangeListener = new ViewPager.OnPageChangeListener(){
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setCheckedPosition(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
+        mViewPager.addOnPageChangeListener(mPageChangeListener);
+    }
 
     @Override
     public void addFocusables(ArrayList<View> views, int direction, int focusableMode) {
@@ -425,6 +453,7 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
                         ((ICheckView) targetView).setChecked(true);
                         makeViewHorizontalCenter(targetView);
                         makeViewVerticalCenter(targetView);
+//                        targetView.requestFocus();
                     }
                 }
             }
@@ -523,6 +552,9 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
             mDynamicFocusHelper.requestChildFocus(checkedView, null);
             RecyclerView.LayoutParams params = (LayoutParams) checkedView.getLayoutParams();
             mCheckedPosition = params.getViewAdapterPosition();
+            if(mViewPager != null){
+                mViewPager.setCurrentItem(mCheckedPosition);
+            }
             if (mOnCheckedChangeListener != null) {
                 mOnCheckedChangeListener.onCheckedChanged(this, checkedView,mCheckedPosition);
             }
@@ -543,6 +575,6 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
 
     public interface OnCheckedChangeListener {
 
-        public void onCheckedChanged(LibTvRecyclerView2 group,View checkedView, int position);
+        void onCheckedChanged(LibTvRecyclerView2 group,View checkedView, int position);
     }
 }

@@ -1,6 +1,7 @@
 package com.txl.wanandroidtv;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,5 +65,7 @@ public class MainActivity extends BaseActivity {
         viewpagerAdapter = new MainNavPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, navs);
 
         viewPager.setAdapter(viewpagerAdapter);
+        navRecyclerView.bindViewPager(viewPager);
+//        navRecyclerView.setOnCheckedChangeListener((group, checkedView, position) -> viewPager.setCurrentItem(position));
     }
 }

@@ -16,8 +16,18 @@ android {
         multiDexEnabled true
     }
     buildTypes {
+        HashMap<String,String> map = new HashMap<String,String>()
+        map.put("screenOrientation","landscape")
         release {
             minifyEnabled false
+
+            setManifestPlaceholders(map)
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled false
+
+            setManifestPlaceholders(map)
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

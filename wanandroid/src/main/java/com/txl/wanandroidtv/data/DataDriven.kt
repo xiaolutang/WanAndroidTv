@@ -90,9 +90,11 @@ object DataDriven {
         }
         return if(!TextUtils.isEmpty(originString)){
             val type = genericType<Response<T>>()
-            Response(true,Gson().fromJson(originString, type), null, "",originString)
+            val tempResponse:Response<T> =  Gson().fromJson(originString, type)
+            tempResponse.originString = originString
+            tempResponse
         }else{
-            Response(false,null, Error.newNetError("-1"),"response is null")
+            Response(null,"", -1,"response is null")
         }
     }
 

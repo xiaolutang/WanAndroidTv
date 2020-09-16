@@ -18,7 +18,7 @@ import java.util.*
  */
 const val CATEGORY = "category"
 abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
-    private var viewModel: AbsNavItemListViewModel? = null
+    protected var viewModel: AbsNavItemListViewModel? = null
 
     var category = CATEGORY_HOME
         private set
@@ -34,8 +34,8 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+
+    override fun initView() {
         initViewModel()
     }
 

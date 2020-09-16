@@ -1,24 +1,31 @@
 package com.txl.wanandroidtv.ui.fragment
 
 import android.os.Bundle
-import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.vlayout.DelegateAdapter
+import com.alibaba.android.vlayout.VirtualLayoutManager
+import com.alibaba.android.vlayout.layout.GridLayoutHelper
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
-import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
-import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.com.besjon.pojo.Article
-import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
+import com.txl.ui_basic.viewholder.BaseViewHolder
+import com.txl.ui_basic.viewholder.IViewHolderFactory
+import com.txl.wanandroidtv.R
+import com.txl.wanandroidtv.bean.home.BannerItemData
+import com.txl.wanandroidtv.data.Response
+import com.txl.wanandroidtv.ui.adpater.BaseVLayoutAdapter
+import com.txl.wanandroidtv.ui.adpater.ListAdapterFactory
+import com.txl.wanandroidtv.ui.adpater.WanAndroidListItemType
 import com.txl.wanandroidtv.ui.utils.PageJumpUtils.openPage
-import com.txl.wanandroidtv.ui.viewholder.HomeFragmentCommonItemViewHolderFactory
-import com.txl.wanandroidtv.ui.widget.HomeGridDividerItemDecoration
+import com.txl.wanandroidtv.utils.RecyclerViewConfigUtils
 import com.txl.wanandroidtv.viewModel.*
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
+import java.util.*
+
 
 /**
  * wan android 首页导航
@@ -48,27 +55,21 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         }
     }
 
-    private var mAdapter: BaseRecyclerFactoryAdapter<Article>?=null
+    private lateinit var delegateAdapter: DelegateAdapter
 
-    var adapter: BaseRecyclerFactoryAdapter<*>? = null
+    var bannerAdapter: BaseVLayoutAdapter<List<BannerItemData>, BaseViewHolder>? = null
 
     var recyclerView: LibTvRecyclerView2? = null
         private set
 
     var smartRefreshLayout: SmartRefreshLayout? = null
 
-    private fun createAdapter(): BaseRecyclerFactoryAdapter<*> {
-        mAdapter = BaseRecyclerFactoryAdapter( HomeFragmentCommonItemViewHolderFactory())
-        mAdapter?.setItemClickListener(this)
-        return mAdapter!!
-    }
-
     override fun onDataReady(currentPage: Int, data: Any?) {
         loadingViewUtils?.showLoadingView(false)
         smartRefreshLayout?.finishLoadMore()
-        if (data is HomeArticleListData){
-            mAdapter?.appendData(data.data.datas)
-        }
+//        if (data is HomeArticleListData){
+//            mAdapter?.appendData(data.data.datas)
+//        }
     }
 
     override fun getLayoutRes(): Int {
@@ -76,14 +77,14 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
     }
 
     override fun initView() {
+        super.initView()
         smartRefreshLayout = rootView?.findViewById(R.id.fragment_lib_smart_refresh_layout)
         recyclerView = rootView?.findViewById(R.id.fragment_lib_recycler)
+        recyclerView?.setRecycledViewPool(RecyclerViewConfigUtils.viewPool)
         smartRefreshLayout?.setEnableAutoLoadMore(true)//是否启用列表惯性滑动到底部时自动加载更多
         smartRefreshLayout?.setOnLoadMoreListener(this)
         showLoading(0)
-        //暂时不考虑阿里的VLayout 不需要那么复杂
-        adapter = createAdapter()
-        recyclerView?.adapter = adapter
+
 //        recyclerView?.focusSearchFailedListener = object: LibTvRecyclerView.OnFocusSearchFailedListener {
 //            override fun onFocusSearchFailed(
 //                    currentFocusView: View?,
@@ -97,8 +98,26 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
 //                }
 //            }
 //        }
-        recyclerView?.layoutManager = GridLayoutManager(requireContext(),HOME_SPAN_COUNT)
-        recyclerView?.addItemDecoration(HomeGridDividerItemDecoration(resources.getDimensionPixelSize(R.dimen.dp_50)))
+        val layoutManager =  VirtualLayoutManager(requireContext())
+        recyclerView?.layoutManager = layoutManager
+        delegateAdapter = DelegateAdapter(layoutManager, true)
+        recyclerView?.adapter = delegateAdapter
+    }
+
+    override fun initData() {
+        super.initData()
+        if(viewModel is HomeNavItemListViewModel){
+
+            (viewModel as HomeNavItemListViewModel).bannerData.observe(this, Observer<Response<List<BannerItemData>>> {
+                if(it.errorCode == 0){
+                    loadingViewUtils?.showLoadingView(false)
+                    val list:List<BannerItemData> = it.data!!
+                    val adapters = ListAdapterFactory.createAdaptersWithType(requireContext(),list,WanAndroidListItemType.TYPE_BANNER)
+                    delegateAdapter.addAdapters(0,adapters)
+                }
+            })
+            (viewModel as HomeNavItemListViewModel).fetchBannerData()
+        }
     }
 
     override fun onItemClick(position: Int, data: Any?) {

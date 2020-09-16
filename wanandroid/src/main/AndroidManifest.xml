@@ -18,8 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         android:banner="@mipmap/ic_launcher_foreground"
-        android:name=".WanAndroidTvApplication">
-        <activity android:name=".SplashActivity">
+        android:name=".WanAndroidTvApplication"
+        >
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="${screenOrientation}"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +31,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="${screenOrientation}"
+            android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <meta-data
             android:name="design_width_in_dp"

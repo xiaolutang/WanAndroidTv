@@ -54,22 +54,22 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
         AppExecutors.execNetIo(new Runnable() {
             @Override
             public void run() {
-                Response<String> response = DataDriven.INSTANCE.getHomeArticleList(getCurrentPage(),true);
-                if(response.getState()){
-                    Gson g = new  Gson();
-                    HomeArticleListData data = g.fromJson(response.getData(), HomeArticleListData.class);
-                    ResourceBoundary<Object>  resourceBoundary = new ResourceBoundary(STATE_LOADED,0,"success",data,getCurrentPage());
-                    getData().postValue(resourceBoundary);
-                }else{
-                    ResourceBoundary<Object>   resourceBoundary = new ResourceBoundary(STATE_LOADED,0,"failed to load data ",null,getCurrentPage());
-                    getData().postValue(resourceBoundary);
-                }
-                if(resetData){
-                    resetData = false;
-                }
-                if(loadData){
-                    loadData = false;
-                }
+//                Response<String> response = DataDriven.INSTANCE.getHomeArticleList(getCurrentPage(),true);
+//                if(response.getState()){
+//                    Gson g = new  Gson();
+//                    HomeArticleListData data = g.fromJson(response.getData(), HomeArticleListData.class);
+//                    ResourceBoundary<Object>  resourceBoundary = new ResourceBoundary(STATE_LOADED,0,"success",data,getCurrentPage());
+//                    getData().postValue(resourceBoundary);
+//                }else{
+//                    ResourceBoundary<Object>   resourceBoundary = new ResourceBoundary(STATE_LOADED,0,"failed to load data ",null,getCurrentPage());
+//                    getData().postValue(resourceBoundary);
+//                }
+//                if(resetData){
+//                    resetData = false;
+//                }
+//                if(loadData){
+//                    loadData = false;
+//                }
             }
         });
     }
