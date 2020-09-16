@@ -7,6 +7,7 @@ import com.txl.wanandroidtv.ui.utils.WanAndroidNetInvokerUtils
 import com.txl.txllog.AndroidLogWrapper
 import com.txl.wanandroidtv.bean.home.BannerItemData
 import java.lang.Exception
+import java.lang.reflect.Type
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -24,7 +25,8 @@ object DataDriven {
      * */
     fun getHomeBanner():Response<List<BannerItemData>>{
         val url = "$BASE_URL/banner/json"
-        return getData(url)
+        val type = genericType<Response<List<BannerItemData>>>()
+        return getData(url,type)
     }
 
     /**
@@ -36,12 +38,14 @@ object DataDriven {
      * */
     fun getHomeArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
         val url = "$BASE_URL/article/list/$page/json"
-        return getData(url)
+        val type = genericType<String>()
+        return getData(url,type)
     }
 
     fun getSquareArticleList(page:Int):Response<String>{
         val url = "$BASE_URL/user_article/list/$page/json"
-        return getData(url)
+        val type = genericType<String>()
+        return getData(url,type)
     }
 
     /**
@@ -49,12 +53,14 @@ object DataDriven {
      * */
     fun getNavigateArticleList():Response<String>{
         val url = "$BASE_URL/navi/json"
-        return getData(url)
+        val type = genericType<String>()
+        return getData(url,type)
     }
 
     fun getQANavArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
         val url = "$BASE_URL/wenda/list/$page/json"
-        return getData(url)
+        val type = genericType<String>()
+        return getData(url,type)
     }
 
     /**
@@ -62,7 +68,8 @@ object DataDriven {
      * */
     fun getSetUpNavData():Response<String>{
         val url = "$BASE_URL/tree/json"
-        return getData(url)
+        val type = genericType<String>()
+        return getData(url,type)
     }
 
     /**
@@ -70,10 +77,14 @@ object DataDriven {
      * */
     fun getSetUpNavItemListData(page:Int,useCache:Boolean = page == 0,cid:Int):Response<String>{
         val url = "$BASE_URL/article/list/$page/json?cid=$cid"
-        return getData(url)
+        val type = genericType<String>()
+        return getData(url,type)
     }
 
-    private fun <T>getData(url:String):Response<T>{
+    /**
+     * 这个应该和 具体的业务 无关
+     * */
+    private fun <T>getData(url:String,type: Type):Response<T>{
         var response: okhttp3.Response? = null
         var originString = ""
         try {
@@ -89,7 +100,6 @@ object DataDriven {
             e.printStackTrace()
         }
         return if(!TextUtils.isEmpty(originString)){
-            val type = genericType<Response<T>>()
             val tempResponse:Response<T> =  Gson().fromJson(originString, type)
             tempResponse.originString = originString
             tempResponse
