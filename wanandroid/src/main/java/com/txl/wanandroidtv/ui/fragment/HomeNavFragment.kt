@@ -1,19 +1,17 @@
 package com.txl.wanandroidtv.ui.fragment
 
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.vlayout.DelegateAdapter
 import com.alibaba.android.vlayout.VirtualLayoutManager
-import com.alibaba.android.vlayout.layout.GridLayoutHelper
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
-import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
+import com.txl.wanandroidtv.bean.home.Article
 import com.txl.wanandroidtv.bean.home.BannerItemData
 import com.txl.wanandroidtv.data.Response
 import com.txl.wanandroidtv.ui.adpater.BaseVLayoutAdapter
@@ -24,7 +22,6 @@ import com.txl.wanandroidtv.utils.RecyclerViewConfigUtils
 import com.txl.wanandroidtv.viewModel.*
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
 import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
-import java.util.*
 
 
 /**
@@ -109,7 +106,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         if(viewModel is HomeNavItemListViewModel){
 
             (viewModel as HomeNavItemListViewModel).bannerData.observe(this, Observer<Response<List<BannerItemData>>> {
-                if(it.errorCode == 0){
+                if(it.netSuccess()){
                     loadingViewUtils?.showLoadingView(false)
                     val list:List<BannerItemData> = it.data!!
                     val adapters = ListAdapterFactory.createAdaptersWithType(requireContext(),list,WanAndroidListItemType.TYPE_BANNER)
@@ -117,6 +114,15 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
                 }
             })
             (viewModel as HomeNavItemListViewModel).fetchBannerData()
+            (viewModel as HomeNavItemListViewModel).topArticles.observe(this, Observer<Response<List<Article>>> {
+                if(it.netSuccess()){
+                    loadingViewUtils?.showLoadingView(false)
+                    val list:List<Article> = it.data!!
+                    val adapters = ListAdapterFactory.createAdaptersWithType(requireContext(),list,WanAndroidListItemType.TYPE_TOP)
+                    delegateAdapter.addAdapters(adapters)
+                }
+            })
+            (viewModel as HomeNavItemListViewModel).fetchTopArticleList()
         }
     }
 

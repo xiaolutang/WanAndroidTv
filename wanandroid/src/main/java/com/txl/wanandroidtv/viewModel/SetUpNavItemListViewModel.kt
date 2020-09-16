@@ -28,7 +28,7 @@ class SetUpNavItemListViewModel : AbsNavItemListViewModel() {
     init {
         AppExecutors.execNetIo {
             val result = DataDriven.getSetUpNavData()
-            if (result.errorCode == 0) {
+            if (result.netSuccess()) {
                 val g = Gson()
                 val data = g.fromJson(result.data, JsonRootBean::class.java)
                 setUpDataReady = true
@@ -58,7 +58,7 @@ class SetUpNavItemListViewModel : AbsNavItemListViewModel() {
         }
         AppExecutors.execNetIo {
             val response = DataDriven.getSetUpNavItemListData(currentPage, currentPage == 0,currentChild.value!!.id)
-            if (response.errorCode== 0) {
+            if (response.netSuccess()) {
                 val g = Gson()
                 val result = g.fromJson(response.data, HomeArticleListData::class.java)
                 val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "success", result, currentPage)

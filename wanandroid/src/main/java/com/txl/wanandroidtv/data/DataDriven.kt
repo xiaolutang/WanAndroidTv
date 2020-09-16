@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.txl.wanandroidtv.ui.utils.WanAndroidNetInvokerUtils
 import com.txl.txllog.AndroidLogWrapper
+import com.txl.wanandroidtv.bean.home.Article
 import com.txl.wanandroidtv.bean.home.BannerItemData
 import java.lang.Exception
 import java.lang.reflect.Type
@@ -26,6 +27,15 @@ object DataDriven {
     fun getHomeBanner():Response<List<BannerItemData>>{
         val url = "$BASE_URL/banner/json"
         val type = genericType<Response<List<BannerItemData>>>()
+        return getData(url,type)
+    }
+
+    /**
+     * 获取置顶文章
+     * */
+    fun getTopArticleList():Response<List<Article>>{
+        val url = "$BASE_URL/article/top/json"
+        val type = genericType<Response<List<Article>>>()
         return getData(url,type)
     }
 

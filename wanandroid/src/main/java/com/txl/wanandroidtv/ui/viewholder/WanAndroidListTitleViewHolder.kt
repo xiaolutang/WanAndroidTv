@@ -19,32 +19,25 @@ import com.txl.wanandroidtv.ui.widget.RatioImageView
  * date：2020/9/16
  * description：
  */
-class WanAndroidBannerItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private val imageIcon = itemView.findViewById<RatioImageView>(R.id.image_icon)
+class WanAndroidListTitleViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
-    /**
-     * 发布时间
-     * */
-    private val tvPublishData = itemView.findViewById<TextView>(R.id.tv_publish_data)
 
     companion object {
         val viewHolderFactory = object : IViewHolderFactory<BaseViewHolder> {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-                return WanAndroidBannerItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_home_banner, parent, false))
+                return WanAndroidListTitleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false))
             }
 
             override fun <T : Any?> getItemViewType(position: Int, data: T): Int {
-                return WanAndroidListItemType.TYPE_BANNER
+                return WanAndroidListItemType.TYPE_TEXT_TITLE
             }
         }
     }
 
     override fun <T : Any?> onBindViewHolder(position: Int, data: T) {
         super.onBindViewHolder(position, data)
-        if (data is BannerItemData) {
-            //如何处理Glide的对象回收问题？
-            Glide.with(imageIcon).load(data.imagePath).into(imageIcon)
-            tvTitle.text = data.title
+        if (data is String) {
+            tvTitle.text = data
         }
     }
 }

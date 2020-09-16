@@ -88,8 +88,8 @@ class NavigateNavFragment: BaseNavFragment() {
         loadingViewUtils?.showLoadingView(false)
         refreshLayout?.finishLoadMore()
         if(data is NavigateArticleListData){
-            leftNavigateAdapter?.appendData(data.data)
-            rightContentNavigateAdapter?.appendData(data.data)
+            leftNavigateAdapter?.appendCollectData(data.data)
+            rightContentNavigateAdapter?.appendCollectData(data.data)
         }
     }
 

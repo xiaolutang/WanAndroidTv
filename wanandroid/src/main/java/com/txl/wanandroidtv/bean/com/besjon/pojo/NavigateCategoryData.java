@@ -1,5 +1,7 @@
 package com.txl.wanandroidtv.bean.com.besjon.pojo;
 
+import com.txl.wanandroidtv.bean.home.Article;
+
 import java.util.List;
 
 /**

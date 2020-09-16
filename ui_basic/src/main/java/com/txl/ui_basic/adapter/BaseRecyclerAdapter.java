@@ -54,7 +54,7 @@ public abstract class BaseRecyclerAdapter<T,VH extends RecyclerView.ViewHolder> 
         this.data.add(data);
         this.notifyDataSetChanged();
     }
-    public void appendData(Collection<T> data)
+    public void appendCollectData(Collection<T> data)
     {
         int originSize = data.size();
         this.data.addAll(data);

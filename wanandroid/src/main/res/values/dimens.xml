@@ -17,4 +17,6 @@
     <dimen name="dp_90">90dp</dimen>
     <dimen name="dp_200dp">200dp</dimen>
     <dimen name="sp_18">18sp</dimen>
+    <dimen name="dp_400">400dp</dimen>
+    <dimen name="dp_600">600dp</dimen>
 </resources>

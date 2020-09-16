@@ -14,5 +14,9 @@ data class Response<T>(
      * */
     var errorCode:Int?=0,
     var errorMsg:String?=""
-)
+){
+    fun netSuccess():Boolean{
+        return errorCode == 0
+    }
+}
 
