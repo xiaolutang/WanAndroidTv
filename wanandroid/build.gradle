@@ -39,7 +39,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs/jsoup-1.11.3.jar')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation project(path: ':tvlib')
@@ -49,6 +48,7 @@ dependencies {
     implementation project(path: ':skin')
     implementation project(path: ':router')
     implementation project(path: ':web')
+    implementation project(path: ':webLinkParse')
 
     //智能刷新框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'

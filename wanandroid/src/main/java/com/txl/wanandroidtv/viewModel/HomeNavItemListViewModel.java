@@ -10,17 +10,7 @@ import com.txl.wanandroidtv.bean.home.Article;
 import com.txl.wanandroidtv.bean.home.BannerItemData;
 import com.txl.wanandroidtv.data.DataDriven;
 import com.txl.wanandroidtv.data.Response;
-
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.txl.weblinkparse.WebLinkParse;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -68,72 +58,8 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                         AppExecutors.execNetIo(new Runnable() {
                             @Override
                             public void run() {
-                                Connection connect = Jsoup.connect(article.getLink());
-                                try {
-                                    // 得到Document对象
-                                    Document document = connect.get();
-                                    // 查找所有img标签
-                                    Elements imgs = document.getElementsByTag("img");
-                                    BitmapFactory.Options maxOptions = null;
-                                    // 遍历img标签并获得src的属性
-                                    for (Element element : imgs) {
-                                        //获取每个img标签URL "abs:"表示绝对路径
-                                        String imgSrc = element.attr("abs:src");
-                                        Log.d(TAG,"link url :"+article.getLink()+"  imgSrc :: "+imgSrc);
-                                        URL url = new URL(imgSrc);
-                                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                        conn.setConnectTimeout(30 * 1000);
-                                        conn.setRequestMethod("GET");
-                                        InputStream inStream = conn.getInputStream();
-                                        BitmapFactory.Options options = new BitmapFactory.Options();
-                                        options.inJustDecodeBounds = true;
-                                        BitmapFactory.decodeStream(inStream,null,options);
-                                        if(maxOptions != null){
-                                            if(options.outWidth+options.outHeight > maxOptions.outWidth+maxOptions.outHeight){
-                                                maxOptions = options;
-                                                article.setLink(imgSrc);
-                                            }
-                                        }else {
-                                            maxOptions = options;
-                                            article.setLink(imgSrc);
-                                        }
-                                    }
-                                    URL url = new URL(article.getLink());
-                                    //B站
-                                    boolean bz = url.getHost().contains("www.bilibili.com");
-                                    if(bz){
-                                        Elements meta = document.getElementsByTag("meta");
-                                        for (Element element:meta){
-                                            String itemprop = element.attr("itemprop");
-                                            if("image".equals(itemprop)){
-                                                String imgSrc = element.attr("content");
-                                                Log.d(TAG,"link url :"+article.getLink()+"  imgSrc :: "+imgSrc);
-                                                URL imgUrl = new URL(imgSrc);
-                                                HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
-                                                conn.setConnectTimeout(30 * 1000);
-                                                conn.setRequestMethod("GET");
-                                                InputStream inStream = conn.getInputStream();
-                                                BitmapFactory.Options options = new BitmapFactory.Options();
-                                                options.inJustDecodeBounds = true;
-                                                BitmapFactory.decodeStream(inStream,null,options);
-                                                if(maxOptions != null){
-                                                    if(options.outWidth+options.outHeight > maxOptions.outWidth+maxOptions.outHeight){
-                                                        maxOptions = options;
-                                                        article.setLink(imgSrc);
-                                                    }
-                                                }else {
-                                                    maxOptions = options;
-                                                    article.setLink(imgSrc);
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }finally {
-                                    countDownLatch.countDown();
-                                }
+                                article.setImagePath(WebLinkParse.getMaxImgAddress(article.getLink()));
+                                countDownLatch.countDown();
                             }
                         });
 
