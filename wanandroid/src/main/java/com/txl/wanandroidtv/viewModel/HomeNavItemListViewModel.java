@@ -1,6 +1,7 @@
 package com.txl.wanandroidtv.viewModel;
 
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -97,6 +98,37 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                                             article.setLink(imgSrc);
                                         }
                                     }
+                                    URL url = new URL(article.getLink());
+                                    //B站
+                                    boolean bz = url.getHost().contains("www.bilibili.com");
+                                    if(bz){
+                                        Elements meta = document.getElementsByTag("meta");
+                                        for (Element element:meta){
+                                            String itemprop = element.attr("itemprop");
+                                            if("image".equals(itemprop)){
+                                                String imgSrc = element.attr("content");
+                                                Log.d(TAG,"link url :"+article.getLink()+"  imgSrc :: "+imgSrc);
+                                                URL imgUrl = new URL(imgSrc);
+                                                HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+                                                conn.setConnectTimeout(30 * 1000);
+                                                conn.setRequestMethod("GET");
+                                                InputStream inStream = conn.getInputStream();
+                                                BitmapFactory.Options options = new BitmapFactory.Options();
+                                                options.inJustDecodeBounds = true;
+                                                BitmapFactory.decodeStream(inStream,null,options);
+                                                if(maxOptions != null){
+                                                    if(options.outWidth+options.outHeight > maxOptions.outWidth+maxOptions.outHeight){
+                                                        maxOptions = options;
+                                                        article.setLink(imgSrc);
+                                                    }
+                                                }else {
+                                                    maxOptions = options;
+                                                    article.setLink(imgSrc);
+                                                }
+                                            }
+                                        }
+                                    }
+
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }finally {
