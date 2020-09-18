@@ -23,35 +23,8 @@ class ExampleUnitTest {
 
     @Test
     fun parseBzImg() {
-        val linkUrl = "https://www.bilibili.com/video/BV1b54y1U71P/"
-        val connect = Jsoup.connect(linkUrl)
-        try {
-            // 得到Document对象
-            val document = connect.get()
-            // 查找所有img标签
-            val imgs = document.getElementsByTag("img")
-            val maxOptions: BitmapFactory.Options? = null
-            // 遍历img标签并获得src的属性
-            for (element in imgs) {
-                //获取每个img标签URL "abs:"表示绝对路径
-                val imgSrc = element.attr("abs:src")
-                println(TAG+ "link url :$linkUrl  imgSrc :: $imgSrc")
-            }
-            val url = URL(linkUrl)
-            //B站
-            val bz = url.host.contains("www.bilibili.com")
-            if (bz) {
-                val meta = document.getElementsByTag("meta")
-                for (element in meta) {
-                    val itemprop = element.attr("itemprop")
-                    if ("image" == itemprop) {
-                        val imgSrc = element.attr("content")
-                        println(TAG+ "link url :$linkUrl  content :: $imgSrc")
-                    }
-                }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+//        val linkUrl = "https://www.bilibili.com/video/BV1b54y1U71P/"
+        val s = WebLinkParse.getMaxImgAddress("https://juejin.im/post/6873466220885049351")
+        System.out.println("$TAG img :: $s")
     }
 }

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.txl.ui_basic.BaseActivity
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : WanAndroidBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

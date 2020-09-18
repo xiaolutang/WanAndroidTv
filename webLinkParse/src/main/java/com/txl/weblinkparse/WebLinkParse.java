@@ -99,8 +99,8 @@ public class WebLinkParse {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return old;//出现异常，说明新传入的不可用
         }
-        return maxImageInfo;
     }
 
     private static MaxImageInfo parseSpecialWebMaxImg(Document document,String linkUrl,MaxImageInfo maxImageInfo){
@@ -124,6 +124,18 @@ public class WebLinkParse {
                     String img = element.attr("data-src");
                     if (!isSuitImagePath(linkUrl, img)) continue;
                     Log.d(TAG,"link url :"+linkUrl+" weixin  img :: "+img);
+                    temp = compareMaxImageInfo(temp,new MaxImageInfo(img));
+                }
+            }else if(url.getHost().contains("juejin.im")){//掘金
+                Elements meta = document.getElementsByTag("img");
+                for (Element element:meta){
+                    String img = element.attr("data-src");
+                    Log.d(TAG,"link url :"+linkUrl+" juejin  img :: "+img);
+                    if(!TextUtils.isEmpty(img) && img.startsWith("//")){
+                        img = "https:"+img;
+                    }
+                    if (!isSuitImagePath(linkUrl, img)) continue;
+                    Log.d(TAG,"link url :"+linkUrl+" juejin  img :: "+img);
                     temp = compareMaxImageInfo(temp,new MaxImageInfo(img));
                 }
             }

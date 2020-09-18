@@ -22,7 +22,7 @@ import com.txl.wanandroidtv.utils.Utils;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends WanAndroidBaseActivity {
 
     private LibTvRecyclerView2 navRecyclerView;
     private ViewPager viewPager;
