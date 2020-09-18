@@ -44,7 +44,7 @@ class WanAndroidCommonItemViewHolder(itemView: View) : BaseViewHolder(itemView) 
         super.onBindViewHolder(position, data)
         if (data is Article) {
             //如何处理Glide的对象回收问题？
-            Glide.with(imageIcon).load(data.imagePath).into(imageIcon)
+            Glide.with(imageIcon).load(data.imagePath).placeholder(R.drawable.wan_android).into(imageIcon)
             tvTitle.text = data.title
         }
     }

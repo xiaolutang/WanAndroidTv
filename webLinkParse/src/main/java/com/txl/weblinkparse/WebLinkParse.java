@@ -129,13 +129,25 @@ public class WebLinkParse {
             }else if(url.getHost().contains("juejin.im")){//掘金
                 Elements meta = document.getElementsByTag("img");
                 for (Element element:meta){
-                    String img = element.attr("data-src");
+                    String img = element.attr("abs:data-src");
                     Log.d(TAG,"link url :"+linkUrl+" juejin  img :: "+img);
                     if(!TextUtils.isEmpty(img) && img.startsWith("//")){
                         img = "https:"+img;
                     }
                     if (!isSuitImagePath(linkUrl, img)) continue;
                     Log.d(TAG,"link url :"+linkUrl+" juejin  img :: "+img);
+                    temp = compareMaxImageInfo(temp,new MaxImageInfo(img));
+                }
+            }else if(url.getHost().contains("www.jianshu.com")){//简书
+                Elements meta = document.getElementsByTag("img");
+                for (Element element:meta){
+                    String img = element.attr("abs:data-original-src");
+                    Log.d(TAG,"link url :"+linkUrl+" jianshu  img :: "+img);
+                    if(!TextUtils.isEmpty(img) && img.startsWith("//")){
+                        img = "https:"+img;
+                    }
+                    if (!isSuitImagePath(linkUrl, img)) continue;
+                    Log.d(TAG,"link url :"+linkUrl+" jianshu  img :: "+img);
                     temp = compareMaxImageInfo(temp,new MaxImageInfo(img));
                 }
             }
