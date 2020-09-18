@@ -1,9 +1,9 @@
 package com.txl.wanandroidtv.ui.fragment
 
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
-import com.txl.wanandroidtv.viewModel.*
-import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
-import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
+import com.txl.wan_android_data_provider.viewModel.*
+import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelClass
+import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelFactory
 
 /**
  * wan android 首页导航

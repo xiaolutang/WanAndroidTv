@@ -1,3 +1,4 @@
+include ':wan_android_data_provider'
 include ':webLinkParse'
 include ':testmoudle:testtvlib'
 include ':testmoudle'

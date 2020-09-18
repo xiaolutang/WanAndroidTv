@@ -3,15 +3,12 @@ package com.txl.wanandroidtv.ui.viewholder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.home.BannerItemData
+import com.txl.wan_android_data_provider.bean.home.BannerItemData
 import com.txl.wanandroidtv.ui.adpater.WanAndroidListItemType
-import com.txl.wanandroidtv.ui.widget.RatioImageView
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.

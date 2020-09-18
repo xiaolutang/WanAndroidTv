@@ -7,8 +7,8 @@ import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
-import com.txl.wanandroidtv.bean.home.Article
-import com.txl.wanandroidtv.bean.home.TopDataWrapper
+import com.txl.wan_android_data_provider.bean.home.Article
+import com.txl.wan_android_data_provider.bean.home.TopDataWrapper
 import com.txl.wanandroidtv.ui.adpater.WanAndroidListItemType
 
 /**

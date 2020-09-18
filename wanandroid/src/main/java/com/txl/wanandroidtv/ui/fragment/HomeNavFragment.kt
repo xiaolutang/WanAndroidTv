@@ -11,19 +11,19 @@ import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.com.besjon.pojo.Data
-import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
-import com.txl.wanandroidtv.bean.home.Article
-import com.txl.wanandroidtv.bean.home.BannerItemData
-import com.txl.wanandroidtv.data.Response
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.Data
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.HomeArticleListData
+import com.txl.wan_android_data_provider.bean.home.Article
+import com.txl.wan_android_data_provider.bean.home.BannerItemData
+import com.txl.wan_android_data_provider.data.Response
 import com.txl.wanandroidtv.ui.adpater.BaseVLayoutAdapter
 import com.txl.wanandroidtv.ui.adpater.ListAdapterFactory
 import com.txl.wanandroidtv.ui.adpater.WanAndroidListItemType
 import com.txl.wanandroidtv.ui.utils.PageJumpUtils.openPage
 import com.txl.wanandroidtv.utils.RecyclerViewConfigUtils
-import com.txl.wanandroidtv.viewModel.*
-import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
-import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
+import com.txl.wan_android_data_provider.viewModel.*
+import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelClass
+import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelFactory
 
 
 /**

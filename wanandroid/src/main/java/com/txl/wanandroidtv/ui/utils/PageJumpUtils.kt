@@ -2,7 +2,7 @@ package com.txl.wanandroidtv.ui.utils
 
 import android.content.Context
 import com.txl.router.web.IWebRouter
-import com.txl.wanandroidtv.bean.home.Article
+import com.txl.wan_android_data_provider.bean.home.Article
 import io.github.prototypez.appjoint.AppJoint
 
 /**

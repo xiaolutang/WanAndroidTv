@@ -1,7 +1,6 @@
 package com.txl.wanandroidtv;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,8 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tencent.mmkv.MMKV;
 import com.txl.tvlib.config.TvLibConfig;
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2;
-import com.txl.ui_basic.BaseActivity;
-import com.txl.wanandroidtv.bean.NavItemData;
+import com.txl.wan_android_data_provider.bean.NavItemData;
 import com.txl.wanandroidtv.ui.adpater.MainNavPageAdapter;
 import com.txl.wanandroidtv.ui.adpater.NavRecyclerAdapter;
 import com.txl.wanandroidtv.ui.utils.ThemeUtils;

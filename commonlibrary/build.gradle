@@ -36,13 +36,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation project(path: ':netModel')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api "de.hdodenhof:circleimageview:${rootProject.ext.hdodenhof_circleimageview}"
     api 'com.google.android.exoplayer:exoplayer:2.10.3'
     api "org.jetbrains.anko:anko:$anko_version"
-    api "com.squareup.okhttp3:okhttp:$okhttp"
     api "com.google.code.gson:gson:$gson"
     api "com.github.bumptech.glide:glide:$glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide"

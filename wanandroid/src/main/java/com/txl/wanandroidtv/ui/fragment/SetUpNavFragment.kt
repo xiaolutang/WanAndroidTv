@@ -1,7 +1,7 @@
 package com.txl.wanandroidtv.ui.fragment
 
 import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.HomeArticleListData
 import kotlinx.android.synthetic.main.fragment_setup_nav.*
 
 /**

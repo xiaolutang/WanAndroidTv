@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.txl.txllog.AndroidLogWrapper;
-import com.txl.wanandroidtv.bean.NavItemData;
+import com.txl.wan_android_data_provider.bean.NavItemData;
 import com.txl.wanandroidtv.ui.fragment.NavFragmentCreateFactory;
 
 import java.util.ArrayList;

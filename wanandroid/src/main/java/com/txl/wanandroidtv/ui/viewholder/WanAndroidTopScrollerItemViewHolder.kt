@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.home.Article
+import com.txl.wan_android_data_provider.bean.home.Article
 import com.txl.wanandroidtv.ui.adpater.WanAndroidListItemType
 import com.txl.wanandroidtv.ui.widget.RatioImageView
 

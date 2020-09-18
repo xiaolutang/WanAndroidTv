@@ -10,20 +10,19 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.txl.commonlibrary.utils.DrawableUtils
-import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateArticleListData
-import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateArticleListData
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateCategoryData
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.ui.utils.ThemeUtils
 import com.txl.wanandroidtv.ui.viewholder.NavigateFlexBoxItemViewHolderFactory
-import com.txl.wanandroidtv.viewModel.NavigateNavItemListViewModel
-import com.txl.wanandroidtv.viewModel.NavigateNavViewModelFactory
-import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelClass
-import com.txl.wanandroidtv.viewModel.ViewModelContainer.putViewModelFactory
+import com.txl.wan_android_data_provider.viewModel.NavigateNavItemListViewModel
+import com.txl.wan_android_data_provider.viewModel.NavigateNavViewModelFactory
+import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelClass
+import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelFactory
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.

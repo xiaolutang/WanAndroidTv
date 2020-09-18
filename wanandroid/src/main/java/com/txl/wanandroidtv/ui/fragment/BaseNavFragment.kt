@@ -1,13 +1,12 @@
 package com.txl.wanandroidtv.ui.fragment
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.txl.ui_basic.fragment.BaseFragment
-import com.txl.wanandroidtv.viewModel.*
+import com.txl.wan_android_data_provider.viewModel.*
 import java.util.*
 
 /**

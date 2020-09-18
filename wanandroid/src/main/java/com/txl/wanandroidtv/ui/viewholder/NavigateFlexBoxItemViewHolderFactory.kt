@@ -10,8 +10,8 @@ import com.txl.ui_basic.adapter.NavTypeSpec
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.home.Article
-import com.txl.wanandroidtv.bean.com.besjon.pojo.NavigateCategoryData
+import com.txl.wan_android_data_provider.bean.home.Article
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateCategoryData
 import com.txl.wanandroidtv.ui.utils.PageJumpUtils
 
 /**

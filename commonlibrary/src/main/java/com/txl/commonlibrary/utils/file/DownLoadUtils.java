@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.txl.commonlibrary.utils.CloseableUtils;
 import com.txl.commonlibrary.utils.Md5Utils;
-import com.txl.commonlibrary.utils.okhttp.OkHttpUtils;
+import com.txl.netmodel.okhttp.okhttp.OkHttpUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;

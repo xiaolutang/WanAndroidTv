@@ -1,17 +1,15 @@
 package com.txl.wanandroidtv.ui.viewholder
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
-import com.txl.commonlibrary.utils.DrawableUtils
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
 import com.txl.wanandroidtv.R
-import com.txl.wanandroidtv.bean.NavItemData
+import com.txl.wan_android_data_provider.bean.NavItemData
 import com.txl.wanandroidtv.ui.utils.ThemeUtils
 
 /**
