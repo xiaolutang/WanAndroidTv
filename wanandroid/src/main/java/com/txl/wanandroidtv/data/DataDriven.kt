@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.txl.wanandroidtv.ui.utils.WanAndroidNetInvokerUtils
 import com.txl.txllog.AndroidLogWrapper
+import com.txl.wanandroidtv.bean.com.besjon.pojo.Data
 import com.txl.wanandroidtv.bean.home.Article
 import com.txl.wanandroidtv.bean.home.BannerItemData
 import java.lang.Exception
@@ -42,13 +43,12 @@ object DataDriven {
     /**
      * 获取玩Android首页文章列表数据
      * @param page 第几页数据
-     * @param useCache 是否对数据进行缓存
      * @return Response 不对数据进行解析，
      * #Notice:这个方法以同步的方法进行，需要在子线程中进行
      * */
-    fun getHomeArticleList(page:Int,useCache:Boolean = page == 0):Response<String>{
+    fun getHomeArticleList(page:Int):Response<Data>{
         val url = "$BASE_URL/article/list/$page/json"
-        val type = genericType<String>()
+        val type = genericType<Response<Data>>()
         return getData(url,type)
     }
 

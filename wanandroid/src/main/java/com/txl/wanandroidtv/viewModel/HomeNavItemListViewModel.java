@@ -1,11 +1,13 @@
 package com.txl.wanandroidtv.viewModel;
 
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.Log;
+
+import android.text.TextUtils;
 
 import androidx.lifecycle.MutableLiveData;
+
+import com.txl.commonlibrary.utils.StringUtils;
 import com.txl.commonlibrary.utils.exector.AppExecutors;
+import com.txl.wanandroidtv.bean.com.besjon.pojo.Data;
 import com.txl.wanandroidtv.bean.home.Article;
 import com.txl.wanandroidtv.bean.home.BannerItemData;
 import com.txl.wanandroidtv.data.DataDriven;
@@ -13,6 +15,9 @@ import com.txl.wanandroidtv.data.Response;
 import com.txl.weblinkparse.WebLinkParse;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import static com.txl.wanandroidtv.viewModel.ResourceBoundaryKt.STATE_ERROR;
+import static com.txl.wanandroidtv.viewModel.ResourceBoundaryKt.STATE_LOADED;
 
 public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
     private static final String TAG = HomeNavItemListViewModel.class.getSimpleName();
@@ -53,8 +58,12 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                 Response<List<Article>> response = DataDriven.INSTANCE.getTopArticleList();
                 if(response.netSuccess() && response.getData() != null && response.getData().size() != 0){
                     int size = response.getData().size();
-                    CountDownLatch countDownLatch = new CountDownLatch(size);
+                    final CountDownLatch countDownLatch = new CountDownLatch(size);
                     for(final Article article :response.getData()){
+                        if(!StringUtils.INSTANCE.isNetUrl(article.getLink())){
+                            countDownLatch.countDown();
+                            continue;
+                        }
                         AppExecutors.execNetIo(new Runnable() {
                             @Override
                             public void run() {
@@ -98,22 +107,41 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
         AppExecutors.execNetIo(new Runnable() {
             @Override
             public void run() {
-//                Response<String> response = DataDriven.INSTANCE.getHomeArticleList(getCurrentPage(),true);
-//                if(response.getState()){
-//                    Gson g = new  Gson();
-//                    HomeArticleListData data = g.fromJson(response.getData(), HomeArticleListData.class);
-//                    ResourceBoundary<Object>  resourceBoundary = new ResourceBoundary(STATE_LOADED,0,"success",data,getCurrentPage());
-//                    getData().postValue(resourceBoundary);
-//                }else{
-//                    ResourceBoundary<Object>   resourceBoundary = new ResourceBoundary(STATE_LOADED,0,"failed to load data ",null,getCurrentPage());
-//                    getData().postValue(resourceBoundary);
-//                }
-//                if(resetData){
-//                    resetData = false;
-//                }
-//                if(loadData){
-//                    loadData = false;
-//                }
+                Response<Data> response = DataDriven.INSTANCE.getHomeArticleList(getCurrentPage());
+                if(response.netSuccess()){
+                    if(response.getData()!= null && response.getData().getDatas() != null){
+                        int size = response.getData().getDatas().size();
+                        CountDownLatch countDownLatch = new CountDownLatch(size);
+                        for(final Article article :response.getData().getDatas()){
+                            if(!StringUtils.INSTANCE.isNetUrl(article.getLink())){
+                                countDownLatch.countDown();
+                                continue;
+                            }
+                            AppExecutors.execNetIo(new Runnable() {
+                                @Override
+                                public void run() {
+                                    article.setImagePath(WebLinkParse.getMaxImgAddress(article.getLink()));
+                                    countDownLatch.countDown();
+                                }
+                            });
+
+                        }
+                        try {
+                            countDownLatch.await();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }finally {
+                            ResourceBoundary<Object> resourceBoundary = new ResourceBoundary<Object>(STATE_LOADED, 0, "success", response, getCurrentPage());
+                            getData().postValue(resourceBoundary);
+                        }
+                    }
+                }
+                if(resetData){
+                    resetData = false;
+                }
+                if(loadData){
+                    loadData = false;
+                }
             }
         });
     }

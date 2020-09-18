@@ -7,10 +7,7 @@ import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.wanandroidtv.R
 import com.txl.wanandroidtv.bean.home.Article
 import com.txl.wanandroidtv.bean.home.TopDataWrapper
-import com.txl.wanandroidtv.ui.viewholder.WanAndroidBannerItemViewHolder
-import com.txl.wanandroidtv.ui.viewholder.WanAndroidListTitleViewHolder
-import com.txl.wanandroidtv.ui.viewholder.WanAndroidTopScrollerItemViewHolder
-import com.txl.wanandroidtv.ui.viewholder.WanAndroidTopScrollerViewHolder
+import com.txl.wanandroidtv.ui.viewholder.*
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.
@@ -44,6 +41,16 @@ object ListAdapterFactory {
                 adapter.appendata(TopDataWrapper(data as List<Article>))
                 val adapters = ArrayList<BaseVLayoutAdapter<Any,BaseViewHolder>>()
                 adapters.add(titleAdapter)
+                adapters.add(adapter)
+                return adapters
+            }
+            WanAndroidListItemType.TYPE_COMMON->{
+                val bannerLayoutHelper = GridLayoutHelper(4)
+                bannerLayoutHelper.setMargin(0,context.resources.getDimensionPixelSize(R.dimen.dp_50),0,0)
+                bannerLayoutHelper.setGap(context.resources.getDimensionPixelSize(R.dimen.dp_50))
+                val adapter = BaseVLayoutAdapter<Any,BaseViewHolder>(WanAndroidCommonItemViewHolder.viewHolderFactory,bannerLayoutHelper)
+                adapter.appendCollectionData(data)
+                val adapters = ArrayList<BaseVLayoutAdapter<Any,BaseViewHolder>>()
                 adapters.add(adapter)
                 return adapters
             }

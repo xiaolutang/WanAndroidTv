@@ -11,6 +11,8 @@ import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.wanandroidtv.R
+import com.txl.wanandroidtv.bean.com.besjon.pojo.Data
+import com.txl.wanandroidtv.bean.com.besjon.pojo.HomeArticleListData
 import com.txl.wanandroidtv.bean.home.Article
 import com.txl.wanandroidtv.bean.home.BannerItemData
 import com.txl.wanandroidtv.data.Response
@@ -64,9 +66,13 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
     override fun onDataReady(currentPage: Int, data: Any?) {
         loadingViewUtils?.showLoadingView(false)
         smartRefreshLayout?.finishLoadMore()
-//        if (data is HomeArticleListData){
-//            mAdapter?.appendData(data.data.datas)
-//        }
+        if (data is Response<*>){
+            val result = data.data
+            if(result is Data){
+                val adapters = ListAdapterFactory.createAdaptersWithType(requireContext(),result.datas,WanAndroidListItemType.TYPE_COMMON)
+                delegateAdapter.addAdapters(adapters)
+            }
+        }
     }
 
     override fun getLayoutRes(): Int {
