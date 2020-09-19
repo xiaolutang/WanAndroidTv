@@ -31,5 +31,6 @@ ext {
 
     hdodenhof_circleimageview="2.2.0"//圆形图片
     app_joint = "1.7"
+    mmkv = "1.0.22"
 
 }

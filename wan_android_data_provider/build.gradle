@@ -33,6 +33,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "com.google.code.gson:gson:$gson"
+    implementation "com.tencent:mmkv:$mmkv"
     implementation project(path: ':netModel')
     implementation project(path: ':commonlibrary')
     implementation project(path: ':webLinkParse')

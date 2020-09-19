@@ -1,8 +1,12 @@
 package com.txl.wan_android_data_provider.viewModel;
 
 
+import android.text.TextUtils;
+
 import androidx.lifecycle.MutableLiveData;
 
+import com.tencent.mmkv.MMKV;
+import com.txl.commonlibrary.utils.Md5Utils;
 import com.txl.commonlibrary.utils.StringUtils;
 import com.txl.commonlibrary.utils.exector.AppExecutors;
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.Data;
@@ -65,7 +69,7 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                         AppExecutors.execNetIo(new Runnable() {
                             @Override
                             public void run() {
-                                article.setImagePath(WebLinkParse.getMaxImgAddress(article.getLink()));
+                                article.setImagePath(getMaxImageAddress(article.getLink()));
                                 countDownLatch.countDown();
                             }
                         });
@@ -118,7 +122,7 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                             AppExecutors.execNetIo(new Runnable() {
                                 @Override
                                 public void run() {
-                                    article.setImagePath(WebLinkParse.getMaxImgAddress(article.getLink()));
+                                    article.setImagePath(getMaxImageAddress(article.getLink()));
                                     countDownLatch.countDown();
                                 }
                             });
@@ -148,5 +152,18 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
     @Override
     protected void getPageData() {
         getHomeNavItemListData();
+    }
+
+    private String getMaxImageAddress(String linkUrl){
+        String md5 = Md5Utils.MD5(linkUrl);
+        String imgpath = MMKV.defaultMMKV().decodeString(md5);
+        if(!TextUtils.isEmpty(imgpath)){
+            return imgpath;
+        }
+        imgpath = WebLinkParse.getMaxImgAddress(linkUrl);
+        if(!TextUtils.isEmpty(imgpath)){
+            MMKV.defaultMMKV().encode(md5,imgpath);
+        }
+        return imgpath;
     }
 }

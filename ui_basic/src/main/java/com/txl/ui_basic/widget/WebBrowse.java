@@ -1,4 +1,4 @@
-package com.txl.commonlibrary.widget;
+package com.txl.ui_basic.widget;
 
 import android.content.Context;
 import android.os.Build;

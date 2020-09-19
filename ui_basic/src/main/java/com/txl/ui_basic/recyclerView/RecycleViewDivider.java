@@ -1,4 +1,4 @@
-package com.txl.commonlibrary.utils.recyclerView;
+package com.txl.ui_basic.recyclerView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
