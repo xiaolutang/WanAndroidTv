@@ -8,5 +8,5 @@
     android:maxLines="1"
     android:ellipsize="end"
     android:padding="@dimen/dp_10"
-    android:textSize="@dimen/sp_32"
+    android:textSize="@dimen/sp_48"
     android:focusable="false"/>

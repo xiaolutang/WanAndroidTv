@@ -21,10 +21,6 @@ import com.txl.wanandroidtv.ui.widget.RatioImageView
 class WanAndroidBannerItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private val imageIcon = itemView.findViewById<RatioImageView>(R.id.image_icon)
     private val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
-    /**
-     * 发布时间
-     * */
-    private val tvPublishData = itemView.findViewById<TextView>(R.id.tv_publish_data)
 
     companion object {
         val viewHolderFactory = object : IViewHolderFactory<BaseViewHolder> {

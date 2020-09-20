@@ -21,11 +21,6 @@ import com.txl.wanandroidtv.ui.widget.RatioImageView
 class WanAndroidTopScrollerItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private val imageIcon = itemView.findViewById<RatioImageView>(R.id.image_icon)
     private val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
-
-    init {
-        imageIcon.setRatio(4.0f/3)
-    }
-
     companion object {
         val viewHolderFactory = object : IViewHolderFactory<BaseViewHolder> {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
