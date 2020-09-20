@@ -17,6 +17,7 @@ import com.txl.ui_basic.utils.LoadingViewUtils
  * todo 拆分加载圈成接口，重新配置加载效果
  */
 abstract class BaseFragment : Fragment() {
+    val TAG = javaClass.simpleName
     var rootView:View? = null
     var loadingViewUtils: LoadingViewUtils? = null
 

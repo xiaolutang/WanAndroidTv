@@ -56,18 +56,19 @@ public class WebLinkParse {
     /**
      * 判断是否是一个合适的图片地址
      * */
-    private static boolean isSuitImagePath(String linkUrl, String imgSrc) {
+    public static boolean isSuitImagePath(String linkUrl, String imgSrc) {
         if(TextUtils.isEmpty(imgSrc)){
             return false;
         }
         if(imgSrc.equals(linkUrl)){
             return false;
         }
-        //判断是不是网络地址
-        String regUrl = "^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\\\/])+$";
-        Pattern p = Pattern.compile(regUrl);
-        Matcher m = p.matcher(imgSrc);
-        return m.matches();
+        //判断是不是网络地址  这个玩意有问题，某些情况下会直接卡主。没有返回结果  比如
+        //https://img-blog.csdnimg.cn/20200909161743229.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bW1lcnJzZQ==,size_16,color_FFFFFF,t_70#pic_center
+//        String regUrl = "^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\\\/])+$";
+//        Pattern p = Pattern.compile(regUrl);
+//        Matcher m = p.matcher(imgSrc);
+        return imgSrc.startsWith("http://") || imgSrc.startsWith("https://");
     }
 
     /**

@@ -63,6 +63,31 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mPageChangeListener;
 
+    private OnFocusSearchFailedListener mOnFocusSearchFailedListener = new OnFocusSearchFailedListener() {
+        @Override
+        public boolean onLeftSearchFailed() {
+            return false;
+        }
+
+        @Override
+        public boolean onRightSearchFailed() {
+            return false;
+        }
+
+        @Override
+        public boolean onTopSearchFailed() {
+            return false;
+        }
+
+        @Override
+        public boolean onBottomSearchFailed() {
+            return false;
+        }
+    };
+
+    public void setOnFocusSearchFailedListener(OnFocusSearchFailedListener onFocusSearchFailedListener) {
+        this.mOnFocusSearchFailedListener = onFocusSearchFailedListener;
+    }
 
     public LibTvRecyclerView2(@NonNull Context context) {
         this(context,null);
@@ -197,16 +222,16 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (event.getKeyCode()) {
                 case KeyEvent.KEYCODE_DPAD_UP:
-                    handled = verticalScroll(View.FOCUS_UP);
+                    handled = verticalScroll(View.FOCUS_UP) || mOnFocusSearchFailedListener.onTopSearchFailed();
                     break;
                 case KeyEvent.KEYCODE_DPAD_DOWN:
-                    handled = verticalScroll(View.FOCUS_DOWN);
+                    handled = verticalScroll(View.FOCUS_DOWN) || mOnFocusSearchFailedListener.onBottomSearchFailed();
                     break;
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    handled = horizontalScroll(View.FOCUS_LEFT);
+                    handled = horizontalScroll(View.FOCUS_LEFT) || mOnFocusSearchFailedListener.onLeftSearchFailed();
                     break;
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    handled = horizontalScroll(View.FOCUS_RIGHT);
+                    handled = horizontalScroll(View.FOCUS_RIGHT) || mOnFocusSearchFailedListener.onRightSearchFailed();
                     break;
             }
         }
@@ -576,5 +601,24 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
     public interface OnCheckedChangeListener {
 
         void onCheckedChanged(LibTvRecyclerView2 group,View checkedView, int position);
+    }
+
+    public interface OnFocusSearchFailedListener{
+        /**
+         * @return true 代表本次事件被外部处理了，RecyclerView在相关子View不处理KeyEvent事件的情况下会自己进行处理
+         * */
+        boolean onLeftSearchFailed();
+        /**
+         * @return true 代表本次事件被外部处理了，RecyclerView在相关子View不处理KeyEvent事件的情况下会自己进行处理
+         * */
+        boolean onRightSearchFailed();
+        /**
+         * @return true 代表本次事件被外部处理了，RecyclerView在相关子View不处理KeyEvent事件的情况下会自己进行处理
+         * */
+        boolean onTopSearchFailed();
+        /**
+         * @return true 代表本次事件被外部处理了，RecyclerView在相关子View不处理KeyEvent事件的情况下会自己进行处理
+         * */
+        boolean onBottomSearchFailed();
     }
 }

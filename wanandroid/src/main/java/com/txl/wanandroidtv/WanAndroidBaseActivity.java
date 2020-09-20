@@ -1,6 +1,10 @@
 package com.txl.wanandroidtv;
 
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
 
 import com.txl.ui_basic.BaseActivity;
 
@@ -13,6 +17,12 @@ import me.jessyan.autosize.AutoSizeCompat;
  * description：
  */
 public class WanAndroidBaseActivity extends BaseActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public Resources getResources() {

@@ -3,5 +3,8 @@
 
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light" >
         <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

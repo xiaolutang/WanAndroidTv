@@ -2,6 +2,7 @@ package com.txl.wan_android_data_provider.viewModel;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -119,10 +120,12 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                                 countDownLatch.countDown();
                                 continue;
                             }
-                            AppExecutors.execNetIo(new Runnable() {
+                            AppExecutors.execDiskIo(new Runnable() {
                                 @Override
                                 public void run() {
+                                    Log.d(TAG,"执行解析之前  "+article.getLink()+" 总数 ：： "+countDownLatch.getCount());
                                     article.setImagePath(getMaxImageAddress(article.getLink()));
+                                    Log.d(TAG,"执行解析之后  "+article.getLink()+" 总数 ：： "+countDownLatch.getCount());
                                     countDownLatch.countDown();
                                 }
                             });
@@ -130,6 +133,7 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                         }
                         try {
                             countDownLatch.await();
+                            Log.d(TAG,"抛出数据 size ::  "+size+" 总数 ：： "+countDownLatch.getCount());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }finally {

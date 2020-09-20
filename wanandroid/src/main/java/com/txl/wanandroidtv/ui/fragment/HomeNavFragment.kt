@@ -1,12 +1,15 @@
 package com.txl.wanandroidtv.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.vlayout.DelegateAdapter
 import com.alibaba.android.vlayout.VirtualLayoutManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
@@ -87,24 +90,34 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         smartRefreshLayout?.setEnableAutoLoadMore(true)//是否启用列表惯性滑动到底部时自动加载更多
         smartRefreshLayout?.setOnLoadMoreListener(this)
         showLoading(0)
-
-//        recyclerView?.focusSearchFailedListener = object: LibTvRecyclerView.OnFocusSearchFailedListener {
-//            override fun onFocusSearchFailed(
-//                    currentFocusView: View?,
-//                    viewPosition: Int,
-//                    direct: Int
-//            ) {
-//                //常规列表有4个元素一行，所以减4
-//                if((direct == View.FOCUS_DOWN || direct == View.FOCUS_RIGHT) && adapter != null && viewPosition+1 >= adapter!!.itemCount-4 && viewPosition != RecyclerView.NO_POSITION){
-//                    smartRefreshLayout?.autoLoadMore()
-////                    viewModel?.nextPage()
-//                }
-//            }
-//        }
         val layoutManager =  VirtualLayoutManager(requireContext())
         recyclerView?.layoutManager = layoutManager
         delegateAdapter = DelegateAdapter(layoutManager, true)
         recyclerView?.adapter = delegateAdapter
+        recyclerView?.setOnFocusSearchFailedListener(object :LibTvRecyclerView2.OnFocusSearchFailedListener{
+            override fun onRightSearchFailed(): Boolean {
+                return false
+            }
+
+            override fun onBottomSearchFailed(): Boolean {
+                smartRefreshLayout?.autoLoadMore()
+                return true
+            }
+
+            override fun onTopSearchFailed(): Boolean {
+                return false
+            }
+
+            override fun onLeftSearchFailed(): Boolean {
+                return false
+            }
+        })
+        smartRefreshLayout?.setOnLoadMoreListener(object :OnLoadMoreListener{
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                viewModel?.nextPage()
+                Log.d(TAG,"onLoadMore")
+            }
+        })
     }
 
     override fun initData() {
