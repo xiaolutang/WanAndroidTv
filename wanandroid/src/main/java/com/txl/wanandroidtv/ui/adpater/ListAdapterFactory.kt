@@ -48,6 +48,7 @@ object ListAdapterFactory {
                 val bannerLayoutHelper = GridLayoutHelper(4)
                 bannerLayoutHelper.setMargin(0,context.resources.getDimensionPixelSize(R.dimen.dp_50),0,0)
                 bannerLayoutHelper.setGap(context.resources.getDimensionPixelSize(R.dimen.dp_50))
+                bannerLayoutHelper.setAutoExpand(false)
                 val adapter = BaseVLayoutAdapter<Any,BaseViewHolder>(WanAndroidCommonItemViewHolder.viewHolderFactory,bannerLayoutHelper)
                 adapter.appendCollectionData(data)
                 val adapters = ArrayList<BaseVLayoutAdapter<Any,BaseViewHolder>>()

@@ -18,6 +18,8 @@ import com.txl.wan_android_data_provider.data.Response;
 import com.txl.weblinkparse.WebLinkParse;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import static com.txl.wan_android_data_provider.viewModel.ResourceBoundaryKt.STATE_ERROR;
 import static com.txl.wan_android_data_provider.viewModel.ResourceBoundaryKt.STATE_LOADED;
@@ -41,59 +43,79 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
         return bannerData;
     }
 
-    public void fetchBannerData(){
-        AppExecutors.execNetIo(new Runnable() {
-            @Override
-            public void run() {
-                Response<List<BannerItemData>> response = DataDriven.INSTANCE.getHomeBanner();
-                bannerData.postValue(response);
+    private Runnable bannerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Response<List<BannerItemData>> response = DataDriven.INSTANCE.getHomeBanner();
+            bannerData.postValue(response);
+        }
+    };
+    private FutureTask<Object> bannerTask = new FutureTask<Object>(bannerRunnable,null);
+
+    private Runnable TopArticleRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Response<List<Article>> response = DataDriven.INSTANCE.getTopArticleList();
+            if(response.netSuccess() && response.getData() != null && response.getData().size() != 0){
+                int size = response.getData().size();
+                final CountDownLatch countDownLatch = new CountDownLatch(size);
+                for(final Article article :response.getData()){
+                    if(!StringUtils.INSTANCE.isNetUrl(article.getLink())){
+                        countDownLatch.countDown();
+                        continue;
+                    }
+                    AppExecutors.execNetIo(new Runnable() {
+                        @Override
+                        public void run() {
+                            article.setImagePath(getMaxImageAddress(article.getLink()));
+                            countDownLatch.countDown();
+                        }
+                    });
+
+                }
+                try {
+                    countDownLatch.await();
+                    topArticles.postValue(response);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }
+    };
+
+    private FutureTask<Object> topArticleTask = new FutureTask<Object>(TopArticleRunnable,null);
+
+    public void fetchBannerData(){
+        AppExecutors.execNetIo(bannerTask);
     }
 
     /**
      * 获取置顶文章
      * */
-    public void fetchTopArticleList(){//fixme 多次请求可能有问题，使用workManager来做吧
-        AppExecutors.execNetIo(new Runnable() {//fixme 使用rxJava或kotlin链式调用来编写
-            @Override
-            public void run() {
-                Response<List<Article>> response = DataDriven.INSTANCE.getTopArticleList();
-                if(response.netSuccess() && response.getData() != null && response.getData().size() != 0){
-                    int size = response.getData().size();
-                    final CountDownLatch countDownLatch = new CountDownLatch(size);
-                    for(final Article article :response.getData()){
-                        if(!StringUtils.INSTANCE.isNetUrl(article.getLink())){
-                            countDownLatch.countDown();
-                            continue;
-                        }
-                        AppExecutors.execNetIo(new Runnable() {
-                            @Override
-                            public void run() {
-                                article.setImagePath(getMaxImageAddress(article.getLink()));
-                                countDownLatch.countDown();
-                            }
-                        });
-
-                    }
-                    try {
-                        countDownLatch.await();
-                        topArticles.postValue(response);
-                        //缓存并刷新数据
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
+    public void fetchTopArticleList(){
+        AppExecutors.execNetIo(topArticleTask);
     }
 
     @Override
     public void resetData() {
         resetData = true;
         setCurrentPage(0);
-        getHomeNavItemListData();
+        AppExecutors.execNetIo(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    fetchBannerData();
+                    bannerTask.get();
+                    fetchTopArticleList();
+                    topArticleTask.get();
+                    getHomeNavItemListData();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

@@ -132,7 +132,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
                     delegateAdapter.addAdapters(0,adapters)
                 }
             })
-            (viewModel as HomeNavItemListViewModel).fetchBannerData()
+//            (viewModel as HomeNavItemListViewModel).fetchBannerData()
             (viewModel as HomeNavItemListViewModel).topArticles.observe(this, Observer<Response<List<Article>>> {
                 if(it.netSuccess()){
                     loadingViewUtils?.showLoadingView(false)
@@ -141,7 +141,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
                     delegateAdapter.addAdapters(adapters)
                 }
             })
-            (viewModel as HomeNavItemListViewModel).fetchTopArticleList()
+//            (viewModel as HomeNavItemListViewModel).fetchTopArticleList()
         }
     }
 
