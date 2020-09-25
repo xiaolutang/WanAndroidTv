@@ -2,12 +2,13 @@ package com.txl.wanandroidtv.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.vlayout.DelegateAdapter
 import com.alibaba.android.vlayout.VirtualLayoutManager
-import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
@@ -15,7 +16,6 @@ import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.wanandroidtv.R
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.Data
-import com.txl.wan_android_data_provider.bean.com.besjon.pojo.HomeArticleListData
 import com.txl.wan_android_data_provider.bean.home.Article
 import com.txl.wan_android_data_provider.bean.home.BannerItemData
 import com.txl.wan_android_data_provider.data.Response
@@ -64,11 +64,12 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
     var recyclerView: LibTvRecyclerView2? = null
         private set
 
-    var smartRefreshLayout: SmartRefreshLayout? = null
+    private var progressBar: ProgressBar? = null
+
 
     override fun onDataReady(currentPage: Int, data: Any?) {
         loadingViewUtils?.showLoadingView(false)
-        smartRefreshLayout?.finishLoadMore()
+        showProgress(false)
         if (data is Response<*>){
             val result = data.data
             if(result is Data){
@@ -78,17 +79,19 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         }
     }
 
+    private fun showProgress(show:Boolean){
+        progressBar?.visibility = if(show){ View.VISIBLE}else{View.GONE}
+    }
+
     override fun getLayoutRes(): Int {
         return R.layout.fragment_lib_nav_base
     }
 
     override fun initView() {
         super.initView()
-        smartRefreshLayout = rootView?.findViewById(R.id.fragment_lib_smart_refresh_layout)
+        progressBar = rootView?.findViewById(R.id.progressBar)
         recyclerView = rootView?.findViewById(R.id.fragment_lib_recycler)
         recyclerView?.setRecycledViewPool(RecyclerViewConfigUtils.viewPool)
-        smartRefreshLayout?.setEnableAutoLoadMore(true)//是否启用列表惯性滑动到底部时自动加载更多
-        smartRefreshLayout?.setOnLoadMoreListener(this)
         showLoading(0)
         val layoutManager =  VirtualLayoutManager(requireContext())
         recyclerView?.layoutManager = layoutManager
@@ -100,7 +103,8 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
             }
 
             override fun onBottomSearchFailed(): Boolean {
-                smartRefreshLayout?.autoLoadMore()
+                viewModel?.nextPage()
+                showProgress(true)
                 return true
             }
 
@@ -112,12 +116,6 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
                 return false
             }
         })
-        smartRefreshLayout?.setOnLoadMoreListener(object :OnLoadMoreListener{
-            override fun onLoadMore(refreshLayout: RefreshLayout) {
-                viewModel?.nextPage()
-                Log.d(TAG,"onLoadMore")
-            }
-        })
     }
 
     override fun initData() {
@@ -125,6 +123,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         if(viewModel is HomeNavItemListViewModel){
 
             (viewModel as HomeNavItemListViewModel).bannerData.observe(this, Observer<Response<List<BannerItemData>>> {
+                showProgress(false)
                 if(it.netSuccess()){
                     loadingViewUtils?.showLoadingView(false)
                     val list:List<BannerItemData> = it.data!!
@@ -134,6 +133,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
             })
 //            (viewModel as HomeNavItemListViewModel).fetchBannerData()
             (viewModel as HomeNavItemListViewModel).topArticles.observe(this, Observer<Response<List<Article>>> {
+                showProgress(false)
                 if(it.netSuccess()){
                     loadingViewUtils?.showLoadingView(false)
                     val list:List<Article> = it.data!!
@@ -153,7 +153,8 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         if(currentPage == 0){
             loadingViewUtils?.showLoadingView(true)
         }else{
-            smartRefreshLayout?.autoLoadMore()
+            viewModel?.nextPage()
+            showProgress(true)
         }
     }
 }

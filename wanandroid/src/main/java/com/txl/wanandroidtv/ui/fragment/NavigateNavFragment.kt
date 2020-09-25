@@ -51,7 +51,7 @@ class NavigateNavFragment: BaseNavFragment() {
     }
 
     var leftNavRecyclerView:LibTvRecyclerView2?  = null
-    var refreshLayout:SmartRefreshLayout?  = null
+
     var contentNavRecyclerView: LibTvRecyclerView2?  = null
 
     private var leftNavigateAdapter: BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
@@ -65,8 +65,6 @@ class NavigateNavFragment: BaseNavFragment() {
         leftNavRecyclerView =  findViewById(R.id.tv_recycler_left_nav)
         leftNavRecyclerView?.openFocusDynamic(true)
 //        leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPositionAndTop(position) }
-        refreshLayout =  findViewById(R.id.fragment_lib_smart_refresh_layout)
-        refreshLayout?.setPadding(resources.getDimensionPixelSize(R.dimen.dp_90),resources.getDimensionPixelSize(R.dimen.dp_20),resources.getDimensionPixelSize(R.dimen.dp_90),resources.getDimensionPixelSize(R.dimen.dp_20))
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
 
         leftNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
@@ -85,7 +83,6 @@ class NavigateNavFragment: BaseNavFragment() {
 
     override fun onDataReady(currentPage: Int, data: Any?) {
         loadingViewUtils?.showLoadingView(false)
-        refreshLayout?.finishLoadMore()
         if(data is NavigateArticleListData){
             leftNavigateAdapter?.appendCollectData(data.data)
             rightContentNavigateAdapter?.appendCollectData(data.data)
@@ -96,7 +93,7 @@ class NavigateNavFragment: BaseNavFragment() {
         if(currentPage == 0){
             loadingViewUtils?.showLoadingView(true)
         }else{
-            refreshLayout?.autoLoadMore()
+
         }
     }
 }

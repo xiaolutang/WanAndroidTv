@@ -1,5 +1,6 @@
 package com.txl.tvlib.border;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -68,6 +69,15 @@ public class BorderPainter {
                 return;
             }
         }
+        Rect rect = getViewPositionInParent(mLastView);
+        if (mLastView == null) {
+            mViewBoundHolder.setLeft(rect.left);
+            mViewBoundHolder.setTop(rect.top);
+            mViewBoundHolder.setWidth(rect.width());
+            mViewBoundHolder.setHeight(rect.height());
+            return;
+        }
+//        startAnimation(rect);
         if (mNinePatchDrawable != null) {
             mNinePatchDrawable.setBounds(mViewBoundHolder.getLeft() - mBorderPaddingRect.left,
                     mViewBoundHolder.getTop() - mBorderPaddingRect.top,
@@ -89,8 +99,8 @@ public class BorderPainter {
         point.y = view.getTop();
         ViewParent parent = view.getParent();
         while (parent != null && parent != mParent) {//fixme 当设置的View和传递进来的parent是同一个View的时候如何处理？
-            point.x += ((View) parent).getLeft();
-            point.y += ((View) parent).getTop();
+            point.x += ((View)parent).getX();
+            point.y += ((View)parent).getY();
             parent = parent.getParent();
         }
         if(mLastView instanceof  ICustomBorderView){

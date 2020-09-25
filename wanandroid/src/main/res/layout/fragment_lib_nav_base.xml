@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_lib_smart_refresh_layout"
     android:paddingStart="@dimen/dp_90"
     android:paddingEnd="@dimen/dp_90"
-    android:paddingBottom="@dimen/dp_50">
+    android:paddingBottom="@dimen/dp_50"
+    android:orientation="vertical">
     <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
         android:id="@+id/fragment_lib_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipChildren="true"
         android:clipToPadding="true"/>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+</LinearLayout>

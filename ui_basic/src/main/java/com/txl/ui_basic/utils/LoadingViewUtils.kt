@@ -11,6 +11,7 @@ import com.txl.ui_basic.R
 /**
  * 封装统一的页面加载效果
  * fixme 抽取接口，供其他项目使用
+ * fixme 浮层 参考领导用 popWindow  做
  * */
 class LoadingViewUtils {
     lateinit var loadingRootView:View

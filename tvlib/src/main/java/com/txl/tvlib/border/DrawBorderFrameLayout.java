@@ -3,6 +3,7 @@ package com.txl.tvlib.border;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -18,6 +19,7 @@ import com.txl.tvlib.R;
  * Created by liutao on 12/16/15.
  */
 public class DrawBorderFrameLayout extends FrameLayout {
+    private static final String TAG = "DrawBorderFrameLayout";
 
     private BorderPainter mBorderPainter;
 
@@ -53,6 +55,7 @@ public class DrawBorderFrameLayout extends FrameLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        Log.d(TAG,"dispatchDraw");
         super.dispatchDraw(canvas);
         mBorderPainter.draw(canvas);
     }
