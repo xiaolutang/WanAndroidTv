@@ -125,24 +125,25 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
             }
         });
         mDynamicFocusHelper = new DynamicFocusHelper(this);
-        addOnLayoutChangeListener( new View.OnLayoutChangeListener(){
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                postDelayed( new Runnable() {
-                    @Override
-                    public void run() {
-                        View f = findFocus();
-                        if(f != null){
-                            makeViewHorizontalCenter( f);
-                            makeViewVerticalCenter( f );
-                            f.clearFocus();
-                            f.requestFocus();
-                        }
-
-                    }
-                } ,64);
-            }
-        } );
+        //会导致页面抖动
+//        addOnLayoutChangeListener( new View.OnLayoutChangeListener(){
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                postDelayed( new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        View f = findFocus();
+//                        if(f != null){
+//                            makeViewHorizontalCenter( f);
+//                            makeViewVerticalCenter( f );
+//                            f.clearFocus();
+//                            f.requestFocus();
+//                        }
+//
+//                    }
+//                } ,64);
+//            }
+//        } );
     }
 
     public void openFocusDynamic(boolean open){

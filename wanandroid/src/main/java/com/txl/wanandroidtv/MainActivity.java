@@ -35,7 +35,7 @@ public class MainActivity extends WanAndroidBaseActivity {
         TvLibConfig config = new TvLibConfig.Builder()
                 .setBorderColor(ThemeUtils.INSTANCE.getThemeColor(this))
                 .setBorderWidth(getResources().getDimensionPixelSize(R.dimen.dp_5))
-                .setHasSelectBorder(false)
+                .setHasSelectBorder(true)
                 .build();
         TvLibConfig.Companion.setDefaultConfig(config);
         initView();

@@ -13,6 +13,12 @@ public interface ICustomBorderView {
     boolean drawBorderBySelf();
 
     /**
+     * 是否需要飞框的移动效果，如果 {@link #drawBorderBySelf} 返回true,并且 drawFlyBorder 返回true
+     * 会额外的绘制边框的移动效果
+     * */
+    boolean drawFlyBorder();
+
+    /**
      * 返回小于0的的值表示不自己进行独立设置，返回大于0的值才可以
      * 格式 1.1 表示 x,y方向都进行1.1倍缩放
      * 格式 1.1,1.2  表示x方向进行1.1倍缩放；y 方向上进行1.2倍缩放

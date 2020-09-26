@@ -92,7 +92,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CardFrameLayout, defStyleAttr, 0);
 
         openFocusShake = a.getBoolean(R.styleable.CardFrameLayout_open_shake, true);
-        autoAddFocusAnimation = a.getBoolean(R.styleable.CardFrameLayout_auto_add_focus_animation, false);
+        autoAddFocusAnimation = a.getBoolean(R.styleable.CardFrameLayout_auto_add_focus_animation, TvLibConfig.Companion.getDefaultConfig().getAutoHasFocusAnimation());
         hasFocusBorder = a.getBoolean(R.styleable.CardFrameLayout_hasFocusBorder,TvLibConfig.Companion.getDefaultConfig().getHasSelectBorder());
         mViewBorder.drawBorder = true;
         mViewBorder.setBorderWidth(a.getDimensionPixelSize(R.styleable.CardFrameLayout_selectBorderWidth, TvLibConfig.Companion.getDefaultConfig().getBorderWidth()));
@@ -113,7 +113,6 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-//        mViewBorder.drawableBorder(canvas);
     }
 
     @Override
@@ -298,6 +297,11 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
     }
 
     @Override
+    public boolean drawFlyBorder() {
+        return false;
+    }
+
+    @Override
     public String focusScale() {
         return null;
     }
@@ -361,7 +365,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
         }
 
         void drawableBorder(Canvas canvas){
-            if(false){//暂时屏蔽自己绘制border的能力
+            if(drawBorder){
                 Log.d(TAG,"drawableBorder width: "+getWidth()+" height: "+getHeight());
                 if(focusDrawable != null){
                     focusDrawable.setBounds(0,0,getWidth(),getHeight());

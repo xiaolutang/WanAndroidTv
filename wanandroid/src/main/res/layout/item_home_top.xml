@@ -6,7 +6,6 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:descendantFocusability="beforeDescendants"
-    app:auto_add_focus_animation="false"
     android:layout_marginEnd="@dimen/dp_50">
     <RelativeLayout
         android:orientation="vertical"

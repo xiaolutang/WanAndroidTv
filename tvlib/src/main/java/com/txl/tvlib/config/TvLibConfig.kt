@@ -32,6 +32,9 @@ class TvLibConfig private constructor() {
     var hasSelectBorder = true
         private set
 
+    var autoHasFocusAnimation = true
+        private set
+
     class Builder {
         private val tvLibConfig = TvLibConfig()
 
@@ -56,6 +59,11 @@ class TvLibConfig private constructor() {
          * */
         fun setHasSelectBorder(has: Boolean):Builder{
             tvLibConfig.hasSelectBorder = has
+            return this
+        }
+
+        fun setAutoHasFocusAnimation(autoHasFocusAnimation:Boolean):Builder{
+            tvLibConfig.autoHasFocusAnimation = autoHasFocusAnimation
             return this
         }
 

@@ -28,6 +28,11 @@ public class BorderPainter {
     private View mParent;
     private AnimatorSet mAnimator;
     private ValueUpdateListener mAnimateUpdateListener;
+    /**
+     * 是否正在执行飞框动画
+     * */
+    private boolean inFlyAnimation = false;
+    private long animationDuration = 500;
 
     public BorderPainter(View parent, int resId) {
         Context context = parent.getContext();
@@ -65,19 +70,12 @@ public class BorderPainter {
         }
         if(mLastView instanceof  ICustomBorderView){
             ICustomBorderView  borderView = (ICustomBorderView) mLastView;
-            if(borderView.drawBorderBySelf()){//自己进行绘制
+            if(borderView.drawFlyBorder() && inFlyAnimation){//需要绘制移动边框
+
+            }else if(borderView.drawBorderBySelf()){//自己进行绘制
                 return;
             }
         }
-        Rect rect = getViewPositionInParent(mLastView);
-        if (mLastView == null) {
-            mViewBoundHolder.setLeft(rect.left);
-            mViewBoundHolder.setTop(rect.top);
-            mViewBoundHolder.setWidth(rect.width());
-            mViewBoundHolder.setHeight(rect.height());
-            return;
-        }
-//        startAnimation(rect);
         if (mNinePatchDrawable != null) {
             mNinePatchDrawable.setBounds(mViewBoundHolder.getLeft() - mBorderPaddingRect.left,
                     mViewBoundHolder.getTop() - mBorderPaddingRect.top,
@@ -124,19 +122,42 @@ public class BorderPainter {
         ObjectAnimator to = ObjectAnimator.ofInt(mViewBoundHolder, "top", rect.top);
         ObjectAnimator wo = ObjectAnimator.ofInt(mViewBoundHolder, "width", rect.width());
         ObjectAnimator ho = ObjectAnimator.ofInt(mViewBoundHolder, "height", rect.height());
-        lo.addUpdateListener(mAnimateUpdateListener);
+        lo.addListener(mAnimateUpdateListener);
+        lo.addListener( mAnimateUpdateListener );
         mAnimator = new AnimatorSet();
         mAnimator.playTogether(lo, to, wo, ho);
         mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimator.setDuration(250);
+        mAnimator.setDuration(animationDuration);
         mAnimator.start();
     }
 
-    public class ValueUpdateListener implements ValueAnimator.AnimatorUpdateListener {
+    public class ValueUpdateListener implements ValueAnimator.AnimatorUpdateListener,ValueAnimator.AnimatorListener {
 
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             ViewCompat.postInvalidateOnAnimation(mParent);
+        }
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+            inFlyAnimation = true;
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            inFlyAnimation = false;
+            ViewCompat.postInvalidateOnAnimation(mParent);
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+            inFlyAnimation = false;
+            ViewCompat.postInvalidateOnAnimation(mParent);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
         }
     }
 }
