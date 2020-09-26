@@ -160,7 +160,7 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
                             e.printStackTrace();
                         }finally {
                             ResourceBoundary<Object> resourceBoundary = new ResourceBoundary<Object>(STATE_LOADED, 0, "success", response, getCurrentPage());
-                            if (getCurrentPage() <= 1){
+                            if (getCurrentPage() <= 2){
                                 getData().postValue(resourceBoundary);
                             }
 

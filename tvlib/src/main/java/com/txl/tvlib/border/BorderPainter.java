@@ -128,7 +128,7 @@ public class BorderPainter {
         mAnimator = new AnimatorSet();
         mAnimator.playTogether(lo, to, wo, ho);
         mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimator.setDuration(300);
+        mAnimator.setDuration(250);
         mAnimator.start();
     }
 

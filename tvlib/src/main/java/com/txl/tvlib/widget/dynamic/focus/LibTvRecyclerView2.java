@@ -125,6 +125,24 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
             }
         });
         mDynamicFocusHelper = new DynamicFocusHelper(this);
+        addOnLayoutChangeListener( new View.OnLayoutChangeListener(){
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                postDelayed( new Runnable() {
+                    @Override
+                    public void run() {
+                        View f = findFocus();
+                        if(f != null){
+                            makeViewHorizontalCenter( f);
+                            makeViewVerticalCenter( f );
+                            f.clearFocus();
+                            f.requestFocus();
+                        }
+
+                    }
+                } ,64);
+            }
+        } );
     }
 
     public void openFocusDynamic(boolean open){
@@ -192,6 +210,15 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
         mDynamicFocusHelper.requestChildFocus(child, focused);
         //bug 解决焦点View被其它子View覆盖的问题
         invalidate();
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        try {
+            super.onLayout( changed, l, t, r, b );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -390,9 +417,9 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
 
     private boolean verticalScroll(int direction){
         boolean down = direction == View.FOCUS_DOWN;
-        if(!canScrollVertically(down?1:-1)){
-            return false;
-        }
+//        if(!canScrollVertically(down?1:-1)){
+//            return false;
+//        }
         View currentFocus = findFocus();
         int realCanUseHeight = getHeight() - getPaddingBottom() - getPaddingTop();
         if(currentFocus.getHeight() < realCanUseHeight){
