@@ -11,5 +11,6 @@ class TestBorderViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_border_view)
         border_02.setBorderDrawable(ContextCompat.getDrawable(this,R.drawable.border))
+        border_02.setOutBound(30)
     }
 }

@@ -128,7 +128,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
         setWillNotDraw(false);
         setChildrenDrawingOrderEnabled(true);
         mBorderVew = new BorderView(context);
-//        addView(mBorderVew);
+        addView(mBorderVew,1,1);
     }
 
     @Override
@@ -153,6 +153,12 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
             index += normalChild.size();
         }
         return index;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mBorderVew.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(),MeasureSpec.EXACTLY),MeasureSpec.makeMeasureSpec(getMeasuredHeight(),MeasureSpec.EXACTLY));
     }
 
     @Override

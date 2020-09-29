@@ -48,11 +48,9 @@ public class BorderView extends View {
         typedArray.recycle();
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int widthModel = MeasureSpec.getMode(widthMeasureSpec);
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    public void setOutBound(int outBound){
+        this.outBound = outBound;
+        invalidate();
     }
 
     public void setBorderDrawable(Drawable drawable){
