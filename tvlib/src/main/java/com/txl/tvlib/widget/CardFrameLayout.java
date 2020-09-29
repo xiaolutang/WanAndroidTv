@@ -9,21 +9,36 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.leanback.widget.BaseCardView;
 import androidx.leanback.widget.ShadowOverlayContainer;
 import com.txl.tvlib.R;
 import com.txl.tvlib.border.ICustomBorderView;
 import com.txl.tvlib.config.TvLibConfig;
 import com.txl.tvlib.focushandler.ViewFocusChangeListener;
+import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2;
 import com.txl.tvlib.widget.focus.shake.IFocusShake;
 import com.txl.tvlib.widget.focus.shake.ViewShakeAnimation;
+
+import java.util.ArrayList;
 
 /**
  * 具有RadioButton的能力，当元素焦点改变时会触发checked,在失去焦点的时候或将check置为false select置为true {@link FocusTracker#onFocusChange}
  * */
 public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomBorderView {
+
+    /**
+     * 专门用来绘制焦点框
+     * */
+    private BorderView mBorderVew;
+
+    private ArrayList<View> normalChild = new ArrayList<>();
+    private ArrayList<View> overBorderChild = new ArrayList<>();
 
     private static final String TAG = CardFrameLayout.class.getSimpleName();
 
@@ -66,6 +81,8 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
 
     private OnViewSelectChangeListener _onViewSelectChangeListener;
 
+    private PassThroughHierarchyChangeListener mHierarchyChangeListener;
+
     /**
      * 焦点变化立即更改checked状态
      * */
@@ -99,6 +116,8 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
         mViewBorder.setBorderColor(a.getColor(R.styleable.CardFrameLayout_borderColor,TvLibConfig.Companion.getDefaultConfig().getBorderColor()));
         mFocusChecked = a.getBoolean(R.styleable.CardFrameLayout_focusChecked,true);
         a.recycle();
+        mHierarchyChangeListener = new PassThroughHierarchyChangeListener();
+        super.setOnHierarchyChangeListener(mHierarchyChangeListener);
         _focusTracker = new FocusTracker();
         super.setOnFocusChangeListener(_focusTracker);
         _viewShakeAnimation = new ViewShakeAnimation(this);
@@ -107,8 +126,34 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
         }
         setFocusable(true);
         setWillNotDraw(false);
+        setChildrenDrawingOrderEnabled(true);
+        mBorderVew = new BorderView(context);
+//        addView(mBorderVew);
     }
 
+    @Override
+    public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
+        mHierarchyChangeListener.mOnHierarchyChangeListener = listener;
+    }
+
+
+
+    @Override
+    protected int getChildDrawingOrder(int childCount, int i) {
+        View child = getChildAt(i);
+        if(child == mBorderVew){
+            return normalChild.size()-1;
+        }
+        int index = normalChild.indexOf(child);
+        if(index == -1){
+            index = overBorderChild.indexOf(child);
+            if(index == -1){
+                return super.getChildDrawingOrder(childCount, i);
+            }
+            index += normalChild.size();
+        }
+        return index;
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -309,6 +354,129 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
     @Override
     public boolean hasFocusAnimation() {
         return false;
+    }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+    }
+
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new  LayoutParams(getContext(),attrs);
+    }
+
+    @Override
+    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams lp) {
+        if (lp instanceof BaseCardView.LayoutParams) {
+            return new LayoutParams((LayoutParams) lp);
+        } else {
+            return new LayoutParams(lp);
+        }
+    }
+
+    private class PassThroughHierarchyChangeListener implements OnHierarchyChangeListener {
+        private OnHierarchyChangeListener mOnHierarchyChangeListener;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void onChildViewAdded(View parent, View child) {
+            if (mOnHierarchyChangeListener != null) {
+                mOnHierarchyChangeListener.onChildViewAdded(parent, child);
+            }
+            ViewGroup.LayoutParams params = child.getLayoutParams();
+            if(params instanceof  LayoutParams){
+                if(((LayoutParams) params).childType == LayoutParams.CHILD_TYPE_OVER_BORDER){
+                    overBorderChild.add(child);
+                    return;
+                }
+            }
+            normalChild.add(child);
+
+
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void onChildViewRemoved(View parent, View child) {
+            if (mOnHierarchyChangeListener != null) {
+                mOnHierarchyChangeListener.onChildViewRemoved(parent, child);
+            }
+            ViewGroup.LayoutParams params = child.getLayoutParams();
+            if(params instanceof  LayoutParams){
+                if(((LayoutParams) params).childType == LayoutParams.CHILD_TYPE_OVER_BORDER){
+                    overBorderChild.add(child);
+                    return;
+                }
+            }
+            normalChild.remove(child);
+        }
+    }
+
+    public static class LayoutParams extends FrameLayout.LayoutParams{
+        public static final int CHILD_TYPE_NORMAL = 0;
+        public static final int CHILD_TYPE_OVER_BORDER = 1;
+
+        public static final int CHILD_OVER_MODEL_LEFT_TOP_RIGHT = 0;
+        public static final int CHILD_OVER_MODEL_LEFT_BOTTOM_RIGHT = 1;
+        public static final int CHILD_OVER_MODEL_TOP_RIGHT_BOTTOM = 2;
+        public static final int CHILD_OVER_MODEL_TOP_LEFT_BOTTOM = 3;
+
+        private int childType = CHILD_TYPE_NORMAL;
+        private int overModel = CHILD_OVER_MODEL_LEFT_TOP_RIGHT;
+        public LayoutParams(@NonNull Context c, @Nullable AttributeSet attrs) {
+            super(c, attrs);
+            TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.CardFrameLayout_Layout);
+            childType = a.getInt(R.styleable.CardFrameLayout_Layout_layout_child_type, CHILD_TYPE_NORMAL);
+            overModel = a.getInt(R.styleable.CardFrameLayout_Layout_layout_over_model, CHILD_OVER_MODEL_LEFT_TOP_RIGHT);
+            a.recycle();
+        }
+
+        public LayoutParams(int width, int height) {
+            super(width, height);
+        }
+
+        public LayoutParams(int width, int height, int gravity) {
+            super(width, height, gravity);
+        }
+
+        public LayoutParams(@NonNull ViewGroup.LayoutParams source) {
+            super(source);
+        }
+
+        public LayoutParams(@NonNull MarginLayoutParams source) {
+            super(source);
+        }
+
+        public LayoutParams(@NonNull FrameLayout.LayoutParams source) {
+            super(source);
+        }
+
+        public LayoutParams(@NonNull LayoutParams source) {
+            super(source);
+            overModel = source.overModel;
+            childType = source.childType;
+        }
+
+        public int getChildType() {
+            return childType;
+        }
+
+        public void setChildType(int childType) {
+            this.childType = childType;
+        }
+
+        public int getOverModel() {
+            return overModel;
+        }
+
+        public void setOverModel(int overModel) {
+            this.overModel = overModel;
+        }
     }
 
     private class FocusTracker implements OnFocusChangeListener{

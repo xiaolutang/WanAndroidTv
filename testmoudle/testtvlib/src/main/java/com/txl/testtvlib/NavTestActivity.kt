@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import com.txl.testtvlib.testborder.TestBorderActivity
+import com.txl.testtvlib.testborder.TestBorderViewActivity
 import com.txl.testtvlib.testborder.TestFlyBorderActivity
 import com.txl.testtvlib.testrecyclerview.item.center.TestRecyclerViewFocusCenterActivity
 import kotlinx.android.synthetic.main.activity_nav_test.*
@@ -22,6 +23,7 @@ class NavTestActivity : AppCompatActivity(), View.OnClickListener {
         card_frame_02.setOnClickListener(this)
         card_frame_03.setOnClickListener(this)
         card_frame_04.setOnClickListener(this)
+        card_frame_05.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -37,6 +39,9 @@ class NavTestActivity : AppCompatActivity(), View.OnClickListener {
             }
             card_frame_04->{
                 startActivity(Intent(this, TestFlyBorderActivity::class.java))
+            }
+            card_frame_05->{
+                startActivity(Intent(this, TestBorderViewActivity::class.java))
             }
         }
     }

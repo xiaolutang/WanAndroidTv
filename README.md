@@ -15,7 +15,9 @@ GSON
 
 AutoSize
 
-LeakCanray
+LeakCanary
+
+BlockCanary
 
 
 

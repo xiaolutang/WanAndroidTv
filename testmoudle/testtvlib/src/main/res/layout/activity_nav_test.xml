@@ -72,6 +72,21 @@
                 android:textSize="@dimen/sp_15"
                 android:gravity="center"/>
         </com.txl.tvlib.widget.CardFrameLayout>
+        <com.txl.tvlib.widget.CardFrameLayout
+            android:id="@+id/card_frame_05"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_test_focus_bg"
+            android:layout_marginTop="@dimen/dp_10"
+            app:auto_add_focus_animation="true"
+            app:hasFocusBorder="false">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:text="测试自定义 BorderView "
+                android:textSize="@dimen/sp_15"
+                android:gravity="center"/>
+        </com.txl.tvlib.widget.CardFrameLayout>
 
     </LinearLayout>
 

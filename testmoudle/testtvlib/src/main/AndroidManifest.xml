@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".testborder.TestBorderActivity"></activity>
+        <activity android:name=".testborder.TestBorderViewActivity"></activity>
+        <activity android:name=".testborder.TestBorderActivity" />
         <activity android:name=".NavTestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
