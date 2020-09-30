@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -174,9 +175,12 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-//        if(isFocused()){
-//            mViewBorder.drawableBorder(canvas);
-//        }
+    }
+
+    @Override
+    public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+        mBorderVew.postInvalidate();
+        return super.requestFocus(direction, previouslyFocusedRect);
     }
 
     public void setViewShakeAnimation(IFocusShake iFocusShake){

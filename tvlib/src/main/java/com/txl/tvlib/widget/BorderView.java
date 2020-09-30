@@ -9,6 +9,7 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewParent;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -65,14 +66,40 @@ public class BorderView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        Log.d(TAG," onLayout "+parentHasFocus());
+        super.onLayout(changed, left, top, right, bottom);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        Log.d(TAG," draw "+parentHasFocus());
+        super.draw(canvas);
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        Log.d(TAG," dispatchDraw "+parentHasFocus());
+        super.dispatchDraw(canvas);
+    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+        Log.d(TAG," onDraw "+parentHasFocus());
         super.onDraw(canvas);
-        if(mDrawable instanceof NinePatchDrawable){
-            mDrawable.setBounds(-outBound - mBorderPaddingRect.left,-outBound - mBorderPaddingRect.top,getWidth()+outBound+  mBorderPaddingRect.right,getHeight()+outBound+  mBorderPaddingRect.bottom);
-        }else {
-            mDrawable.setBounds(-outBound,-outBound,getWidth()+outBound,getHeight()+outBound);
+        if(parentHasFocus()){
+            if(mDrawable instanceof NinePatchDrawable){
+                mDrawable.setBounds(-outBound - mBorderPaddingRect.left,-outBound - mBorderPaddingRect.top,getWidth()+outBound+  mBorderPaddingRect.right,getHeight()+outBound+  mBorderPaddingRect.bottom);
+            }else {
+                mDrawable.setBounds(-outBound,-outBound,getWidth()+outBound,getHeight()+outBound);
+            }
+            mDrawable.draw(canvas);
         }
-        mDrawable.draw(canvas);
-        Log.d(TAG,"onDraw");
+
+    }
+
+    public boolean parentHasFocus(){
+        ViewParent p = getParent();
+        return ((View) p).isFocused();
     }
 }

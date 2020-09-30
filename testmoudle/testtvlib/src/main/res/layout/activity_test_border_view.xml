@@ -30,6 +30,7 @@
         android:background="@color/colorAccent"/>
 
     <com.txl.tvlib.widget.CardFrameLayout
+        android:id="@+id/border_03"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,12 +38,16 @@
         app:layout_constraintTop_toBottomOf="@+id/border_02"
         android:layout_marginTop="@dimen/dp_30"
         android:clipChildren="false"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="你是猪吗"/>
+            android:text="你是猪吗"
+            android:focusable="false"/>
     </com.txl.tvlib.widget.CardFrameLayout>
 
 
