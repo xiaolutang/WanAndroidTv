@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,8 @@ import com.txl.tvlib.R;
  * 因为这个View需要 和父容器保持相同的大小，因此需要在父容器测量子View时特殊处理
  */
 public class BorderView extends View {
+    private static final String TAG = "BorderView";
+
     //焦点Drawable
     private Drawable mDrawable;
     private Rect mBorderPaddingRect = new Rect();
@@ -42,7 +45,7 @@ public class BorderView extends View {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BorderView);
         outBound =  typedArray.getInt(R.styleable.BorderView_border_bound,0);
-        Drawable drawable = ContextCompat.getDrawable(context,R.drawable.select_border);
+        Drawable drawable = ContextCompat.getDrawable(context,R.drawable.border);
         setBorderDrawable(drawable);
 //        mDrawable = typedArray.getDrawable()
         typedArray.recycle();
@@ -70,5 +73,6 @@ public class BorderView extends View {
             mDrawable.setBounds(-outBound,-outBound,getWidth()+outBound,getHeight()+outBound);
         }
         mDrawable.draw(canvas);
+        Log.d(TAG,"onDraw");
     }
 }

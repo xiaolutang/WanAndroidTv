@@ -29,5 +29,21 @@
         android:layout_marginTop="@dimen/dp_30"
         android:background="@color/colorAccent"/>
 
+    <com.txl.tvlib.widget.CardFrameLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/border_02"
+        android:layout_marginTop="@dimen/dp_30"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="你是猪吗"/>
+    </com.txl.tvlib.widget.CardFrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -145,12 +145,17 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
             return normalChild.size()-1;
         }
         int index = normalChild.indexOf(child);
+        int borderViewIndex = normalChild.indexOf(mBorderVew);
         if(index == -1){
             index = overBorderChild.indexOf(child);
             if(index == -1){
                 return super.getChildDrawingOrder(childCount, i);
             }
             index += normalChild.size();
+        }else if(index == borderViewIndex){
+            index = normalChild.size()-1;
+        }else if(index > borderViewIndex){
+            index-=1;
         }
         return index;
     }
@@ -169,9 +174,9 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if(isFocused()){
-            mViewBorder.drawableBorder(canvas);
-        }
+//        if(isFocused()){
+//            mViewBorder.drawableBorder(canvas);
+//        }
     }
 
     public void setViewShakeAnimation(IFocusShake iFocusShake){
