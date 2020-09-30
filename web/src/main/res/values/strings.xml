@@ -1,1 +1,5 @@
-<resources></resources>
+<resources>
+    <string name="web_webview_opennative">%1$s正在请求打开%2$s</string>
+    <string name="web_cancel">取消</string>
+    <string name="web_sure">确认</string>
+</resources>
