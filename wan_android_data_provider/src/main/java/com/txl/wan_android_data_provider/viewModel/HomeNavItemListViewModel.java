@@ -86,6 +86,7 @@ public class HomeNavItemListViewModel extends AbsNavItemListViewModel {
     private FutureTask<Object> topArticleTask = new FutureTask<Object>(TopArticleRunnable,null);
 
     public void fetchBannerData(){
+        Log.d(TAG,"bannerTask "+bannerTask);
         AppExecutors.execNetIo(bannerTask);
     }
 
