@@ -142,9 +142,6 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
     @Override
     protected int getChildDrawingOrder(int childCount, int i) {
         View child = getChildAt(i);
-        if(child == mBorderVew){
-            return normalChild.size()-1;
-        }
         int index = normalChild.indexOf(child);
         int borderViewIndex = normalChild.indexOf(mBorderVew);
         if(index == -1){
@@ -158,6 +155,7 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
         }else if(index > borderViewIndex){
             index-=1;
         }
+        Log.d(TAG,"child "+child+"  i "+i+" index = "+index);
         return index;
     }
 
