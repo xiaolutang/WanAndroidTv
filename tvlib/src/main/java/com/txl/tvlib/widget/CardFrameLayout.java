@@ -150,12 +150,12 @@ public class CardFrameLayout extends FrameLayout implements ICheckView, ICustomB
                 return super.getChildDrawingOrder(childCount, i);
             }
             index += normalChild.size();
-        }else if(index == borderViewIndex){
-            index = normalChild.size()-1;
-        }else if(index > borderViewIndex){
-            index-=1;
+        }else if(index == normalChild.size()-1){
+            index = borderViewIndex;
+        }else if(index >= borderViewIndex){
+            index+=1;
         }
-        Log.d(TAG,"child "+child+"  i "+i+" index = "+index);
+        Log.d(TAG,"child "+child+"  id : "+child.getId()+"  i "+i+" index = "+index+"  this "+this);
         return index;
     }
 
