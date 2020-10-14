@@ -21,14 +21,35 @@
             android:focusable="false"
             android:background="#0fff"
             app:elevation="0dp">
-            <TextView
+            <com.txl.tvlib.widget.dynamic.focus.DynamicLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_28"
-                android:textColor="#fff"
-                android:text="WanAndroidTv"
+                android:orientation="horizontal"
                 app:layout_scrollFlags="scroll|enterAlways"
-                android:focusable="false"/>
+                android:focusable="false">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_28"
+                    android:textColor="#fff"
+                    android:text="WanAndroidTv"
+                    android:focusable="false"/>
+                <com.txl.tvlib.widget.CardFrameLayout
+                    android:id="@+id/frame_user_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:auto_add_focus_animation="true"
+                    android:focusable="true">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/user_icon"
+                        android:focusable="false"/>
+                </com.txl.tvlib.widget.CardFrameLayout>
+            </com.txl.tvlib.widget.dynamic.focus.DynamicLinearLayout>
             <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

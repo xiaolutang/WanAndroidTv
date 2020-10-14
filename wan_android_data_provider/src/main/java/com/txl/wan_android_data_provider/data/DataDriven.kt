@@ -10,6 +10,8 @@ import com.txl.wan_android_data_provider.bean.home.BannerItemData
 import com.txl.wan_android_data_provider.utils.WanAndroidNetInvokerUtils
 import java.lang.Exception
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -91,6 +93,15 @@ object DataDriven {
         return getData(url,type)
     }
 
+    fun login(userName:String,password:String):Response<String>{
+        val url = "$BASE_URL/user/login"
+        val type = genericType<String>()
+        val hashMap = TreeMap<String,String>()
+        hashMap["username"] = userName
+        hashMap["password"] = password
+        return postData(url,hashMap,type)
+    }
+
     /**
      * 这个应该和 具体的业务 无关
      * */
@@ -99,6 +110,33 @@ object DataDriven {
         var originString = ""
         try {
             response = WanAndroidNetInvokerUtils.get(url)
+            if(response?.code == 200){
+                response.body?.let {
+                    val content = it.string()
+                    originString = content
+                    Log.d(TAG,"url is $url Api response:${content}")
+                }
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+        return if(!TextUtils.isEmpty(originString)){
+            val tempResponse:Response<T> =  Gson().fromJson(originString, type)
+            tempResponse.originString = originString
+            tempResponse
+        }else{
+            Response(null,"", -1,"response is null")
+        }
+    }
+
+    /**
+     * 这个应该和 具体的业务 无关
+     * */
+    private fun <T>postData(url:String, params: SortedMap<String, String> = TreeMap(), type: Type):Response<T>{
+        var response: okhttp3.Response? = null
+        var originString = ""
+        try {
+            response = WanAndroidNetInvokerUtils.post(url,params)
             if(response?.code == 200){
                 response.body?.let {
                     val content = it.string()

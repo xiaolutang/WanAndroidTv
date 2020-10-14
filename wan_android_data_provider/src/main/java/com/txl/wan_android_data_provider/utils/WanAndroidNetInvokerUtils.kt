@@ -2,9 +2,9 @@ package com.txl.wan_android_data_provider.utils
 
 import com.txl.netmodel.okhttp.okhttp.OkHttpUtils
 import okhttp3.*
-import java.lang.Exception
-import java.lang.StringBuilder
+import okhttp3.FormBody
 import java.util.*
+
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -58,6 +58,23 @@ object WanAndroidNetInvokerUtils {
         } catch (e: Exception) {//上面的代码中网络部分可能会抛出异常
             e.printStackTrace()
         }
+    }
+
+    fun post(url: String, params: SortedMap<String, String> = TreeMap()):Response?{
+        val builder = FormBody.Builder()
+        for (param in params){
+            builder.add(param.key, param.value)
+        }
+        val requestBody: RequestBody =  builder.build()
+        val request = Request.Builder().url(url)
+                .post(requestBody)
+                .build()
+        try {
+            return getOkHttpClient().newCall(request).execute()
+        } catch (e: Exception) {//上面的代码中网络部分可能会抛出异常
+            e.printStackTrace()
+        }
+        return null
     }
 
     /**

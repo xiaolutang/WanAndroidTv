@@ -1,6 +1,7 @@
 package com.txl.wanandroidtv;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,7 +49,13 @@ public class MainActivity extends WanAndroidBaseActivity {
         navRecyclerView.openFocusDynamic(true);
         viewPager = findViewById(R.id.main_view_pager);
         viewPager.setOffscreenPageLimit(3);
+        View userIcon = findViewById( R.id.frame_user_icon );
+        userIcon.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
 
+            }
+        } );
     }
 
     private void initData(){
