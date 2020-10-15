@@ -24,7 +24,7 @@ class LoadingViewUtils {
         private set
 
     constructor(context: Context){
-        loadingRootView = LayoutInflater.from(context).inflate(R.layout.lib_loading,null,false)
+        loadingRootView = LayoutInflater.from(context).inflate(R.layout.ui_basic_lib_loading,null,false)
         initView(loadingRootView)
     }
 

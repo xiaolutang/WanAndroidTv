@@ -23,7 +23,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if(needLoadingView()){
-            rootView = inflater.inflate(R.layout.lib_root_frame_layout,container,false)
+            rootView = inflater.inflate(R.layout.ui_basic_lib_root_frame_layout,container,false)
             loadingViewUtils = applyLoadingView()
             val viewGroup = rootView as ViewGroup
             inflater.inflate(getLayoutRes(),viewGroup,true)
