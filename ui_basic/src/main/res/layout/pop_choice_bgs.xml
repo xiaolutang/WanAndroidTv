@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/ui_basic_d14"
+        android:layout_marginEnd="@dimen/ui_basic_d14"
+        android:background="@drawable/shape_dialog_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/ui_basic_d14"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/tx_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="#ff222222"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tx_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_basic_d14"
+            android:gravity="left"
+            android:text="Here is the content."
+            android:textColor="#ff222222"
+            android:textSize="@dimen/ui_basic_sp_15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_title"
+            app:layout_goneMarginTop="0dp" />
+
+        <TextView
+
+            android:id="@+id/tx_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/ui_basic_d29"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#999"
+            android:textSize="@dimen/ui_basic_d12"
+            app:layout_constraintBottom_toBottomOf="@id/tx_make_sure"
+            app:layout_constraintEnd_toStartOf="@id/tx_make_sure" />
+
+        <TextView
+            android:id="@+id/tx_make_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/ui_basic_d25"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="#E32416"
+            android:textSize="@dimen/ui_basic_sp_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

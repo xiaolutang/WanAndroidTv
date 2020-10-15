@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ui_basic_d20">20dp</dimen>
+    <dimen name="ui_basic_d14">14dp</dimen>
+    <dimen name="ui_basic_d30">30dp</dimen>
+    <dimen name="ui_basic_d15">15dp</dimen>
+    <dimen name="ui_basic_sp_15">15sp</dimen>
+    <dimen name="ui_basic_d29">29dp</dimen>
+    <dimen name="ui_basic_d12">12dp</dimen>
+    <dimen name="ui_basic_d25">25dp</dimen>
+    <dimen name="ui_basic_sp_12">12sp</dimen>
+    <dimen name="ui_basic_d10">10dp</dimen>
+</resources>
