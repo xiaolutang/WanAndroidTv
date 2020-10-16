@@ -37,17 +37,19 @@
                     android:focusable="false"/>
                 <com.txl.tvlib.widget.CardFrameLayout
                     android:id="@+id/frame_user_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_80"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:auto_add_focus_animation="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:padding="@dimen/dp_15">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:src="@drawable/user_icon"
-                        android:focusable="false"/>
+                        android:focusable="false"
+                        android:scaleType="centerCrop"/>
                 </com.txl.tvlib.widget.CardFrameLayout>
             </com.txl.tvlib.widget.dynamic.focus.DynamicLinearLayout>
             <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2

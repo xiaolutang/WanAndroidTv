@@ -1,6 +1,8 @@
 package com.txl.wanandroidtv;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.view.View;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -15,6 +17,7 @@ import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2;
 import com.txl.wan_android_data_provider.bean.NavItemData;
 import com.txl.wanandroidtv.ui.adpater.MainNavPageAdapter;
 import com.txl.wanandroidtv.ui.adpater.NavRecyclerAdapter;
+import com.txl.wanandroidtv.ui.user.UserCenterActivity;
 import com.txl.wanandroidtv.ui.utils.ThemeUtils;
 import com.txl.wanandroidtv.utils.Utils;
 
@@ -53,7 +56,8 @@ public class MainActivity extends WanAndroidBaseActivity {
         userIcon.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent( MainActivity.this, UserCenterActivity.class );
+                startActivity( intent );
             }
         } );
     }
