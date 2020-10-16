@@ -2,6 +2,7 @@ package com.txl.wan_android_data_provider.viewModel.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.txl.wan_android_data_provider.data.DataDriven
 
 /**
  * Copyright (c) 2020, 唐小陆 All rights reserved.
@@ -11,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
  */
 class UserViewModel :ViewModel(){
     fun loginOrRegister(userName:String, password:String){
-
+        DataDriven.login(userName,password)
     }
 }
 

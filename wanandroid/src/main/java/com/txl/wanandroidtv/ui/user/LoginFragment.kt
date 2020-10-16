@@ -1,6 +1,7 @@
 package com.txl.wanandroidtv.ui.user
 
 import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.txl.ui_basic.fragment.BaseFragment
@@ -30,6 +31,7 @@ class LoginFragment:BaseFragment() {
                 toast("请输入账号和密码")
                 return@setOnClickListener
             }
+            Log.d(TAG,"login click ")
             userViewModel.loginOrRegister(userName, password)
         }
     }
