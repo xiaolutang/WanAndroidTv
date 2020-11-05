@@ -3,11 +3,14 @@ import android.text.TextUtils
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.Data
 import com.txl.wan_android_data_provider.bean.home.Article
 import com.txl.wan_android_data_provider.bean.home.BannerItemData
+import com.txl.wan_android_data_provider.bean.user.UserInfo
 import com.txl.wan_android_data_provider.utils.WanAndroidNetInvokerUtils
+import org.json.JSONObject
 import java.lang.Exception
 import java.lang.reflect.Type
 import java.util.*
@@ -54,9 +57,9 @@ object DataDriven {
         return getData(url,type)
     }
 
-    fun getSquareArticleList(page:Int):Response<String>{
+    fun getSquareArticleList(page:Int):Response<Data>{
         val url = "$BASE_URL/user_article/list/$page/json"
-        val type = genericType<String>()
+        val type = genericType<Response<Data>>()
         return getData(url,type)
     }
 
@@ -93,9 +96,9 @@ object DataDriven {
         return getData(url,type)
     }
 
-    fun login(userName:String,password:String):Response<String>{
+    fun login(userName:String,password:String):Response<UserInfo>{
         val url = "$BASE_URL/user/login"
-        val type = genericType<String>()
+        val type = genericType<Response<UserInfo>>()
         val hashMap = TreeMap<String,String>()
         hashMap["username"] = userName
         hashMap["password"] = password
@@ -148,9 +151,14 @@ object DataDriven {
             e.printStackTrace()
         }
         return if(!TextUtils.isEmpty(originString)){
-            val tempResponse:Response<T> =  Gson().fromJson(originString, type)
-            tempResponse.originString = originString
-            tempResponse
+            return try {
+                val tempResponse:Response<T> =  Gson().fromJson(originString, type)
+                tempResponse.originString = originString
+                tempResponse
+            }catch (e:Exception){
+                e.printStackTrace()
+                Response(null,originString, -1,"response is null")
+            }
         }else{
             Response(null,"", -1,"response is null")
         }

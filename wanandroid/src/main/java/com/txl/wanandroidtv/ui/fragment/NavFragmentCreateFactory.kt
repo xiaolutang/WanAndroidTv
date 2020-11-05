@@ -31,13 +31,12 @@ class NavFragmentCreateFactory {
         fun createFragmentByCategory(category: String, vararg args: Any): BaseFragment {
             when (category) {
                 CATEGORY_HOME,
-                CATEGORY_SQUARE,
                 CATEGORY_QUESTION_AND_ANSWER-> {
                     return HomeNavFragment.newInstance(category)
                 }
-//                CATEGORY_SQUARE->{
-//                    return SquareNavFragment::class.java.newInstance()
-//                }
+                CATEGORY_SQUARE->{
+                    return SquareNavFragment.newInstance(category)
+                }
                 CATEGORY_NAVIGATE->{
                     return NavigateNavFragment.newInstance(category)
                 }

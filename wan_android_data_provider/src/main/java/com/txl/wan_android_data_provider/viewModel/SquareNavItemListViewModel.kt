@@ -2,8 +2,8 @@ package com.txl.wan_android_data_provider.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
 import com.txl.commonlibrary.utils.exector.AppExecutors
+import com.txl.wan_android_data_provider.data.DataDriven
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.
@@ -19,22 +19,13 @@ class SquareNavItemListViewModel: AbsNavItemListViewModel() {
 
     private fun getSquareNavItemListData() {
         AppExecutors.execNetIo {
-//            val (state, data1) = getSquareArticleList(currentPage)
-//            if (state) {
-//                val g = Gson()
-//                val result = g.fromJson(data1, HomeArticleListData::class.java)
-//                val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "success", result, currentPage)
-//                data.postValue(resourceBoundary)
-//            } else {
-//                val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "failed to load data ", null, currentPage)
-//                data.postValue(resourceBoundary)
-//            }
-//            if (resetData) {
-//                resetData = false
-//            }
-//            if (loadData) {
-//                loadData = false
-//            }
+            val response = DataDriven.getSquareArticleList(currentPage)
+            if(response.netSuccess()){
+                val resourceBoundary = ResourceBoundary<Any>(STATE_LOADED, 0, "success", response, currentPage)
+                data.postValue(resourceBoundary)
+            }else{
+
+            }
         }
     }
 }

@@ -39,12 +39,10 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         init {
             //初始化factory
             putViewModelFactory(CATEGORY_HOME, HomeViewModelFactory())
-            putViewModelFactory(CATEGORY_SQUARE, SquareViewModelFactory())
             putViewModelFactory(CATEGORY_QUESTION_AND_ANSWER, QANavViewModelFactory())
 
             //初始化class
             putViewModelClass(CATEGORY_HOME, HomeNavItemListViewModel::class.java)
-            putViewModelClass(CATEGORY_SQUARE, SquareNavItemListViewModel::class.java)
             putViewModelClass(CATEGORY_QUESTION_AND_ANSWER, QANavItemListViewModel::class.java)
         }
 
@@ -58,8 +56,6 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
     }
 
     private lateinit var delegateAdapter: DelegateAdapter
-
-    var bannerAdapter: BaseVLayoutAdapter<List<BannerItemData>, BaseViewHolder>? = null
 
     var recyclerView: LibTvRecyclerView2? = null
         private set
