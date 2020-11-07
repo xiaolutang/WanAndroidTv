@@ -57,8 +57,7 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
 
     private lateinit var delegateAdapter: DelegateAdapter
 
-    var recyclerView: LibTvRecyclerView2? = null
-        private set
+    private var recyclerView: LibTvRecyclerView2? = null
 
     private var progressBar: ProgressBar? = null
 
