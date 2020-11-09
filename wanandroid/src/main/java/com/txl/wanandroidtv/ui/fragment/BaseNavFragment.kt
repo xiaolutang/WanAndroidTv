@@ -71,7 +71,7 @@ abstract class BaseNavFragment : BaseFragment(), OnLoadMoreListener {
      * */
     abstract fun showLoading(currentPage:Int);
 
-    abstract fun onDataReady(currentPage:Int,data :Any?)
+    abstract fun onDataReady(currentPage:Int,data :Any?)//fixme data使用泛型
 
     fun onLoadDataError(currentPage:Int){}
 

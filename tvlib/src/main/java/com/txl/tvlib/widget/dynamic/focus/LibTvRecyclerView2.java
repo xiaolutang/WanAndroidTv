@@ -63,6 +63,11 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mPageChangeListener;
 
+    /**
+     * 优先在容器内跨行进行焦点查找
+     * */
+    private boolean focusSearchJumpRow = true;
+
     private OnFocusSearchFailedListener mOnFocusSearchFailedListener = new OnFocusSearchFailedListener() {
         @Override
         public boolean onLeftSearchFailed() {
@@ -144,6 +149,10 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
 //                } ,64);
 //            }
 //        } );
+    }
+
+    public void setFocusSearchJumpRow(boolean focusSearchJumpRow) {
+        this.focusSearchJumpRow = focusSearchJumpRow;
     }
 
     public void openFocusDynamic(boolean open){
@@ -283,7 +292,7 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
         }
 
 
-        View nextFocus = findNextFocusViewJumpRow(currentFocus,direction);
+        View nextFocus = focusSearchJumpRow ? findNextFocusViewJumpRow(currentFocus,direction):FocusFinder.getInstance().findNextFocus(this,currentFocus,direction);
         if(nextFocus != null){
             makeViewHorizontalCenter(nextFocus);
             makeViewVerticalCenter(nextFocus);
@@ -341,6 +350,10 @@ public class LibTvRecyclerView2 extends RecyclerView implements IDynamicFocusVie
      * 左右按键跨行寻找下一个可以获取焦点的View
      * */
     private View findNextFocusViewJumpRow(View currentFocus,int direct){
+        View nextFocus = FocusFinder.getInstance().findNextFocus(this,currentFocus,direct);
+        if(nextFocus != null){
+            return nextFocus;
+        }
         boolean isRight = direct == View.FOCUS_RIGHT;
         //原来向右左向
         int position = isRight?(getAdapterPositionByView(this,currentFocus)+1):(getAdapterPositionByView(this,currentFocus)-1);

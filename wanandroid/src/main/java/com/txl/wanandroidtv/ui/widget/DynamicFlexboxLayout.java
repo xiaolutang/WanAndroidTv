@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -12,6 +13,8 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.txl.tvlib.focushandler.IFocusSearchHelper;
 import com.txl.tvlib.widget.dynamic.focus.IDynamicFocusViewGroup;
 import com.txl.tvlib.widget.dynamic.focus.utils.DynamicFocusHelper;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -42,6 +45,62 @@ public class DynamicFlexboxLayout extends FlexboxLayout implements IDynamicFocus
 
     private void init(){
         dynamicFocusUtils = new DynamicFocusHelper(this);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+
+        return super.dispatchKeyEvent( event ) || executeKeyEvent(event);
+    }
+
+    private boolean executeKeyEvent(KeyEvent event){
+        int direction = View.FOCUS_DOWN;
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_DPAD_UP:
+                    direction = View.FOCUS_UP;
+                    break;
+                case KeyEvent.KEYCODE_DPAD_DOWN:
+                    direction = View.FOCUS_DOWN;
+                    break;
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                    direction = View.FOCUS_LEFT;
+                    break;
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    direction = View.FOCUS_RIGHT;
+                    break;
+            }
+
+            View nextFocus = findNextFocusViewBySelf( direction );
+            if (nextFocus != null) {
+                nextFocus.requestFocus();
+                return true;
+            };
+        }
+        return false;
+    }
+
+    @Nullable
+    private View findNextFocusViewBySelf(int direction) {
+        int index = findFocusIndex(findFocus());
+        Log.e("DynamicFlexboxLayout","focusSearch index :: "+index+"  is right "+(direction == View.FOCUS_RIGHT));
+        if(index != -1){
+            if(direction == View.FOCUS_RIGHT){
+                if(index != getChildCount()-1){
+                    View nextFocus = getChildAt(index+1);
+                    nextFocus = findFirstFocusAbleView(nextFocus);
+                    Log.e("DynamicFlexboxLayout","focusSearch index :: "+index+"  is right "+nextFocus);
+                    return nextFocus;
+                }
+            }else if(direction == View.FOCUS_LEFT){
+                if(index != 0){
+                    View nextFocus = getChildAt(index-1);
+                    nextFocus = findFirstFocusAbleView(nextFocus);
+                    return nextFocus;
+                }
+            }
+        }
+        return null;
     }
 
     @Override

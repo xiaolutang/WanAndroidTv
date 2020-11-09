@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Checkable
 import android.widget.RadioButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.txl.commonlibrary.utils.DrawableUtils
+import com.txl.tvlib.widget.ICheckView
 import com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
 import com.txl.wanandroidtv.R
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateArticleListData
@@ -54,9 +56,9 @@ class NavigateNavFragment: BaseNavFragment() {
         }
     }
 
-    var leftNavRecyclerView:LibTvRecyclerView2?  = null
+    private var leftNavRecyclerView:LibTvRecyclerView2?  = null
 
-    var contentNavRecyclerView: LibTvRecyclerView2?  = null
+    private var contentNavRecyclerView: LibTvRecyclerView2?  = null
 
     private var leftNavigateAdapter: BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
     private var rightContentNavigateAdapter: BaseRecyclerFactoryAdapter<NavigateCategoryData>? = null
@@ -67,6 +69,13 @@ class NavigateNavFragment: BaseNavFragment() {
 
     override fun initView() {
         leftNavRecyclerView =  findViewById(R.id.tv_recycler_left_nav)
+        leftNavRecyclerView?.setOnCheckedChangeListener(object : LibTvRecyclerView2.OnCheckedChangeListener {
+
+            override fun onCheckedChanged(group: LibTvRecyclerView2?, checkedView: View?, position: Int) {
+                contentNavRecyclerView?.scrollToPosition(position)
+            }
+        })
+        leftNavRecyclerView?.setFocusSearchJumpRow(false)
         leftNavRecyclerView?.openFocusDynamic(true)
 //        leftNavRecyclerView?.setChildFocusListener { position, child -> contentNavRecyclerView?.smoothScrollToPositionAndTop(position) }
         contentNavRecyclerView =  findViewById(R.id.fragment_lib_recycler)
@@ -77,6 +86,7 @@ class NavigateNavFragment: BaseNavFragment() {
 
         contentNavRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         contentNavRecyclerView?.openFocusDynamic(false)
+//        contentNavRecyclerView?.setFocusSearchJumpRow(false)
         rightContentNavigateAdapter = BaseRecyclerFactoryAdapter( NavigateFlexBoxItemViewHolderFactory())
         contentNavRecyclerView?.adapter = rightContentNavigateAdapter
 //        contentNavRecyclerView?.setChildFocusListener{ position, child ->
@@ -91,7 +101,7 @@ class NavigateNavFragment: BaseNavFragment() {
         if (data is Response<*>){
             val result = data.data
             if(result is List<*>){
-                if(result[0] is NavigateArticleListData){
+                if(result[0] is NavigateCategoryData){
                     leftNavigateAdapter?.appendCollectData(result as MutableCollection<NavigateCategoryData>?)
                     rightContentNavigateAdapter?.appendCollectData(result as MutableCollection<NavigateCategoryData>?)
                 }
@@ -125,7 +135,7 @@ class LeftItemViewHolder(view: View): BaseViewHolder(view) {
     init {
         val states = arrayOfNulls<IntArray>(3)
         states[0] = intArrayOf(android.R.attr.state_focused)
-        states[1] = intArrayOf(android.R.attr.state_checked)
+        states[1] = intArrayOf(android.R.attr.state_selected)
         states[2] = intArrayOf()
         val themeColor = ThemeUtils.getThemeColor(radioButton.context)
         val white = radioButton.resources.getColor(R.color.white)

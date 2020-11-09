@@ -1,10 +1,9 @@
 package com.txl.ui_basic.adapter;
 
-import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.txl.ui_basic.viewholder.BaseViewHolder;
@@ -19,13 +18,13 @@ import java.util.Collection;
  * description：通过 IViewHolderFactory 创建ViewHolder
  */
 public class BaseRecyclerFactoryAdapter<T> extends BaseRecyclerAdapter<T, BaseViewHolder>{
-    private IViewHolderFactory mViewHolderFactory;
+    private IViewHolderFactory<? extends RecyclerView.ViewHolder> mViewHolderFactory;
     private OnItemClickListener mItemClickListener;
-    public BaseRecyclerFactoryAdapter(IViewHolderFactory viewHolderFactory) {
+    public BaseRecyclerFactoryAdapter(IViewHolderFactory<? extends RecyclerView.ViewHolder> viewHolderFactory) {
         mViewHolderFactory = viewHolderFactory;
     }
 
-    public BaseRecyclerFactoryAdapter(Collection<T> data,IViewHolderFactory viewHolderFactory) {
+    public BaseRecyclerFactoryAdapter(Collection<T> data,IViewHolderFactory<? extends RecyclerView.ViewHolder> viewHolderFactory) {
         super( data );
         mViewHolderFactory = viewHolderFactory;
     }
@@ -34,14 +33,11 @@ public class BaseRecyclerFactoryAdapter<T> extends BaseRecyclerAdapter<T, BaseVi
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BaseViewHolder holder = mViewHolderFactory.onCreateViewHolder( parent, viewType );
-        holder.setOnViewHolderItemClickListener(new BaseViewHolder.OnViewHolderItemClickListener() {
-            @Override
-            public void onViewHolderItemClick(View view, int position) {
-                if(mItemClickListener != null){
-                    mItemClickListener.onItemClick(position,getData().get(position));
-                }
+        holder.setOnViewHolderItemClickListener( (view, position) -> {
+            if(mItemClickListener != null){
+                mItemClickListener.onItemClick(position,getData().get(position));
             }
-        });
+        } );
         return holder;
     }
 

@@ -68,9 +68,9 @@ object DataDriven {
     /**
      * 获取导航数据
      * */
-    fun getNavigateArticleList():Response<List<NavigateArticleListData>>{
+    fun getNavigateArticleList():Response<List<NavigateCategoryData>>{
         val url = "$BASE_URL/navi/json"
-        val type = genericType<Response<List<NavigateArticleListData>>>()
+        val type = genericType<Response<List<NavigateCategoryData>>>()
         return getData(url,type)
     }
 

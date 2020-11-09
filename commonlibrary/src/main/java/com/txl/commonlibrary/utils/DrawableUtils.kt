@@ -93,13 +93,13 @@ object DrawableUtils{
     /**
      * @param colorNormal 默认状态下的填充色
      * @param colorFocus  获取焦点状态下的填充色
-     * @param colorSelect 被选中的颜色
+     * @param colorChecked 被选中的颜色
      * @param radius      圆角半径
      */
-    fun makeFramelessStateListDrawable(colorNormal:Int,colorFocus:Int,colorSelect:Int,radius:Float):Drawable{
+    fun makeFramelessStateListDrawable(colorNormal:Int,colorFocus:Int,colorChecked:Int,radius:Float):Drawable{
         val drawable = StateListDrawable()
         drawable.addState(intArrayOf(android.R.attr.state_focused), makeFramelessRectangleDrawable(colorFocus,radius))
-        drawable.addState(intArrayOf(android.R.attr.state_selected), makeFramelessRectangleDrawable(colorSelect,radius))
+        drawable.addState(intArrayOf(android.R.attr.state_checked), makeFramelessRectangleDrawable(colorChecked,radius))
         drawable.addState(intArrayOf(), makeFramelessRectangleDrawable(colorNormal,radius))
         return drawable
     }
