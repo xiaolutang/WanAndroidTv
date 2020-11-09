@@ -16,7 +16,6 @@
         android:paddingEnd="@dimen/dp_50"
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
-        android:background="@drawable/b_menu_settled"
         android:focusable="false"
         android:textColor="@drawable/color_text_checked" />
 </com.txl.tvlib.widget.CardFrameLayout>
