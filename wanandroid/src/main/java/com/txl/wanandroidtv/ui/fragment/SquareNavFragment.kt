@@ -73,12 +73,20 @@ class SquareNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemCl
     }
 
     override fun showLoading(currentPage: Int) {
-
+        if(currentPage == 0){
+            loadingViewUtils?.showLoadingView(true)
+        }else{
+            viewModel?.nextPage()
+            showProgress(true)
+        }
     }
 
     override fun onDataReady(currentPage: Int, data: Any?) {
         loadingViewUtils?.showLoadingView(false)
         showProgress(false)
+        if(currentPage == 0){
+            delegateAdapter.clear()
+        }
         if (data is Response<*>){
             val result = data.data
             if(result is Data){

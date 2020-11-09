@@ -17,12 +17,16 @@ import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateCategoryDa
 import com.txl.ui_basic.adapter.BaseRecyclerFactoryAdapter
 import com.txl.ui_basic.viewholder.BaseViewHolder
 import com.txl.ui_basic.viewholder.IViewHolderFactory
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.Data
+import com.txl.wan_android_data_provider.data.Response
 import com.txl.wanandroidtv.ui.utils.ThemeUtils
 import com.txl.wanandroidtv.ui.viewholder.NavigateFlexBoxItemViewHolderFactory
 import com.txl.wan_android_data_provider.viewModel.NavigateNavItemListViewModel
 import com.txl.wan_android_data_provider.viewModel.NavigateNavViewModelFactory
 import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelClass
 import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelFactory
+import com.txl.wanandroidtv.ui.adpater.ListAdapterFactory
+import com.txl.wanandroidtv.ui.adpater.WanAndroidListItemType
 
 /**
  * Copyright (c) 2020 唐小陆 All rights reserved.
@@ -78,14 +82,20 @@ class NavigateNavFragment: BaseNavFragment() {
 //        contentNavRecyclerView?.setChildFocusListener{ position, child ->
 //            leftNavRecyclerView?.setCheckedPosition(position)
 //        }
+        super.initView()
     }
 
 
     override fun onDataReady(currentPage: Int, data: Any?) {
         loadingViewUtils?.showLoadingView(false)
-        if(data is NavigateArticleListData){
-            leftNavigateAdapter?.appendCollectData(data.data)
-            rightContentNavigateAdapter?.appendCollectData(data.data)
+        if (data is Response<*>){
+            val result = data.data
+            if(result is List<*>){
+                if(result[0] is NavigateArticleListData){
+                    leftNavigateAdapter?.appendCollectData(result as MutableCollection<NavigateCategoryData>?)
+                    rightContentNavigateAdapter?.appendCollectData(result as MutableCollection<NavigateCategoryData>?)
+                }
+            }
         }
     }
 

@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.Data
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateArticleListData
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateCategoryData
 import com.txl.wan_android_data_provider.bean.home.Article
 import com.txl.wan_android_data_provider.bean.home.BannerItemData
 import com.txl.wan_android_data_provider.bean.user.UserInfo
@@ -66,9 +68,9 @@ object DataDriven {
     /**
      * 获取导航数据
      * */
-    fun getNavigateArticleList():Response<String>{
+    fun getNavigateArticleList():Response<List<NavigateArticleListData>>{
         val url = "$BASE_URL/navi/json"
-        val type = genericType<String>()
+        val type = genericType<Response<List<NavigateArticleListData>>>()
         return getData(url,type)
     }
 
