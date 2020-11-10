@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.Data
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateArticleListData
 import com.txl.wan_android_data_provider.bean.com.besjon.pojo.NavigateCategoryData
+import com.txl.wan_android_data_provider.bean.com.besjon.pojo.ProjectClassifyItem
 import com.txl.wan_android_data_provider.bean.home.Article
 import com.txl.wan_android_data_provider.bean.home.BannerItemData
 import com.txl.wan_android_data_provider.bean.user.UserInfo
@@ -71,6 +72,12 @@ object DataDriven {
     fun getNavigateArticleList():Response<List<NavigateCategoryData>>{
         val url = "$BASE_URL/navi/json"
         val type = genericType<Response<List<NavigateCategoryData>>>()
+        return getData(url,type)
+    }
+
+    fun getProjectClassify():Response<List<ProjectClassifyItem>>{
+        val url = "$BASE_URL/project/tree/json"
+        val type = genericType<Response<List<ProjectClassifyItem>>>()
         return getData(url,type)
     }
 

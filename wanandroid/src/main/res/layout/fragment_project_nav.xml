@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <com.txl.tvlib.widget.dynamic.focus.LibTvRecyclerView2
+        android:id="@+id/tv_recycler_left_nav"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_30"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_50"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_marginBottom="@dimen/dp_50"/>
+   <include layout="@layout/fragment_lib_nav_base"/>
+</LinearLayout>

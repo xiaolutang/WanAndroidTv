@@ -13,10 +13,10 @@ import com.txl.wan_android_data_provider.data.DataDriven
  * date：2020/3/27
  * description：
  */
-class ProjectNavItemListViewModel: AbsNavItemListViewModel() {
+class NavigateNavItemListViewModel: AbsNavItemListViewModel() {
     override fun getPageData() {
         AppExecutors.execNetIo {
-            val response = DataDriven.getNavigateArticleList()
+            val response = DataDriven.getProjectClassify()
             if (response.netSuccess()) {
 //                val g = Gson()
 //                val result = g.fromJson(response.data, NavigateArticleListData::class.java)
@@ -37,8 +37,8 @@ class ProjectNavItemListViewModel: AbsNavItemListViewModel() {
 
 }
 
-class ProjectNavViewModelFactory: ViewModelProvider.NewInstanceFactory() {
+class NavigateNavViewModelFactory: ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ProjectNavItemListViewModel() as T
+        return NavigateNavItemListViewModel() as T
     }
 }

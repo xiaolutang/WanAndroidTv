@@ -23,15 +23,14 @@ const val CATEGORY_NAVIGATE = "3"
 /**
  * 问答
  * */
-const val CATEGORY_QUESTION_AND_ANSWER = "4"
+const val CATEGORY_PROJECT = "4"
 
 class NavFragmentCreateFactory {
     companion object {
         @JvmStatic
         fun createFragmentByCategory(category: String, vararg args: Any): BaseFragment {
             when (category) {
-                CATEGORY_HOME,
-                CATEGORY_QUESTION_AND_ANSWER-> {
+                CATEGORY_HOME-> {
                     return HomeNavFragment.newInstance(category)
                 }
                 CATEGORY_SQUARE->{
@@ -39,6 +38,9 @@ class NavFragmentCreateFactory {
                 }
                 CATEGORY_NAVIGATE->{
                     return NavigateNavFragment.newInstance(category)
+                }
+                CATEGORY_PROJECT->{
+                    return ProjectNavFragment.newInstance(category)
                 }
                 else -> {
                     return HomeNavFragment.newInstance(category)

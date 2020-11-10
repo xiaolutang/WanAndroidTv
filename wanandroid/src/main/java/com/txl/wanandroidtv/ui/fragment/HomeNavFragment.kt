@@ -39,11 +39,9 @@ class HomeNavFragment : BaseNavFragment(), BaseRecyclerFactoryAdapter.OnItemClic
         init {
             //初始化factory
             putViewModelFactory(CATEGORY_HOME, HomeViewModelFactory())
-            putViewModelFactory(CATEGORY_QUESTION_AND_ANSWER, QANavViewModelFactory())
 
             //初始化class
             putViewModelClass(CATEGORY_HOME, HomeNavItemListViewModel::class.java)
-            putViewModelClass(CATEGORY_QUESTION_AND_ANSWER, QANavItemListViewModel::class.java)
         }
 
         fun newInstance(category:String):HomeNavFragment{
