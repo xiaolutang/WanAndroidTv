@@ -27,6 +27,7 @@ import com.txl.wanandroidtv.ui.utils.ThemeUtils
 import com.txl.wanandroidtv.ui.viewholder.NavigateFlexBoxItemViewHolderFactory
 import com.txl.wan_android_data_provider.viewModel.NavigateNavItemListViewModel
 import com.txl.wan_android_data_provider.viewModel.NavigateNavViewModelFactory
+import com.txl.wan_android_data_provider.viewModel.ProjectNavItemListViewModel
 import com.txl.wan_android_data_provider.viewModel.ProjectNavViewModelFactory
 import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelClass
 import com.txl.wan_android_data_provider.viewModel.ViewModelContainer.putViewModelFactory
@@ -47,7 +48,7 @@ class ProjectNavFragment: BaseNavFragment() {
             putViewModelFactory(CATEGORY_PROJECT, ProjectNavViewModelFactory())
 
             //初始化class
-            putViewModelClass(CATEGORY_PROJECT, NavigateNavItemListViewModel::class.java)
+            putViewModelClass(CATEGORY_PROJECT, ProjectNavItemListViewModel::class.java)
         }
 
         fun newInstance(category:String):ProjectNavFragment{

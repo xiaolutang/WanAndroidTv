@@ -1,5 +1,6 @@
 package com.txl.wanandroidtv.ui.fragment
 
+import android.util.Log
 import com.txl.ui_basic.fragment.BaseFragment
 
 /**
@@ -29,6 +30,7 @@ class NavFragmentCreateFactory {
     companion object {
         @JvmStatic
         fun createFragmentByCategory(category: String, vararg args: Any): BaseFragment {
+            Log.d("Nav","NavFragmentCreateFactory category $category  ")
             when (category) {
                 CATEGORY_HOME-> {
                     return HomeNavFragment.newInstance(category)

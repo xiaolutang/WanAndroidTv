@@ -3,6 +3,7 @@ package com.txl.netmodel.okhttp.okhttp;
 import android.os.Build;
 import android.util.Log;
 
+import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.Cache;
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
@@ -23,7 +25,23 @@ import okhttp3.TlsVersion;
  * 全局的okHttpClient
  * */
 public class OkHttpUtils {
+    private static File cacheFile;
+    //缓存大小为20M
+    private static int cacheSize = 20 * 1024 * 1024;
+    //创建缓存对象
+    private static Cache cache;
 
+    private static boolean initCache = false;
+
+    public static void initCache(String cachePath, int cacheSize){
+        if(initCache){
+            return;
+        }
+        initCache = true;
+        OkHttpUtils.cacheFile = new File(cachePath,"netCache");
+        OkHttpUtils.cacheSize = cacheSize;
+        cache = new Cache(cacheFile,OkHttpUtils.cacheSize);
+    }
 
     public static OkHttpClient.Builder getOkhttpBuilder(){
         return OkHttpClientHolder.builder;
@@ -128,6 +146,9 @@ public class OkHttpUtils {
                         .hostnameVerifier((hostname, session) -> true)
                         .followSslRedirects(true)
                         .sslSocketFactory(new Tls12SocketFactory(sslContext.getSocketFactory()), list[0]);
+                if(cache != null){
+                    builder.cache( cache );
+                }
                 okHttpClient = builder.build();
             } catch (KeyManagementException | NoSuchAlgorithmException e) {
                 e.printStackTrace();
